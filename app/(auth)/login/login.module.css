@@ -1,0 +1,221 @@
+/* Login page — covers the app-shell (sidebar + main) entirely */
+
+.shell {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  font-family: var(--font-sans);
+  background: var(--white);
+}
+
+/* ── Left panel ───────────────────────────────────────────── */
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 56px;
+  background: var(--white);
+  border-right: 0.5px solid var(--gray-200);
+}
+
+.wordmark {
+  margin-bottom: auto;
+  padding-bottom: 0;
+}
+
+.wordmarkName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  display: block;
+  line-height: 1;
+}
+
+.wordmarkSub {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-top: 3px;
+}
+
+.formArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 0 0;
+}
+
+.heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+.subtext {
+  font-size: 13px;
+  color: #727272;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--red);
+  outline: 1.5px solid var(--red);
+  outline-offset: -1px;
+}
+
+.input::placeholder {
+  color: var(--gray-400);
+}
+
+.errorCard {
+  background: var(--red-pale);
+  border: 0.5px solid var(--red-light);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--red-dark);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 12px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #C42A23;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.footer {
+  font-size: 11px;
+  color: var(--gray-400);
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* ── Right panel ──────────────────────────────────────────── */
+
+.right {
+  position: relative;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.rightDecorA {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  top: -100px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.rightDecorB {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  bottom: -60px;
+  left: -60px;
+  pointer-events: none;
+}
+
+.rightContent {
+  position: relative;
+  z-index: 1;
+  max-width: 360px;
+  padding: 40px;
+  text-align: center;
+}
+
+.rightTagline {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.35;
+  margin-bottom: 1rem;
+}
+
+.rightMeta {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}

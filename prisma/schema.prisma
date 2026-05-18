@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(VIEWER)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  sessions  Session[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AppSettings {
+  id              String   @id @default("singleton")
+  anthropicKeyEnc String?
+  anthropicKeyIv  String?
+  anthropicKeyTag String?
+  updatedAt       DateTime @updatedAt
+  updatedBy       String?
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}

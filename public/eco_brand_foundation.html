@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecomobi — Brand Strategy 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #f43c34;
+  --red-dark: #c42a23;
+  --red-pale: #fff0ef;
+  --red-light: #ffe0de;
+  --black: #1a1a1a;
+  --gray-800: #2e2e2e;
+  --gray-600: #5c5c5c;
+  --gray-400: #999;
+  --gray-200: #e8e8e8;
+  --gray-100: #f4f4f4;
+  --gray-50: #fafafa;
+  --white: #ffffff;
+  --border: #e4e4e4;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.06);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; font-family:'Plus Jakarta Sans',sans-serif; background:#f0efed; color:var(--black); overflow:hidden; font-size:15px; line-height:1.6; }
+
+/* ── DECK ── */
+.deck { width:100%; height:100vh; position:relative; }
+.slide { position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity 0.4s ease; display:flex; flex-direction:column; justify-content:center; }
+.slide.active { opacity:1; pointer-events:all; }
+
+/* ── NAV ── */
+.nav-bar { position:fixed; bottom:1.75rem; left:50%; transform:translateX(-50%); z-index:999; display:flex; align-items:center; gap:0.6rem; background:var(--white); border:1px solid var(--border); border-radius:40px; padding:0.45rem 0.9rem; box-shadow:var(--shadow); }
+.nbtn { background:none; border:none; color:var(--gray-400); font-family:inherit; font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; padding:0.35rem 0.7rem; border-radius:20px; transition:all 0.15s; }
+.nbtn:hover { color:var(--black); background:var(--gray-100); }
+.nbtn.red { background:var(--red); color:#fff; }
+.nbtn.red:hover { background:var(--red-dark); }
+.ncounter { font-size:11px; font-weight:500; color:var(--gray-400); min-width:34px; text-align:center; }
+.ndots { display:flex; gap:4px; align-items:center; }
+.ndot { width:5px; height:5px; border-radius:50%; background:var(--gray-200); cursor:pointer; transition:all 0.2s; }
+.ndot.active { background:var(--red); width:14px; border-radius:3px; }
+
+/* ── SHARED ── */
+.tag { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--red); display:inline-flex; align-items:center; gap:7px; margin-bottom:1rem; }
+.tag::before { content:''; display:block; width:12px; height:2px; background:var(--red); border-radius:1px; }
+.pad { padding:3.5rem 5rem; }
+
+@keyframes fu { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.a1 { animation:fu 0.55s 0.05s both; }
+.a2 { animation:fu 0.55s 0.14s both; }
+.a3 { animation:fu 0.55s 0.23s both; }
+.a4 { animation:fu 0.55s 0.32s both; }
+/* Don't suppress animations via !important — JS resets them on navigation */
+
+/* card style */
+.card { background:var(--white); border:1px solid var(--border); border-radius:12px; }
+.card-flat { background:var(--white); border:1px solid var(--border); border-radius:8px; }
+
+/* ── S1 TITLE ── */
+.s1 { background:var(--white); }
+.s1-layout { display:grid; grid-template-columns:1fr 1fr; height:100%; }
+.s1-left { padding:4rem 5rem; display:flex; flex-direction:column; justify-content:center; border-right:1px solid var(--border); }
+.s1-right { background:var(--red); padding:4rem 5rem; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
+.s1-right::before { content:''; position:absolute; right:-4rem; top:-4rem; width:300px; height:300px; background:rgba(255,255,255,0.06); border-radius:50%; }
+.s1-right::after { content:''; position:absolute; left:-2rem; bottom:-3rem; width:200px; height:200px; background:rgba(255,255,255,0.04); border-radius:50%; }
+.s1-title { font-size:clamp(3rem,6vw,6rem); font-weight:800; line-height:0.92; color:var(--black); }
+.s1-title em { font-style:normal; color:var(--red); }
+.s1-sub { font-size:14px; color:var(--gray-600); max-width:420px; line-height:1.75; margin:1.5rem 0 2.5rem; }
+.s1-meta { display:flex; gap:2rem; flex-wrap:wrap; }
+.s1-mi { display:flex; flex-direction:column; gap:2px; }
+.s1-ml { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-400); }
+.s1-mv { font-size:13px; font-weight:600; color:var(--black); }
+.s1-concept { font-size:clamp(1.6rem,3vw,2.75rem); font-weight:800; color:#fff; line-height:1.1; position:relative; z-index:1; }
+.s1-concept-sub { font-size:13px; color:rgba(255,255,255,0.65); line-height:1.7; margin-top:1.25rem; max-width:320px; position:relative; z-index:1; }
+.s1-locked { display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; background:rgba(255,255,255,0.15); color:#fff; padding:4px 10px; border-radius:20px; margin-bottom:1.5rem; position:relative; z-index:1; }
+
+/* ── S2 PROBLEM ── */
+.s2 { background:var(--gray-50); }
+.s2-inner { max-width:1100px; margin:0 auto; width:100%; }
+.s2-title { font-size:clamp(1.8rem,3.5vw,3rem); font-weight:800; color:var(--black); line-height:1.05; margin-top:0.5rem; }
+.s2-title em { font-style:normal; color:var(--red); }
+.pgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:2rem; }
+.pcell { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:1.75rem; }
+.pc-n { font-size:2.5rem; font-weight:800; color:var(--gray-200); line-height:1; margin-bottom:0.75rem; }
+.pc-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.4rem; }
+.pc-ttl { font-size:1rem; font-weight:700; color:var(--black); margin-bottom:0.5rem; line-height:1.3; }
+.pc-bdy { font-size:12.5px; color:var(--gray-600); line-height:1.7; }
+.pconc { margin-top:1rem; background:var(--red-pale); border:1px solid var(--red-light); border-radius:10px; padding:1.25rem 1.75rem; display:flex; align-items:center; gap:1.5rem; }
+.pconc-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); min-width:80px; }
+.pconc-txt { font-size:13.5px; font-weight:500; color:var(--gray-800); line-height:1.6; }
+
+/* ── S3 SYSTEM ── */
+.s3 { background:var(--white); }
+.s3-inner { max-width:1100px; margin:0 auto; width:100%; }
+.s3-stmt { font-size:clamp(1.3rem,2.5vw,2.1rem); font-weight:800; color:var(--black); line-height:1.15; padding-bottom:1.75rem; border-bottom:1px solid var(--border); margin-bottom:1.75rem; }
+.s3-stmt em { font-style:normal; color:var(--red); }
+.sflow { display:grid; grid-template-columns:repeat(5,1fr); gap:0.75rem; }
+.fstep { background:var(--gray-50); border:1px solid var(--border); border-radius:10px; padding:1.25rem; }
+.fs-n { font-size:1.75rem; font-weight:800; color:var(--gray-200); line-height:1; margin-bottom:0.6rem; }
+.fs-lyr { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.3rem; }
+.fs-ttl { font-size:0.88rem; font-weight:700; color:var(--black); margin-bottom:0.35rem; line-height:1.3; }
+.fs-bdy { font-size:11px; color:var(--gray-600); line-height:1.6; }
+.sproofs { display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; margin-top:0.75rem; }
+.sproof { background:var(--red-pale); border:1px solid var(--red-light); border-radius:10px; padding:1.1rem 1.4rem; }
+.sp-num { font-size:1.5rem; font-weight:800; color:var(--red); line-height:1; }
+.sp-lbl { font-size:11px; color:var(--gray-600); line-height:1.5; margin-top:3px; }
+
+/* ── S4 INTENT ── */
+.s4 { background:var(--gray-50); flex-direction:row; }
+.s4-l { width:48%; padding:4rem 4.5rem; display:flex; flex-direction:column; justify-content:center; }
+.s4-r { width:52%; padding:4rem 4.5rem; display:flex; flex-direction:column; justify-content:center; }
+.concept-big { font-size:clamp(2.5rem,5vw,4.5rem); font-weight:800; color:var(--black); line-height:0.95; }
+.concept-big em { font-style:normal; color:var(--red); }
+.concept-def { font-size:13.5px; color:var(--gray-600); line-height:1.75; max-width:380px; margin-top:1.25rem; }
+.ctable { background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.ctable-hdr { background:var(--red); padding:0.75rem 1.25rem; display:grid; grid-template-columns:1fr 24px 1fr; gap:0.75rem; }
+.ch-l { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.65); }
+.ch-r { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#fff; }
+.crow { display:grid; grid-template-columns:1fr 24px 1fr; gap:0.75rem; align-items:center; padding:0.8rem 1.25rem; border-bottom:1px solid var(--border); }
+.crow:last-child { border-bottom:none; }
+.cr-l { font-size:12px; color:var(--gray-400); text-decoration:line-through; text-decoration-color:var(--gray-200); }
+.cr-a { font-size:12px; color:var(--gray-400); text-align:center; }
+.cr-r { font-size:12px; font-weight:600; color:var(--black); }
+.cproof { margin-top:0.75rem; background:var(--red-pale); border:1px solid var(--red-light); border-radius:10px; padding:1.1rem 1.25rem; }
+.cproof-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.35rem; }
+.cproof-txt { font-size:12px; color:var(--gray-800); line-height:1.65; }
+
+/* ── S5 VELOCITY ── */
+.s5 { background:var(--white); }
+.s5-inner { max-width:1100px; margin:0 auto; width:100%; }
+.s5-hdr { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:end; margin-bottom:2rem; }
+.vel-big { font-size:clamp(2.2rem,4.5vw,4rem); font-weight:800; color:var(--black); line-height:0.95; }
+.vel-big em { font-style:normal; color:var(--red); }
+.vel-def { font-size:13px; color:var(--gray-600); line-height:1.75; }
+.vdims { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.vd { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:1.75rem; }
+.vd-n { font-size:2rem; font-weight:800; color:var(--red); line-height:1; margin-bottom:0.3rem; }
+.vd-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-400); margin-bottom:0.6rem; }
+.vd-ttl { font-size:0.95rem; font-weight:700; color:var(--black); margin-bottom:0.35rem; }
+.vd-bdy { font-size:12px; color:var(--gray-600); line-height:1.65; margin-bottom:0.75rem; }
+.vd-proof { font-size:11px; color:var(--red); font-weight:600; line-height:1.5; padding:0.6rem 0.9rem; background:var(--red-pale); border-left:2px solid var(--red); border-radius:0 4px 4px 0; }
+
+/* ── S6 CATALYST ── */
+.s6 { background:var(--gray-50); flex-direction:row; }
+.s6-l { width:44%; padding:4rem; display:flex; flex-direction:column; justify-content:center; border-right:1px solid var(--border); }
+.s6-r { width:56%; padding:4rem; display:flex; flex-direction:column; justify-content:center; }
+.cat-big { font-size:clamp(2.5rem,5vw,5rem); font-weight:800; color:var(--black); line-height:0.92; }
+.cat-big em { font-style:normal; color:var(--red); }
+.cat-def { font-size:13px; color:var(--gray-600); line-height:1.75; margin-top:1.25rem; max-width:360px; }
+.vstable { background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.vsh { display:grid; grid-template-columns:1fr 1fr; }
+.vshc { padding:0.65rem 1.25rem; background:var(--gray-100); border-bottom:1px solid var(--border); }
+.vshc.red { background:var(--red); }
+.vshc-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-400); }
+.vshc.red .vshc-lbl { color:rgba(255,255,255,0.9); }
+.vsrow { display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--border); }
+.vsc { padding:1.1rem 1.25rem; }
+.vsc.hl { background:var(--red-pale); }
+.vsc-lbl { font-size:10px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--gray-400); margin-bottom:0.3rem; }
+.vsc-bdy { font-size:12px; color:var(--gray-600); line-height:1.6; }
+.vsc.hl .vsc-bdy { color:var(--gray-800); font-weight:500; }
+.catproof { margin-top:0.75rem; background:var(--red-pale); border:1px solid var(--red-light); border-radius:10px; padding:1.1rem 1.25rem; }
+.catproof-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.35rem; }
+.catproof-txt { font-size:12px; color:var(--gray-800); line-height:1.65; }
+
+/* ── S7 MAP ── */
+.s7 { background:var(--white); }
+.s7-inner { max-width:1100px; margin:0 auto; width:100%; }
+.s7-ttl { font-size:clamp(1.5rem,2.8vw,2.5rem); font-weight:800; color:var(--black); line-height:1.1; margin-top:0.5rem; }
+.s7-ttl em { font-style:normal; color:var(--red); }
+.rmap { display:flex; flex-direction:column; gap:0.6rem; margin-top:1.75rem; }
+.rmap-row { display:grid; grid-template-columns:1fr 40px 1fr 40px 1fr 40px; gap:0; align-items:stretch; }
+.rnode { background:var(--gray-50); border:1px solid var(--border); border-radius:10px; padding:1.1rem 1.25rem; }
+.rnode.hl { background:var(--red-pale); border-color:var(--red-light); }
+.rnode.dk { background:var(--gray-100); }
+.rn-lbl { font-size:9px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.25rem; }
+.rn-ttl { font-size:12px; font-weight:700; color:var(--black); line-height:1.3; margin-bottom:0.2rem; }
+.rn-bdy { font-size:10.5px; color:var(--gray-600); line-height:1.5; }
+.rarrow { display:flex; align-items:center; justify-content:center; }
+.rarrow span { font-size:18px; color:var(--red); opacity:0.5; }
+.rfeedback { background:var(--red-pale); border:1px solid var(--red-light); border-radius:10px; padding:1rem 1.5rem; display:flex; align-items:center; gap:1.5rem; }
+.rfl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); min-width:100px; }
+.rft { font-size:12px; color:var(--gray-800); line-height:1.6; }
+
+/* ── S8 MOAT ── */
+.s8 { background:var(--gray-50); }
+.s8-inner { max-width:1100px; margin:0 auto; width:100%; }
+.s8-ttl { font-size:clamp(1.75rem,3vw,2.75rem); font-weight:800; color:var(--black); line-height:1.05; margin-top:0.5rem; }
+.s8-ttl em { font-style:normal; color:var(--red); }
+.moatgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:2rem; }
+.mcell { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:1.75rem; }
+.mc-ico { width:36px; height:36px; background:var(--red-pale); border:1px solid var(--red-light); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; color:var(--red); margin-bottom:1rem; }
+.mc-lbl { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.4rem; }
+.mc-ttl { font-size:1rem; font-weight:700; color:var(--black); margin-bottom:0.4rem; }
+.mc-bdy { font-size:12px; color:var(--gray-600); line-height:1.7; margin-bottom:0.75rem; }
+.mc-proof { font-size:11px; color:var(--red); font-weight:600; line-height:1.5; }
+.moatconc { margin-top:1rem; background:var(--red); border-radius:12px; padding:1.4rem 2rem; display:flex; align-items:center; justify-content:space-between; }
+.mct { font-size:0.95rem; font-weight:700; color:#fff; line-height:1.4; max-width:680px; }
+.mcp { font-size:11px; color:rgba(255,255,255,0.65); white-space:nowrap; margin-left:2rem; font-weight:600; }
+
+/* ── S9 SUMMARY ── */
+.s9 { background:var(--white); }
+.s9-inner { max-width:1100px; margin:0 auto; width:100%; }
+.s9-ttl { font-size:clamp(1.5rem,2.5vw,2.3rem); font-weight:800; color:var(--black); line-height:1.1; margin-top:0.5rem; }
+.lsummary { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:2rem; }
+.lsc { background:var(--gray-50); border:1px solid var(--border); border-radius:12px; padding:1.75rem 2rem; display:grid; grid-template-columns:64px 1fr; gap:1rem; align-items:start; }
+.ls-n { font-size:2.5rem; font-weight:800; color:var(--gray-200); line-height:1; }
+.ls-tag { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); margin-bottom:0.3rem; }
+.ls-ttl { font-size:0.88rem; font-weight:700; color:var(--black); margin-bottom:0.3rem; line-height:1.3; }
+.ls-bdy { font-size:12px; color:var(--gray-600); line-height:1.65; }
+.ls-badge { display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:var(--red-pale); color:var(--red); padding:3px 9px; border-radius:20px; margin-top:0.5rem; border:1px solid var(--red-light); }
+
+/* ── S10 CLOSE ── */
+.s10 { background:var(--red); align-items:center; text-align:center; }
+.cl-eye { font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:1.5rem; }
+.cl-ttl { font-size:clamp(2.5rem,6vw,6rem); font-weight:800; color:#fff; line-height:0.92; margin-bottom:1.5rem; }
+.cl-sub { font-size:1rem; color:rgba(255,255,255,0.65); max-width:480px; line-height:1.7; margin:0 auto 2.5rem; }
+.cl-meta { display:flex; gap:3rem; justify-content:center; }
+.cl-mi { display:flex; flex-direction:column; gap:2px; align-items:center; background:rgba(255,255,255,0.12); border-radius:12px; padding:1rem 1.5rem; min-width:110px; }
+.cl-ml { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.5); }
+.cl-mv { font-size:1.6rem; font-weight:800; color:#fff; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- S1 TITLE -->
+<div class="slide active">
+  <div class="s1-layout" style="height:100%;display:grid;grid-template-columns:1fr 1fr;">
+    <div class="s1-left">
+      <div class="tag a1">Ecomobi Brand Strategy — 2026</div>
+      <h1 class="s1-title a2">Why<br>Ecomobi<br><em>Works.</em></h1>
+      <p class="s1-sub a3">A semantic breakdown of our brand layers — what we believe, what we create, and why no competitor can replicate it from scratch.</p>
+      <div class="s1-meta a4">
+        <div class="s1-mi"><span class="s1-ml">Market</span><span class="s1-mv">SEA — 6 Countries</span></div>
+        <div class="s1-mi"><span class="s1-ml">Focus</span><span class="s1-mv">Content Commerce</span></div>
+        <div class="s1-mi"><span class="s1-ml">Status</span><span class="s1-mv">Foundation Locked</span></div>
+      </div>
+    </div>
+    <div class="s1-right">
+      <div class="s1-locked a1">● Locked — 2026</div>
+      <p class="s1-concept a2">Authentic<br>Commerce Intent<br>at Social Commerce<br>Velocity.</p>
+      <p class="s1-concept-sub a3">Southeast Asia's Content Commerce Catalyst — turning authentic creator content into measurable GMV at a scale no single-layer vendor can replicate.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S2 PROBLEM -->
+<div class="slide">
+  <div class="s2-inner pad">
+    <div class="tag a1">The Problem We Solve</div>
+    <h2 class="s2-title a2">Most brands treat creator commerce<br>as a <em>campaign.</em> That's why they fail.</h2>
+    <div class="pgrid a3">
+      <div class="pcell">
+        <p class="pc-n">01</p>
+        <p class="pc-lbl">The Disconnect</p>
+        <p class="pc-ttl">Four vendors. Zero system.</p>
+        <p class="pc-bdy">A KOL agency for content. A livestream vendor for sales. A media agency for ads. An affiliate network for reach. None of them talk to each other. Four budgets. One fragmented result.</p>
+      </div>
+      <div class="pcell">
+        <p class="pc-n">02</p>
+        <p class="pc-lbl">The Waste</p>
+        <p class="pc-ttl">Content that never converts.</p>
+        <p class="pc-bdy">A brand runs 50 KOC videos. Gets 10M views. Zero GMV uplift. No affiliate link. No livestream to convert into. No media to amplify the winners. Each piece worked. The system didn't.</p>
+      </div>
+      <div class="pcell">
+        <p class="pc-n">03</p>
+        <p class="pc-lbl">The Reset</p>
+        <p class="pc-ttl">Every campaign starts from zero.</p>
+        <p class="pc-bdy">When a campaign ends, the data disappears. No creator performance history. No content angle intelligence. No compounding advantage. The next campaign pays the same learning cost again.</p>
+      </div>
+    </div>
+    <div class="pconc a4">
+      <p class="pconc-lbl">The insight</p>
+      <p class="pconc-txt">Creator commerce in SEA is not a campaign problem. It is a systems problem. Solving it requires owning the full stack — not renting pieces of it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S3 SYSTEM -->
+<div class="slide">
+  <div class="s3-inner pad">
+    <div class="tag a1">The Ecomobi System</div>
+    <p class="s3-stmt a2">When all layers connect, <em>each one amplifies the others.</em><br>That's the system. That's why it compounds.</p>
+    <div class="sflow a3">
+      <div class="fstep"><p class="fs-n">01</p><p class="fs-lyr">Foundation</p><p class="fs-ttl">Affiliate & Creator Network</p><p class="fs-bdy">1M+ creators via Passio. Commission-based — only rewards real results. Builds authentic demand at scale.</p></div>
+      <div class="fstep"><p class="fs-n">02</p><p class="fs-lyr">Content</p><p class="fs-ttl">UGC, Content & Livestream Factory</p><p class="fs-bdy">5,000+ videos/month. Scripted UGC, branded KOL content, and full branded livestream production — from BAU rooms to LED mega studios. Built for scale and conversion win-rate.</p></div>
+      <div class="fstep"><p class="fs-n">03</p><p class="fs-lyr">Commerce</p><p class="fs-ttl">TikTok Shop Partner</p><p class="fs-bdy">Full TikTok Shop capability — livestream (80+ studios, 7,500+ sessions/month), KOL booking, commerce videos, affiliate activation, and shop management. Vietnam's largest branded livestream factory. Total TikTok commerce, end-to-end.</p></div>
+      <div class="fstep"><p class="fs-n">04</p><p class="fs-lyr">Amplification</p><p class="fs-ttl">Performance Media</p><p class="fs-bdy">Spark Ads, Pub-U, GMV Max. Every winning content piece gets amplified. Every stream gets traffic.</p></div>
+      <div class="fstep"><p class="fs-n">05</p><p class="fs-lyr">Intelligence</p><p class="fs-ttl">Technology & Data</p><p class="fs-bdy">AI matching, real-time dashboards, fraud detection. Every campaign makes the next one smarter.</p></div>
+    </div>
+    <div class="sproofs a4">
+      <div class="sproof"><p class="sp-num">10M+</p><p class="sp-lbl">GMV committed for one L'Oréal division — all five layers connected</p></div>
+      <div class="sproof"><p class="sp-num">357%</p><p class="sp-lbl">GMV uplift in 3 months for Homecare VN — brand new TikTok store</p></div>
+      <div class="sproof"><p class="sp-num">70%</p><p class="sp-lbl">Operational time saved through the automated technology layer</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- S4 AUTHENTIC INTENT -->
+<div class="slide" style="background:var(--gray-50);flex-direction:row;">
+  <div class="s4-l">
+    <div class="tag a1">Core Concept — What We Create</div>
+    <p class="concept-big a2">Authentic<br><em>Commerce</em><br>Intent.</p>
+    <p class="concept-def a3">The moment a person genuinely decides they want to buy — not because an ad told them to, but because someone they trust showed them why it matters.<br><br>Commission-based creators only earn when someone buys. So only authentic recommendations survive.</p>
+  </div>
+  <div class="s4-r">
+    <div class="tag a1">Why it converts differently</div>
+    <div class="ctable a2">
+      <div class="ctable-hdr">
+        <p class="ch-l">Traditional</p>
+        <div></div>
+        <p class="ch-r">Ecomobi</p>
+      </div>
+      <div class="crow"><p class="cr-l">Brand speaks to audience</p><p class="cr-a">→</p><p class="cr-r">Creator speaks to community</p></div>
+      <div class="crow"><p class="cr-l">Audience is skeptical</p><p class="cr-a">→</p><p class="cr-r">Community trusts the creator</p></div>
+      <div class="crow"><p class="cr-l">Message is manufactured</p><p class="cr-a">→</p><p class="cr-r">Recommendation is genuine</p></div>
+      <div class="crow"><p class="cr-l">Measured in impressions</p><p class="cr-a">→</p><p class="cr-r">Measured in purchases</p></div>
+      <div class="crow"><p class="cr-l">Resets every campaign</p><p class="cr-a">→</p><p class="cr-r">Compounds over time</p></div>
+    </div>
+    <div class="cproof a3">
+      <p class="cproof-lbl">Proof — Dove Dry Serum</p>
+      <p class="cproof-txt">Expected 200 UGCs, 15M views. Got 400 UGCs and 68.48M views — 4× beyond target. 185 KOCs who genuinely used the product created content their audiences actually responded to. Authenticity multiplied the reach.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S5 VELOCITY -->
+<div class="slide">
+  <div class="s5-inner pad">
+    <div class="s5-hdr a1">
+      <div>
+        <div class="tag" style="margin-bottom:0.6rem;">Core USP — How We Deliver It</div>
+        <p class="vel-big">Social Commerce<br><em>Velocity.</em></p>
+      </div>
+      <p class="vel-def">How Ecomobi delivers authentic intent — at speed, at scale, and with compounding momentum. Three dimensions working simultaneously, not sequentially. This is what no single-layer vendor can match.</p>
+    </div>
+    <div class="vdims a2">
+      <div class="vd">
+        <p class="vd-n">01</p>
+        <p class="vd-lbl">Dimension 1 — Speed</p>
+        <p class="vd-ttl">Fast to market</p>
+        <p class="vd-bdy">Open Plan to CIR in 60 days. A brand new TikTok store to market leader in under 2 months. Brands don't wait months to see results.</p>
+        <p class="vd-proof">Homecare VN: Zero TikTok presence → 357% GMV uplift in 3 months</p>
+      </div>
+      <div class="vd">
+        <p class="vd-n">02</p>
+        <p class="vd-lbl">Dimension 2 — Scale</p>
+        <p class="vd-ttl">Massive activation</p>
+        <p class="vd-bdy">500+ creators monthly. 7,500+ livestream sessions. 5,000+ content pieces. All running simultaneously — not one after the other.</p>
+        <p class="vd-proof">L'Oréal: 2,000+ sessions + 800+ UGCs + 400+ creators in one cycle</p>
+      </div>
+      <div class="vd">
+        <p class="vd-n">03</p>
+        <p class="vd-lbl">Dimension 3 — Compound</p>
+        <p class="vd-ttl">Gets better over time</p>
+        <p class="vd-bdy">Month 1 baseline. Month 3 scales winners. Month 6 compounds — the system knows your brand, creators, and best content angles.</p>
+        <p class="vd-proof">Makeup brand: 130% MoM GMV uplift sustained across Q4 2024 — not a spike</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 CATALYST -->
+<div class="slide" style="background:var(--gray-50);flex-direction:row;">
+  <div class="s6-l">
+    <div class="tag a1">Brand Persona</div>
+    <p class="cat-big a2">Content<br>Commerce<br><em>Catalyst.</em></p>
+    <p class="cat-def a3">In chemistry, a catalyst creates a reaction and remains unchanged — the reaction continues even after the catalyst's direct involvement ends.<br><br>That is precisely what Ecomobi does. Brands no longer need just KOLs and KOCs — they need authentic, commerce-ready content at scale. We create the content conditions that drive genuine purchase intent. The momentum compounds long after any single campaign ends.</p>
+  </div>
+  <div class="s6-r">
+    <div class="tag a1">Operator vs Catalyst</div>
+    <div class="vstable a2">
+      <div class="vsh">
+        <div class="vshc"><p class="vshc-lbl">Operator — what we're not</p></div>
+        <div class="vshc red"><p class="vshc-lbl">Catalyst — what we are</p></div>
+      </div>
+      <div class="vsrow">
+        <div class="vsc"><p class="vsc-lbl">Role</p><p class="vsc-bdy">Executes instructions. Follows the brief. Replaceable by a cheaper option.</p></div>
+        <div class="vsc hl"><p class="vsc-lbl">Role</p><p class="vsc-bdy">Creates conditions for transformation. Brings the system that makes the reaction happen.</p></div>
+      </div>
+      <div class="vsrow">
+        <div class="vsc"><p class="vsc-lbl">When contract ends</p><p class="vsc-bdy">Everything stops. Brand starts from zero again.</p></div>
+        <div class="vsc hl"><p class="vsc-lbl">When contract ends</p><p class="vsc-bdy">Brand retains creator network, performance data, and operational depth that doesn't disappear.</p></div>
+      </div>
+      <div class="vsrow">
+        <div class="vsc"><p class="vsc-lbl">Value over time</p><p class="vsc-bdy">Flat. Same service, same result, same cost each campaign.</p></div>
+        <div class="vsc hl"><p class="vsc-lbl">Value over time</p><p class="vsc-bdy">Compounds. Each campaign makes the next smarter, faster, higher-returning.</p></div>
+      </div>
+    </div>
+    <div class="catproof a3">
+      <p class="catproof-lbl">Proof — L'Oréal 2024 Winning Agency</p>
+      <p class="catproof-txt">Not because Ecomobi ran good campaigns. Because Ecomobi built the factory, trained the hosts, connected the creators, and created a commerce operation that L'Oréal couldn't run without them. That's catalysis — not service delivery.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S7 MAP -->
+<div class="slide">
+  <div class="s7-inner pad">
+    <div class="tag a1">The Compounding Loop</div>
+    <p class="s7-ttl a2">How everything connects — and why Ecomobi becomes<br><em>genuinely hard to replace.</em></p>
+    <div class="rmap a3">
+      <div class="rmap-row">
+        <div class="rnode"><p class="rn-lbl">Foundation</p><p class="rn-ttl">Affiliate & Creator Network</p><p class="rn-bdy">Commission-based creators who only earn when audiences buy</p></div>
+        <div class="rarrow"><span>→</span></div>
+        <div class="rnode hl"><p class="rn-lbl">Creates</p><p class="rn-ttl">Authentic Commerce Intent</p><p class="rn-bdy">Real purchase desire through genuine creator trust</p></div>
+        <div class="rarrow"><span>→</span></div>
+        <div class="rnode"><p class="rn-lbl">Delivered by</p><p class="rn-ttl">Full Stack System</p><p class="rn-bdy">Content + Livestream + Affiliate + Media as one</p></div>
+        <div class="rarrow"><span>→</span></div>
+      </div>
+      <div class="rmap-row">
+        <div class="rnode hl"><p class="rn-lbl">Generates</p><p class="rn-ttl">Social Commerce Velocity</p><p class="rn-bdy">GMV at speed and scale — compounding each month</p></div>
+        <div class="rarrow"><span>→</span></div>
+        <div class="rnode dk"><p class="rn-lbl">Produces</p><p class="rn-ttl">Performance Data</p><p class="rn-bdy">Creator benchmarks, content win-rates, GMV by vertical</p></div>
+        <div class="rarrow"><span>→</span></div>
+        <div class="rnode"><p class="rn-lbl">Builds</p><p class="rn-ttl">Compounding Advantage</p><p class="rn-bdy">Every campaign makes the next one faster, smarter, higher-returning</p></div>
+        <div class="rarrow"><span>↩</span></div>
+      </div>
+      <div class="rfeedback">
+        <p class="rfl">Feedback loop</p>
+        <p class="rft">Performance data feeds back into creator selection, content briefing, and campaign planning — making every future campaign smarter than the last. This loop cannot be bought. It has to be earned through campaigns run over time. The longer a brand stays, the harder it is for any competitor to replicate what Ecomobi knows about that brand.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 MOAT -->
+<div class="slide" style="background:var(--gray-50);">
+  <div class="s8-inner pad">
+    <div class="tag a1">Why Competitors Can't Catch Up</div>
+    <p class="s8-ttl a2">The moat isn't budget.<br>It's <em>time, ecosystem, and depth.</em></p>
+    <div class="moatgrid a3">
+      <div class="mcell">
+        <div class="mc-ico">①</div>
+        <p class="mc-lbl">Asset 1</p>
+        <p class="mc-ttl">Creator Ecosystem</p>
+        <p class="mc-bdy">1M+ creators across 6 SEA markets — not just a list, but a managed ecosystem. AI-powered matching via Passio, automated briefing, fraud detection, and 25-day payment cycles. The scale and technology to recruit, activate, and retain creators at a speed no competitor can match.</p>
+        <p class="mc-proof">→ Built affiliate-native since founding. The tech stack took years — you cannot shortcut it.</p>
+      </div>
+      <div class="mcell">
+        <div class="mc-ico">②</div>
+        <p class="mc-lbl">Asset 2</p>
+        <p class="mc-ttl">Commerce Intelligence</p>
+        <p class="mc-bdy">Every campaign generates data — which angles convert, which creators perform by vertical, which products have the right content-to-purchase ratio. This compounds across every brand.</p>
+        <p class="mc-proof">→ A new competitor starts with zero. Ecomobi starts with years of data.</p>
+      </div>
+      <div class="mcell">
+        <div class="mc-ico">③</div>
+        <p class="mc-lbl">Asset 3</p>
+        <p class="mc-ttl">Operational Depth</p>
+        <p class="mc-bdy">80+ studios. Trained hosts. Vertical runbooks. A livestream factory built in 30 days for L'Oréal because the operational knowledge already existed from years of smaller operations.</p>
+        <p class="mc-proof">→ Infrastructure that takes 2-3 years to match at equivalent quality.</p>
+      </div>
+    </div>
+    <div class="moatconc a4">
+      <p class="mct">Brands that use Ecomobi for 12 months build a commerce intelligence advantage that any competitor would have to start from scratch to replicate.</p>
+      <p class="mcp">This is why brands stay.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S9 SUMMARY -->
+<div class="slide">
+  <div class="s9-inner pad">
+    <div class="tag a1">What We've Locked</div>
+    <p class="s9-ttl a2">The brand foundation — locked, validated,<br>and ready to build everything else on.</p>
+    <div class="lsummary a3">
+      <div class="lsc">
+        <p class="ls-n">01</p>
+        <div>
+          <p class="ls-tag">Layer 1 — Core Truth</p>
+          <p class="ls-ttl">Creator commerce is a systems problem, not a campaign problem.</p>
+          <p class="ls-bdy">The internal conviction that never changes. Only a full-stack connected system produces compounding results.</p>
+          <p class="ls-badge">● Locked</p>
+        </div>
+      </div>
+      <div class="lsc">
+        <p class="ls-n">02</p>
+        <div>
+          <p class="ls-tag">Layer 2 — Brand Essence</p>
+          <p class="ls-ttl">Creating authentic commerce intent for Southeast Asia's most iconic brands.</p>
+          <p class="ls-bdy">Real purchase desire, built through creator trust — not manufactured through paid placement.</p>
+          <p class="ls-badge">● Locked</p>
+        </div>
+      </div>
+      <div class="lsc">
+        <p class="ls-n">03</p>
+        <div>
+          <p class="ls-tag">Layer 2 — Core USP</p>
+          <p class="ls-ttl">Social commerce velocity through the only affiliate-rooted, full-stack creator commerce operation in SEA.</p>
+          <p class="ls-bdy">Speed, scale, and compounding momentum — delivered through a system no competitor can shortcut.</p>
+          <p class="ls-badge">● Locked</p>
+        </div>
+      </div>
+      <div class="lsc">
+        <p class="ls-n">04</p>
+        <div>
+          <p class="ls-tag">Layer 2 — Brand Persona</p>
+          <p class="ls-ttl">We are Ecomobi — Southeast Asia's Content Commerce Catalyst.</p>
+          <p class="ls-bdy">Not an operator. A catalyst. Brands need authentic commerce content at scale — not just KOLs. We create the conditions for that demand, and the momentum compounds long after any campaign ends.</p>
+          <p class="ls-badge">● Locked</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 CLOSE -->
+<div class="slide" style="background:var(--red);align-items:center;justify-content:center;text-align:center;">
+  <p class="cl-eye a1">Ecomobi Brand Foundation — 2026</p>
+  <p class="cl-ttl a2">We don't run<br>campaigns.<br>We build<br>momentum.</p>
+  <p class="cl-sub a3">Authentic commerce intent, delivered at social commerce velocity, by Southeast Asia's content commerce catalyst.</p>
+  <div class="cl-meta a4">
+    <div class="cl-mi"><span class="cl-ml">Creators</span><span class="cl-mv">1M+</span></div>
+    <div class="cl-mi"><span class="cl-ml">Markets</span><span class="cl-mv">6 SEA</span></div>
+    <div class="cl-mi"><span class="cl-ml">Monthly GMV</span><span class="cl-mv">$40M</span></div>
+    <div class="cl-mi"><span class="cl-ml">Studios</span><span class="cl-mv">80+</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <button class="nbtn" onclick="go(-1)">← Prev</button>
+  <div class="ndots" id="dots"></div>
+  <span class="ncounter" id="ctr">1 / 10</span>
+  <button class="nbtn red" onclick="go(1)">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+const dotsEl = document.getElementById('dots');
+const ctrEl = document.getElementById('ctr');
+
+// Build dots
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'ndot' + (i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(i) {
+  const prev = cur;
+  slides[prev].classList.remove('active');
+  dotsEl.children[prev].classList.remove('active');
+  cur = Math.max(0, Math.min(i, total-1));
+
+  // Force animation restart: clone animated children to reset their state
+  const incoming = slides[cur];
+  incoming.querySelectorAll('.a1,.a2,.a3,.a4').forEach(el => {
+    el.style.animation = 'none';
+    // Trigger reflow
+    void el.offsetWidth;
+    el.style.animation = '';
+  });
+
+  incoming.classList.add('active');
+  dotsEl.children[cur].classList.add('active');
+  ctrEl.textContent = (cur+1) + ' / ' + total;
+}
+
+function go(dir) { goTo(cur+dir); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
+});
+
+// Touch / swipe
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+</script>
+</body>
+</html>

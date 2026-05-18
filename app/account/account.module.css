@@ -1,0 +1,412 @@
+/* Account Settings page */
+
+.page {
+  padding: 32px 40px 80px;
+  max-width: 860px;
+  font-family: var(--font-sans);
+}
+
+.breadcrumb {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-bottom: 24px;
+}
+
+.pageHeader {
+  margin-bottom: 36px;
+}
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+/* ── Section ───────────────────────────────────────────────── */
+
+.section {
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid var(--gray-200);
+}
+
+.card {
+  background: var(--white);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+/* ── Profile ───────────────────────────────────────────────── */
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--red-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #C42A23;
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  flex: 1;
+}
+
+.profileEmail {
+  font-size: 13px;
+  color: #727272;
+  margin-top: 2px;
+}
+
+.roleBadge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.roleBadgeAdmin {
+  background: var(--red-pale);
+  color: var(--red);
+  border: 0.5px solid var(--red-light);
+}
+
+.roleBadgeEditor {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 0.5px solid #BFDBFE;
+}
+
+.roleBadgeViewer {
+  background: var(--gray-100);
+  color: var(--gray-400);
+  border: 0.5px solid var(--gray-200);
+}
+
+/* ── Form elements ─────────────────────────────────────────── */
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--red);
+  outline: 1.5px solid var(--red);
+  outline-offset: -1px;
+}
+
+.input:disabled {
+  background: var(--gray-50);
+  color: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.input::placeholder {
+  color: var(--gray-400);
+}
+
+.inputEyeBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gray-400);
+  font-family: var(--font-sans);
+  padding: 4px 6px;
+}
+
+.inputEyeBtn:hover {
+  color: var(--black);
+}
+
+.inputHint {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 4px;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+
+.btnPrimary {
+  padding: 9px 18px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnPrimary:hover:not(:disabled) { background: #C42A23; }
+.btnPrimary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btnSecondary {
+  padding: 8px 14px;
+  background: var(--white);
+  color: var(--black);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+}
+
+.btnSecondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btnDanger {
+  padding: 8px 14px;
+  background: var(--white);
+  color: var(--red);
+  border: 0.5px solid var(--red-light);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnDanger:hover { background: var(--red-pale); }
+
+.btnRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Status messages ───────────────────────────────────────── */
+
+.successMsg {
+  font-size: 12px;
+  color: #0F6E56;
+  background: #ECFDF5;
+  border: 0.5px solid #A7F3D0;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.errorMsg {
+  font-size: 12px;
+  color: var(--red-dark);
+  background: var(--red-pale);
+  border: 0.5px solid var(--red-light);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.warnMsg {
+  font-size: 12px;
+  color: #854F0B;
+  background: #FFFBEB;
+  border: 0.5px solid #FDE68A;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+/* ── API key section ───────────────────────────────────────── */
+
+.apiSectionEyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.apiSectionDesc {
+  font-size: 12px;
+  color: var(--gray-400);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.keyStatusRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.statusPillConnected {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0F6E56;
+  background: #ECFDF5;
+  border: 0.5px solid #A7F3D0;
+  border-radius: 10px;
+  padding: 3px 10px;
+}
+
+.statusPillNone {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-400);
+  background: var(--gray-100);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 3px 10px;
+}
+
+.maskedKeyDisplay {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: #353535;
+  background: var(--gray-100);
+  padding: 8px 14px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.removeLink {
+  font-size: 11px;
+  color: #C42A23;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.15s;
+}
+
+.removeLink:hover { text-decoration-color: #C42A23; }
+
+.keyFormDivider {
+  border: none;
+  border-top: 0.5px solid var(--gray-200);
+  margin: 16px 0;
+}
+
+.testResultOk {
+  font-size: 12px;
+  color: #0F6E56;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.testResultErr {
+  font-size: 12px;
+  color: var(--red-dark);
+  font-weight: 500;
+}
+
+/* ── Danger zone ───────────────────────────────────────────── */
+
+.dangerCard {
+  background: var(--white);
+  border: 0.5px solid var(--gray-200);
+  border-left: 3px solid var(--red);
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dangerCardLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.dangerCardDesc {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 2px;
+}

@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/knowledge-base)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/knowledge-base/brand-system)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/knowledge-base/brand-system/brand-foundation)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/knowledge-base/brand-system/design-guidelines)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/knowledge-base/brand-system/design-guidelines/general-tokens)",
+      "Bash(cp /Users/tienvnguyen/Downloads/eco_brand_foundation.html /Users/tienvnguyen/eco_mkt_infra/eco_brand_foundation.html && wc -l /Users/tienvnguyen/eco_mkt_infra/eco_brand_foundation.html)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/eco_brand_foundation.html)",
+      "Bash(npx tsc *)",
+      "Bash(npx tsx -e ' *)",
+      "Bash(rm -rf \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio/[slug]\")",
+      "Bash(mkdir -p \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio/[accountSlug]/[projectSlug]\")",
+      "Bash(npm run *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(sleep 8 && cat /tmp/nextjs-dev.log)",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3001/knowledge-base/client-insight/portfolio/__TRACKED_VAR__)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/loreal-vietnam\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/unilever-vietnam\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/cocoon\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/pampers\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/friso\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/loreal-vietnam/tet-2024-livestream-series\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3001/knowledge-base/client-insight/portfolio/loreal-vietnam/maybelline-1111-flash-sale\")",
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "Bash(node -e \"const p = require\\('./node_modules/next-auth/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(npx ts-node *)",
+      "Bash(npx tsx *)",
+      "Bash(mkdir -p /Users/tienvnguyen/eco_mkt_infra/app/api/auth/\\\\[...nextauth\\\\] /Users/tienvnguyen/eco_mkt_infra/app/api/settings/api-key /Users/tienvnguyen/eco_mkt_infra/app/api/settings/users/\\\\[id\\\\])"
+    ],
+    "additionalDirectories": [
+      "/Users/tienvnguyen/Downloads",
+      "/Users/tienvnguyen/eco_mkt_infra/app/api/auth"
+    ]
+  }
+}

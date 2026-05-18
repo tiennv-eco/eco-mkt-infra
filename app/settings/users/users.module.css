@@ -1,0 +1,405 @@
+/* User Management page */
+
+.page {
+  padding: 32px 40px 80px;
+  max-width: 920px;
+  font-family: var(--font-sans);
+}
+
+.breadcrumb {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-bottom: 24px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.headerLeft { flex: 1; }
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+.btnPrimary {
+  padding: 9px 18px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.btnPrimary:hover { background: #C42A23; }
+
+/* ── Stats row ─────────────────────────────────────────────── */
+
+.statsRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.statChip {
+  font-size: 12px;
+  color: var(--gray-400);
+  background: var(--white);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  padding: 7px 14px;
+}
+
+.statChip strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+/* ── Invite form ───────────────────────────────────────────── */
+
+.inviteCard {
+  background: var(--white);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.inviteTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+
+.inviteRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.input {
+  width: 100%;
+  padding: 9px 13px;
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--red);
+  outline: 1.5px solid var(--red);
+  outline-offset: -1px;
+}
+
+.select {
+  width: 100%;
+  padding: 9px 13px;
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.select:focus {
+  border-color: var(--red);
+  outline: 1.5px solid var(--red);
+  outline-offset: -1px;
+}
+
+.btnInvite {
+  padding: 9px 16px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+  align-self: flex-end;
+}
+
+.btnInvite:hover:not(:disabled) { background: #C42A23; }
+.btnInvite:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btnCancel {
+  padding: 9px 14px;
+  background: var(--white);
+  color: var(--black);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+  align-self: flex-end;
+}
+
+.btnCancel:hover { background: var(--gray-50); }
+
+.inviteSuccess {
+  margin-top: 14px;
+  background: #ECFDF5;
+  border: 0.5px solid #A7F3D0;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #0F6E56;
+}
+
+.inviteSuccessPw {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  background: var(--white);
+  border: 0.5px solid #A7F3D0;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.errorMsg {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--red-dark);
+  background: var(--red-pale);
+  border: 0.5px solid var(--red-light);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+/* ── Users table ───────────────────────────────────────────── */
+
+.tableCard {
+  background: var(--white);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid var(--gray-200);
+  background: var(--gray-50);
+}
+
+.tr {
+  border-bottom: 0.5px solid var(--gray-200);
+}
+
+.tr:last-child { border-bottom: none; }
+
+.td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  font-size: 13px;
+  color: var(--black);
+}
+
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.avatarAdmin {
+  background: #EEEDFE;
+  color: #3C3489;
+}
+
+.avatarEditor {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.avatarViewer {
+  background: var(--gray-100);
+  color: var(--gray-400);
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.userEmail {
+  font-size: 11px;
+  color: #727272;
+  margin-top: 1px;
+}
+
+.roleBadge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.roleBadgeAdmin {
+  background: var(--red-pale);
+  color: var(--red);
+  border: 0.5px solid var(--red-light);
+}
+
+.roleBadgeEditor {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 0.5px solid #BFDBFE;
+}
+
+.roleBadgeViewer {
+  background: var(--gray-100);
+  color: var(--gray-400);
+  border: 0.5px solid var(--gray-200);
+}
+
+.joinedDate {
+  font-size: 11px;
+  color: var(--gray-400);
+}
+
+.actionsCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.roleSelect {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 0.5px solid var(--gray-200);
+  border-radius: 5px;
+  font-family: var(--font-sans);
+  color: var(--black);
+  background: var(--white);
+  cursor: pointer;
+  outline: none;
+}
+
+.roleSelect:focus {
+  border-color: var(--red);
+}
+
+.deactivateBtn {
+  font-size: 11px;
+  color: #C42A23;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  padding: 0 4px;
+}
+
+.deactivateBtn:disabled {
+  color: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.inactivePill {
+  font-size: 10px;
+  color: var(--gray-400);
+  background: var(--gray-100);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 2px 7px;
+  margin-left: 6px;
+}
+
+/* ── Access denied ─────────────────────────────────────────── */
+
+.denied {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+  gap: 12px;
+}
+
+.deniedIcon {
+  font-size: 40px;
+  color: var(--gray-200);
+}
+
+.deniedTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.deniedDesc {
+  font-size: 13px;
+  color: var(--gray-400);
+}
