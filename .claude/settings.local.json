@@ -58,7 +58,11 @@
       "Bash(xargs kill -9)",
       "Bash(grep -v \"^$\")",
       "Bash(git init *)",
-      "Bash(sed -i '' \"s/model: 'claude-opus-4-7'/model: EXTRACTION_MODEL/g\" \"/Users/tienvnguyen/eco_mkt_infra/app/api/research/sources/[id]/extract/route.ts\")"
+      "Bash(sed -i '' \"s/model: 'claude-opus-4-7'/model: EXTRACTION_MODEL/g\" \"/Users/tienvnguyen/eco_mkt_infra/app/api/research/sources/[id]/extract/route.ts\")",
+      "Bash(xargs ls -la)",
+      "Bash(sed -n '20,35p' /Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio.module.css)",
+      "Bash(sed -n '15,25p' /Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/research/research.module.css)",
+      "Bash(sed -n '17,30p' \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio/[accountSlug]/brand/[brandSlug]/brand.module.css\")"
     ],
     "additionalDirectories": [
       "/Users/tienvnguyen/Downloads",
