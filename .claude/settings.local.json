@@ -62,7 +62,11 @@
       "Bash(xargs ls -la)",
       "Bash(sed -n '20,35p' /Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio.module.css)",
       "Bash(sed -n '15,25p' /Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/research/research.module.css)",
-      "Bash(sed -n '17,30p' \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio/[accountSlug]/brand/[brandSlug]/brand.module.css\")"
+      "Bash(sed -n '17,30p' \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/portfolio/[accountSlug]/brand/[brandSlug]/brand.module.css\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('exports', {}\\), indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k: d[k] for k in ['browser','exports','main','module'] if k in d}, indent=2\\)\\)\")",
+      "Bash(npm view *)",
+      "Bash(python3 -c \"import sys,json; vs=json.load\\(sys.stdin\\); print\\(json.dumps\\(vs[-10:], indent=2\\)\\)\")"
     ],
     "additionalDirectories": [
       "/Users/tienvnguyen/Downloads",

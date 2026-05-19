@@ -309,6 +309,7 @@ export default function NewSourcePage() {
   const [pdfState, setPdfState] = useState<PDFState>({ status: 'idle' });
   const [urls, setUrls] = useState<UrlRef[]>([{ url: '', title: '', quote: '', notes: '' }]);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [submitError, setSubmitError] = useState('');
 
   function setField(key: keyof FormState, value: string | string[]) {
@@ -335,6 +336,7 @@ export default function NewSourcePage() {
     if (!canSubmit() || !sourceType) return;
     setSubmitting(true);
     setSubmitError('');
+    setUploadProgress(null);
 
     try {
       let pdfUrl: string | undefined;
@@ -343,11 +345,20 @@ export default function NewSourcePage() {
       let pdfCompressedSize: number | undefined;
 
       if (sourceType === 'pdf' && pdfState.status === 'ready') {
-        const blob = await upload(pdfState.file.name, pdfState.file, {
-          access: 'public',
-          handleUploadUrl: '/api/research/upload',
-        });
-        pdfUrl = blob.url;
+        const abortController = new AbortController();
+        const timeoutId = setTimeout(() => abortController.abort(), 3 * 60 * 1000);
+        try {
+          const blob = await upload(pdfState.file.name, pdfState.file, {
+            access: 'public',
+            handleUploadUrl: '/api/research/upload',
+            abortSignal: abortController.signal,
+            onUploadProgress: ({ percentage }) => setUploadProgress(Math.round(percentage)),
+          });
+          pdfUrl = blob.url;
+        } finally {
+          clearTimeout(timeoutId);
+          setUploadProgress(null);
+        }
         pdfFilename = pdfState.file.name;
         pdfOriginalSize = pdfState.originalSize;
         pdfCompressedSize = pdfState.compressedSize;
@@ -561,7 +572,11 @@ export default function NewSourcePage() {
               className={styles.btnPrimary}
               disabled={!canSubmit() || submitting}
             >
-              {submitting ? 'Saving…' : 'Save Source'}
+              {submitting
+                ? uploadProgress !== null
+                  ? `Uploading… ${uploadProgress}%`
+                  : 'Saving…'
+                : 'Save Source'}
             </button>
           </div>
         </form>
