@@ -130,8 +130,7 @@ export default function InsightListItem({
         href={`/knowledge-base/research/sources/${insight.source.id}`}
         target="_blank"
         rel="noreferrer"
-        className={styles.insightListCard}
-        style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+        className={`${styles.insightListCard} ${styles.sourceLink}`}
       >
         {inner}
       </a>

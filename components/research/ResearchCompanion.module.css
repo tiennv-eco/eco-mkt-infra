@@ -351,14 +351,14 @@
 
 .trigger {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 90;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 18px 10px 14px;
-  background: var(--black);
+  background: var(--red);
   color: white;
   border: none;
   border-radius: 100px;
@@ -366,14 +366,14 @@
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 16px rgba(244, 60, 52, 0.3);
   transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 
 .trigger:hover {
-  background: #2A2A2A;
+  background: #D63028;
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(244, 60, 52, 0.4);
 }
 
 .triggerDot {

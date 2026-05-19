@@ -1846,6 +1846,12 @@
   transition: border-color 0.15s, background 0.1s;
 }
 
+.sourceLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .insightListCard:hover {
   border-color: #D3D3D3;
   background: #FDFDFD;

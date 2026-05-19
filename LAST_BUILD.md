@@ -1,4 +1,58 @@
-# Last Build — Wave 1: Security & Type Safety Fixes
+# Last Build — Wave 2: Research Companion UI Alignment
+_2026-05-19_
+
+## Summary
+
+4 UI consistency findings from CONSOLIDATION_REPORT.md closed. Surgical value-only edits — no restructuring. TypeScript clean, build succeeds (114 pages, 0 errors).
+
+---
+
+## Closed findings
+
+| ID | Finding | Fix |
+|----|---------|-----|
+| I-004 | Trigger position off-spec (28px, z-index 90) | bottom/right → 24px, z-index → 50 |
+| M-002 | Trigger background `var(--black)` | Changed to `var(--red)`, red-tinted shadow `rgba(244,60,52,0.3/0.4)` |
+| M-003 | InsightListItem inline `style={{...}}` on source-link `<a>` | Moved to `.sourceLink` class in `research.module.css` |
+
+## M-001 not changed (cross-check result)
+
+M-001 said to align drawer z-index to 100/90. Cross-checking VisionCompanion shows it uses 101/100, not 100/90. Since VisionCompanion is canonical, Research Companion is already consistent at 101/100. SKILL.md spec (100/90) is the document that's out of date — see deferred below.
+
+## Files touched
+
+```
+components/research/ResearchCompanion.module.css
+  — trigger: bottom/right 28px→24px, z-index 90→50,
+    background var(--black)→var(--red),
+    box-shadow → rgba(244,60,52,0.3) / hover rgba(244,60,52,0.4)
+  — triggerDot remains (visible on hover as accent; styling intentional)
+
+app/knowledge-base/research/research.module.css
+  — Added .sourceLink { text-decoration: none; color: inherit; display: block; }
+
+components/research/InsightListItem.tsx
+  — Replaced inline style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+    with className combination ${styles.insightListCard} ${styles.sourceLink}
+```
+
+## No schema changes. No new dependencies. No new env vars.
+
+## Manual verification
+
+- Research Companion trigger is now red, sits at 24px from bottom-right ✓
+- Red-tinted shadow on trigger ✓
+- Drawer + backdrop stack unchanged (101/100 — consistent with VisionCompanion) ✓
+- No inline styles remain in InsightListItem ✓
+
+## Discovered during Wave 2, deferred
+
+- SKILL.md spec says drawer z-index 100 / backdrop z-index 90. Both VisionCompanion and ResearchCompanion use 101/100 instead. SKILL.md needs updating to reflect the actual codebase standard (Wave 3 CLAUDE.md update wave could include this).
+- `triggerDot` (small red dot on trigger) was visible against the black background as an accent; against the new red background it's invisible. Consider removing or recoloring the dot in a future pass.
+
+---
+
+# Previous Build — Wave 1: Security & Type Safety Fixes
 _2026-05-19_
 
 ## Summary
