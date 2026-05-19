@@ -2874,3 +2874,60 @@
   padding: 8px 0;
 }
 
+
+/* ─── Ghost / empty state utilities ─────────────────────────── */
+
+.fieldMuted {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gray-400);
+}
+
+/* Standalone ghost card (dashed border + reduced opacity) */
+.ghostCard {
+  background: var(--gray-50) !important;
+  border: 0.5px dashed var(--gray-200) !important;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Ghost row inside a bordered list container (no extra border) */
+.ghostRow {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Applied to text inside ghost cards/rows */
+.ghostText {
+  font-style: italic !important;
+  color: var(--gray-400) !important;
+  font-weight: 400 !important;
+}
+
+/* Dashed pill (type badge in ghost rows) */
+.ghostPill {
+  border-style: dashed !important;
+  opacity: 0.6;
+}
+
+/* Ghost circle avatar (contact / creator avatar placeholder) */
+.ghostAvatar {
+  background: transparent !important;
+  border: 0.5px dashed var(--gray-200) !important;
+}
+
+/* Ghost dot (replaces goalDot / storyTimelineDot in ghost rows) */
+.ghostDot {
+  background: transparent !important;
+  border: 0.5px dashed var(--gray-400) !important;
+}
+
+/* Ghost icon box (replaces pjIconBox in ghost project cards) */
+.ghostIconBox {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: transparent;
+  border: 0.5px dashed var(--gray-200);
+  flex-shrink: 0;
+}

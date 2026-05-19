@@ -1,97 +1,74 @@
-# Last Build — Marketing Dossier (13-section, Groups A–G)
+# Last Build — Ghost Empty-State Refinement
 _2026-05-19_
 
 ## Summary
 
-Replaced the portfolio detail page with a full 14-section marketing dossier in 7 groups (A–G). Added 6 new marketing-focused data sections to `PortfolioAccount`: `categoryMarketIntelligence`, `audienceInsights`, `storyCapital`, `creatorStrategy`, `contentAngles`, `coPromotionOpportunities`. Removed all sales/CSM-oriented sections (`accountPatterns`, `businessIntelligence`, `workingStyleNorms`, `approvalWorkflow` etc.). `loreal-vn-consumer` is the showcase portfolio with full seed data across all dossier sections. All other portfolios render with "Not yet captured" empty states. Listing page updated with status filter. `npx tsc --noEmit` clean. `npm run build` succeeds (94 pages, 0 errors).
+Surgical empty-state refinement on the portfolio detail page. Replaced section-level "this section will populate…" placeholder cards with two patterns: **Pattern A** (field sections always render structure with labels + italic muted "Not yet captured" values) and **Pattern B** (list sections render N dashed-border ghost cards mirroring the real card layout). `SectionEmpty` component removed. `FieldMuted` component added. `icpRationale` moved from §01 to §03 exclusively. `npx tsc --noEmit` clean. `npm run build` succeeds (94 pages, 0 errors).
 
 ---
 
 ## Files modified
 
 ```
-data/portfolio/types.ts          — BrandStatus expanded to 5 values (active/prospect/pitched/lapsed/paused);
-                                   AccountContact.personaSlug + personaLabel made optional;
-                                   accountPatterns REMOVED from PortfolioAccount;
-                                   6 new interfaces: CategoryMarketIntelligence, AudienceInsights,
-                                   StoryCapital (+ StoryWorthyMoment), CreatorStrategy (+ TopPerformer),
-                                   ContentAngle, CoPromotionOpportunity;
-                                   2 new types: MarketPosition, CoPromoType;
-                                   2 new lookup tables: MARKET_POSITION_LABELS, COPROMO_TYPE_LABELS;
-                                   6 new optional fields on PortfolioAccount
-
-data/portfolio/accounts.ts       — REPLACED entirely:
-                                   loreal-vn-consumer: full 13-section dossier seed data;
-                                   loreal-vn-active: minimal seed (marketPosition: 'niche' only);
-                                   unilever-vn-beauty: minimal seed;
-                                   cocoon/pampers/friso/bobby/sunhouse/comet: categoryName/categorySlug
-                                   changed to 'General'/'general'; accountPatterns removed everywhere;
-                                   parentSlug corrected (loreal-vn → loreal-vietnam, 
-                                   unilever-vn → unilever-vietnam);
-                                   categorySlug corrected (consumer-products → consumer,
-                                   active-cosmetics → active);
-                                   Garnier status: active → pitched;
-                                   Sunsilk, Pond's status: active → prospect
-
-data/portfolio/helpers.ts        — accountPatterns removed from patternsTotal + totalPatterns
-                                   calculations in getAccountSummaryStats + getPortfolioStats
-
-app/knowledge-base/client-insight/portfolio/page.tsx
-                                 — Status filter added (engaged/pitched/inactive derived from
-                                   brand statuses); sorted A→Z by parent then category;
-                                   status dot + "Since" in card footer; removed accountPatterns ref
+app/knowledge-base/client-insight/portfolio.module.css
+                                 — Ghost utility classes appended:
+                                   .fieldMuted (inline italic muted text);
+                                   .ghostCard (standalone: dashed border + 55% opacity);
+                                   .ghostRow (list rows inside bordered container);
+                                   .ghostText (italic muted text override);
+                                   .ghostPill (dashed pill badge);
+                                   .ghostAvatar (dashed circle avatar);
+                                   .ghostDot (dashed small circle dot);
+                                   .ghostIconBox (dashed 22×22px rectangle, project icon)
 
 app/knowledge-base/client-insight/portfolio/[accountSlug]/page.tsx
-                                 — REPLACED entirely: 14-section marketing dossier in Groups A–G;
-                                   GroupDivider + SectionHeader + FieldEmpty + SectionEmpty 
-                                   helper components; all 9 existing sections reorganised;
-                                   accountPatterns section removed
-
-app/knowledge-base/client-insight/portfolio.module.css
-                                 — ~450 new CSS lines appended:
-                                   Status dot + pfCardSince (listing);
-                                   dossPage, dossHero, dossHeroEyebrow/H1/Meta/Right;
-                                   dossCatBadge, dossLockBadge; dossStats strip;
-                                   groupDivider + groupEyebrow + groupDividerLine;
-                                   dossSection, dossSectionHeader/Num/Title/Subtitle;
-                                   fieldEmpty, sectionEmpty, sectionEmptyIcon/Text;
-                                   profileGrid, profileRow, profileLabel/Value, profileRationale;
-                                   bpcRows, bpcRow, bpcRowLabel/Val, bpcServicesMuted;
-                                   icpContactList; cmiCard, cmiGrid, cmiRow, cmiLabel/Val,
-                                   mktPosPill + leader/challenger/niche/emerging variants,
-                                   competitorPill(s), cmiNotes; audienceCard, audienceBlock;
-                                   storyCard, storyBlock, storyTimeline + items;
-                                   creatorCard, creatorProfileTop/Block, topPerformerGrid/Card,
-                                   tpAvatar/Info/Name/Handle/Notes; anglesList/Card/Title/Why/Ref;
-                                   coPromoList/Row, coPromoTypePill + event/platform/co-content/
-                                   industry-presence variants; brandDividerGmv, brandNoProjects
+                                 — SectionEmpty component REMOVED;
+                                   FieldMuted component added;
+                                   §01: icpRationale removed (consolidated to §03);
+                                   §03: ghost contact rows (3) when keyContacts empty;
+                                         icpRationale added below contact list;
+                                   §04: Pattern A — always renders cmiCard,
+                                         FieldMuted for missing categorySize/Growth/
+                                         marketPosition/keyCompetitors;
+                                   §05: Pattern A — always renders audienceCard,
+                                         FieldMuted for missing demographic blocks;
+                                   §06: Pattern B — ghost listItem rows (3) when
+                                         goals/painPoints absent;
+                                   §07: Pattern A — always renders solutionBlock,
+                                         FieldMuted for missing servicesOverview;
+                                   §08: Pattern B — 3 ghost metricCards when metrics absent;
+                                         Pattern A — fieldMuted paragraph for missing narrative;
+                                   §09: Pattern A for narrative/quotable/uniqueAngles;
+                                         Pattern B — 2 ghost timeline items for moments;
+                                   §10: Pattern A for creatorProfile fields;
+                                         Pattern B — 3 ghost topPerformerCards;
+                                   §11: Pattern B — 3 ghost angleCCards;
+                                   §12: Pattern B — 3 ghost coPromoRows;
+                                   §13: Pattern B — 1 ghost pjCard per brand with 0 projects;
+                                         addProjectCard now only shows when project list > 0;
+                                   §14: conditional && guard removed — always renders section
 ```
 
 ---
 
-## Dossier structure (Groups A–G)
+## Empty-state pattern assignments
 
-| Group | Sections | Status for loreal-vn-consumer |
+| Section | Pattern | Ghost count |
 |---|---|---|
-| A · Portfolio Identity | 01 Profile · 02 Brands · 03 ICP & Persona | Full |
-| B · Market & Audience | 04 CMI · 05 Audience | Full |
-| C · Engagement | 06 Brief · 07 Solution · 08 Outcomes | Full |
-| D · Story Capital | 09 Story Capital | Full (4 milestones) |
-| E · Creator Strategy | 10 Creator Match | Full (3 performers) |
-| F · Marketing Playbook | 11 Content Angles · 12 Co-promo | Full (4 each) |
-| G · Archive & Reference | 13 Projects · 14 Reference Index | Full |
-
----
-
-## Data changes
-
-- `parentSlug` for L'Oréal portfolios: 'loreal-vn' → 'loreal-vietnam'
-- `parentSlug` for Unilever: 'unilever-vn' → 'unilever-vietnam'
-- `categorySlug` for loreal-vn-consumer: 'consumer-products' → 'consumer'
-- `categorySlug` for loreal-vn-active: 'active-cosmetics' → 'active'
-- All 6 general accounts: `categoryName` → 'General', `categorySlug` → 'general'
-- Garnier: status 'active' → 'pitched'
-- Sunsilk, Pond's: status 'active' → 'prospect'
+| §01 Portfolio Profile | A (grid always renders) | — |
+| §02 Brand Portfolio | A (cards always render) | — |
+| §03 ICP & Persona | B (ghost contact rows) | 3 |
+| §04 CMI | A (cmiCard always renders) | — |
+| §05 Audience | A (audienceCard always renders) | — |
+| §06 The Brief | B (ghost list rows per column) | 3 + 3 |
+| §07 Solution | A (solutionBlock always renders) | — |
+| §08 Outcomes | B (ghost metric cards) + A (narrative) | 3 |
+| §09 Story Capital | A (narrative/quotable/angles) + B (moments) | 2 |
+| §10 Creator Match | A (profile fields) + B (top performers) | 3 |
+| §11 Content Angles | B (ghost angle cards) | 3 |
+| §12 Co-promo | B (ghost co-promo rows) | 3 |
+| §13 Projects | B (ghost project card per empty brand) | 1 |
+| §14 Reference Index | A (always renders, fieldMuted if empty) | — |
 
 ---
 

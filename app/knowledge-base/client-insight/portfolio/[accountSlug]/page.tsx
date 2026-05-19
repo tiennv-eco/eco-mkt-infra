@@ -54,24 +54,17 @@ function creatorInitials(name: string): string {
   return name.trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
 }
 
-/* ── Empty states ─────────────────────────────────────────── */
+/* ── Empty states ─────────────────────────────────────────────── */
 
 function FieldEmpty() {
   return <span className={styles.fieldEmpty}>Not yet captured</span>;
 }
 
-function SectionEmpty({ topic }: { topic: string }) {
-  return (
-    <div className={styles.sectionEmpty}>
-      <span className={`material-icons-round ${styles.sectionEmptyIcon}`}>edit_note</span>
-      <p className={styles.sectionEmptyText}>
-        This section will populate as the team captures insights about {topic} for this portfolio.
-      </p>
-    </div>
-  );
+function FieldMuted() {
+  return <span className={styles.fieldMuted}>Not yet captured</span>;
 }
 
-/* ── Group divider ────────────────────────────────────────── */
+/* ── Group divider ────────────────────────────────────────────── */
 
 function GroupDivider({ label }: { label: string }) {
   return (
@@ -82,7 +75,7 @@ function GroupDivider({ label }: { label: string }) {
   );
 }
 
-/* ── Section header ───────────────────────────────────────── */
+/* ── Section header ───────────────────────────────────────────── */
 
 function SectionHeader({ num, title, subtitle }: { num: string; title: string; subtitle?: string }) {
   return (
@@ -96,7 +89,7 @@ function SectionHeader({ num, title, subtitle }: { num: string; title: string; s
   );
 }
 
-/* ── Main component ───────────────────────────────────────── */
+/* ── Main component ───────────────────────────────────────────── */
 
 export default async function AccountPage({
   params,
@@ -190,7 +183,7 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP A · PORTFOLIO IDENTITY" />
 
-      {/* 01 · Portfolio Profile */}
+      {/* §01 · Portfolio Profile — Pattern A (always-visible grid) */}
       <div className={styles.dossSection}>
         <SectionHeader num="01" title="PORTFOLIO PROFILE" />
         <div className={styles.profileGrid}>
@@ -210,12 +203,9 @@ export default async function AccountPage({
             </div>
           ))}
         </div>
-        {account.icpRationale && (
-          <p className={styles.profileRationale}>{account.icpRationale}</p>
-        )}
       </div>
 
-      {/* 02 · Brand Portfolio */}
+      {/* §02 · Brand Portfolio — Pattern A (always-visible cards) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="02"
@@ -270,18 +260,17 @@ export default async function AccountPage({
         </div>
       </div>
 
-      {/* 03 · ICP & Persona Match */}
+      {/* §03 · ICP & Persona Match
+           Pattern B (ghost contacts) + icpRationale consolidated here from §01 */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="03"
           title="ICP & PERSONA MATCH"
           subtitle="Decision-makers matched to internal personas."
         />
-        {account.keyContacts.length === 0 ? (
-          <SectionEmpty topic="key contacts and persona matches" />
-        ) : (
-          <div className={styles.icpContactList}>
-            {account.keyContacts.map((c, i) => (
+        <div className={styles.icpContactList}>
+          {account.keyContacts.length > 0 ? (
+            account.keyContacts.map((c, i) => (
               <div key={i} className={styles.contactRow}>
                 <span className={styles.contactAvatar}>{contactInitials(c.name)}</span>
                 <div className={styles.crInfo}>
@@ -295,8 +284,22 @@ export default async function AccountPage({
                   <span className={styles.personaPill}>{c.personaLabel}</span>
                 )}
               </div>
-            ))}
-          </div>
+            ))
+          ) : (
+            [0, 1, 2].map(i => (
+              <div key={i} className={`${styles.contactRow} ${styles.ghostRow}`}>
+                <span className={`${styles.contactAvatar} ${styles.ghostAvatar}`} />
+                <div className={styles.crInfo}>
+                  <p className={`${styles.crName} ${styles.ghostText}`}>Not yet captured</p>
+                  <p className={`${styles.crRole} ${styles.ghostText}`}>—</p>
+                </div>
+                <span className={`${styles.personaPill} ${styles.ghostPill}`}>—</span>
+              </div>
+            ))
+          )}
+        </div>
+        {account.icpRationale && (
+          <p className={styles.profileRationale} style={{ marginTop: 12 }}>{account.icpRationale}</p>
         )}
       </div>
 
@@ -305,87 +308,83 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP B · THEIR MARKET & AUDIENCE" />
 
-      {/* 04 · Category & Market Intelligence */}
+      {/* §04 · Category & Market Intelligence — Pattern A (always render cmiCard) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="04"
           title="CATEGORY & MARKET INTELLIGENCE"
           subtitle="What we know about the category this portfolio operates in — for content, SEO/AIO positioning, and PR angles."
         />
-        {!account.categoryMarketIntelligence ? (
-          <SectionEmpty topic="market intelligence and competitive landscape" />
-        ) : (
-          <div className={styles.cmiCard}>
-            <div className={styles.cmiGrid}>
-              <div className={styles.cmiRow}>
-                <span className={styles.cmiLabel}>CATEGORY SIZE</span>
-                <span className={styles.cmiVal}>{account.categoryMarketIntelligence.categorySize ?? <FieldEmpty />}</span>
-              </div>
-              <div className={styles.cmiRow}>
-                <span className={styles.cmiLabel}>CATEGORY GROWTH</span>
-                <span className={styles.cmiVal}>{account.categoryMarketIntelligence.categoryGrowth ?? <FieldEmpty />}</span>
-              </div>
-              <div className={styles.cmiRow}>
-                <span className={styles.cmiLabel}>MARKET POSITION</span>
-                <span className={styles.cmiVal}>
-                  {account.categoryMarketIntelligence.marketPosition ? (
-                    <span className={`${styles.mktPosPill} ${MARKET_POS_CLASS[account.categoryMarketIntelligence.marketPosition]}`}>
-                      {MARKET_POSITION_LABELS[account.categoryMarketIntelligence.marketPosition]}
-                    </span>
-                  ) : <FieldEmpty />}
-                </span>
-              </div>
-              <div className={styles.cmiRow}>
-                <span className={styles.cmiLabel}>KEY COMPETITORS</span>
-                <span className={styles.cmiVal}>
-                  {account.categoryMarketIntelligence.keyCompetitors?.length ? (
-                    <span className={styles.competitorPills}>
-                      {account.categoryMarketIntelligence.keyCompetitors.map(c => (
-                        <span key={c} className={styles.competitorPill}>{c}</span>
-                      ))}
-                    </span>
-                  ) : <FieldEmpty />}
-                </span>
-              </div>
+        <div className={styles.cmiCard}>
+          <div className={styles.cmiGrid}>
+            <div className={styles.cmiRow}>
+              <span className={styles.cmiLabel}>CATEGORY SIZE</span>
+              <span className={styles.cmiVal}>
+                {account.categoryMarketIntelligence?.categorySize ?? <FieldMuted />}
+              </span>
             </div>
-            {account.categoryMarketIntelligence.marketDynamicsNotes && (
-              <div className={styles.cmiNotes}>
-                <p className={styles.cmiNotesText}>{account.categoryMarketIntelligence.marketDynamicsNotes}</p>
-              </div>
-            )}
+            <div className={styles.cmiRow}>
+              <span className={styles.cmiLabel}>CATEGORY GROWTH</span>
+              <span className={styles.cmiVal}>
+                {account.categoryMarketIntelligence?.categoryGrowth ?? <FieldMuted />}
+              </span>
+            </div>
+            <div className={styles.cmiRow}>
+              <span className={styles.cmiLabel}>MARKET POSITION</span>
+              <span className={styles.cmiVal}>
+                {account.categoryMarketIntelligence?.marketPosition ? (
+                  <span className={`${styles.mktPosPill} ${MARKET_POS_CLASS[account.categoryMarketIntelligence.marketPosition]}`}>
+                    {MARKET_POSITION_LABELS[account.categoryMarketIntelligence.marketPosition]}
+                  </span>
+                ) : <FieldMuted />}
+              </span>
+            </div>
+            <div className={styles.cmiRow}>
+              <span className={styles.cmiLabel}>KEY COMPETITORS</span>
+              <span className={styles.cmiVal}>
+                {account.categoryMarketIntelligence?.keyCompetitors?.length ? (
+                  <span className={styles.competitorPills}>
+                    {account.categoryMarketIntelligence.keyCompetitors.map(c => (
+                      <span key={c} className={styles.competitorPill}>{c}</span>
+                    ))}
+                  </span>
+                ) : <FieldMuted />}
+              </span>
+            </div>
           </div>
-        )}
+          {account.categoryMarketIntelligence?.marketDynamicsNotes && (
+            <div className={styles.cmiNotes}>
+              <p className={styles.cmiNotesText}>{account.categoryMarketIntelligence.marketDynamicsNotes}</p>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* 05 · Audience & Consumer Insights */}
+      {/* §05 · Audience & Consumer Insights — Pattern A (always render audienceCard) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="05"
           title="AUDIENCE & CONSUMER INSIGHTS"
           subtitle="Who the brands serve — essential for creator matching and content angle decisions."
         />
-        {!account.audienceInsights ? (
-          <SectionEmpty topic="audience demographics, psychographics, and purchase behavior" />
-        ) : (
-          <div className={styles.audienceCard}>
-            {[
-              ['DEMOGRAPHICS', account.audienceInsights.demographics],
-              ['PSYCHOGRAPHICS', account.audienceInsights.psychographics],
-              ['PURCHASE BEHAVIOR', account.audienceInsights.purchaseBehavior],
-              ['CHANNEL PREFERENCES', account.audienceInsights.channelPreferences],
-            ].map(([label, text]) => (
-              <div key={label} className={styles.audienceBlock}>
-                <p className={styles.audienceBlockLabel}>{label}</p>
-                <p className={styles.audienceBlockBody}>{text ?? <FieldEmpty />}</p>
-              </div>
-            ))}
-            {account.audienceInsights.notes && (
-              <div className={styles.audienceNotes}>
-                <p className={styles.audienceNotesText}>{account.audienceInsights.notes}</p>
-              </div>
-            )}
-          </div>
-        )}
+        <div className={styles.audienceCard}>
+          {[
+            ['DEMOGRAPHICS', account.audienceInsights?.demographics],
+            ['PSYCHOGRAPHICS', account.audienceInsights?.psychographics],
+            ['PURCHASE BEHAVIOR', account.audienceInsights?.purchaseBehavior],
+            ['CHANNEL PREFERENCES', account.audienceInsights?.channelPreferences],
+          ].map(([label, text]) => (
+            <div key={label} className={styles.audienceBlock}>
+              <p className={styles.audienceBlockLabel}>{label}</p>
+              <p className={styles.audienceBlockBody}>{text ?? <FieldMuted />}</p>
+            </div>
+          ))}
+          {account.audienceInsights?.notes && (
+            <div className={styles.audienceNotes}>
+              <p className={styles.audienceNotesText}>{account.audienceInsights.notes}</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -393,94 +392,120 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP C · THE ENGAGEMENT" />
 
-      {/* 06 · The Brief */}
+      {/* §06 · The Brief — Pattern B (ghost rows when goals/painPoints absent) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="06"
           title="THE BRIEF"
           subtitle="Category-level goals and pain points."
         />
-        {!account.accountBrief ? (
-          <SectionEmpty topic="client goals and pain points at the portfolio level" />
-        ) : (
-          <div className={styles.briefTwoCol}>
-            <div className={styles.twoColBlock}>
-              <p className={styles.sectionTitle}>Goals</p>
-              <div className={styles.listCard}>
-                {account.accountBrief.goals.map((g, i) => (
+        <div className={styles.briefTwoCol}>
+          <div className={styles.twoColBlock}>
+            <p className={styles.sectionTitle}>Goals</p>
+            <div className={styles.listCard}>
+              {account.accountBrief?.goals.length ? (
+                account.accountBrief.goals.map((g, i) => (
                   <div key={i} className={styles.listItem}>
                     <span className={styles.goalDot} />
                     {g}
                   </div>
-                ))}
-              </div>
+                ))
+              ) : (
+                [0, 1, 2].map(i => (
+                  <div key={i} className={`${styles.listItem} ${styles.ghostRow}`}>
+                    <span className={`${styles.goalDot} ${styles.ghostDot}`} />
+                    <span className={styles.ghostText}>Not yet captured</span>
+                  </div>
+                ))
+              )}
             </div>
-            <div className={styles.twoColBlock}>
-              <p className={styles.sectionTitle}>Pain Points</p>
-              <div className={styles.listCard}>
-                {account.accountBrief.painPoints.map((pt, i) => (
+          </div>
+          <div className={styles.twoColBlock}>
+            <p className={styles.sectionTitle}>Pain Points</p>
+            <div className={styles.listCard}>
+              {account.accountBrief?.painPoints.length ? (
+                account.accountBrief.painPoints.map((pt, i) => (
                   <div key={i} className={styles.listItem}>
                     <span className={styles.painDot} />
                     {pt}
                   </div>
-                ))}
-              </div>
+                ))
+              ) : (
+                [0, 1, 2].map(i => (
+                  <div key={i} className={`${styles.listItem} ${styles.ghostRow}`}>
+                    <span className={`${styles.painDot} ${styles.ghostDot}`} />
+                    <span className={styles.ghostText}>Not yet captured</span>
+                  </div>
+                ))
+              )}
             </div>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* 07 · Our Solution */}
+      {/* §07 · Our Solution — Pattern A (always render solutionBlock) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="07"
           title="OUR SOLUTION"
           subtitle="How we serve this category across brands."
         />
-        {!account.accountSolution ? (
-          <SectionEmpty topic="our solution and service strategy for this portfolio" />
-        ) : (
-          <div className={styles.solutionBlock}>
-            <div className={styles.solutionServicesRow}>
-              {Array.from(new Set(account.projects.flatMap(p => p.services))).sort().map(s => (
-                <span key={s} className={styles.solutionPill}>{s} — {SERVICE_NAMES[s]}</span>
-              ))}
-            </div>
-            <p className={styles.solutionOverview}>{account.accountSolution.servicesOverview}</p>
-            <p className={styles.solutionReasoning}>{account.accountSolution.reasoning}</p>
+        <div className={styles.solutionBlock}>
+          <div className={styles.solutionServicesRow}>
+            {(() => {
+              const services = Array.from(new Set(account.projects.flatMap(p => p.services))).sort();
+              return services.length > 0 ? (
+                services.map(s => (
+                  <span key={s} className={styles.solutionPill}>{s} — {SERVICE_NAMES[s]}</span>
+                ))
+              ) : (
+                <FieldMuted />
+              );
+            })()}
           </div>
-        )}
+          <p className={styles.solutionOverview}>
+            {account.accountSolution?.servicesOverview ?? <FieldMuted />}
+          </p>
+          {account.accountSolution?.reasoning && (
+            <p className={styles.solutionReasoning}>{account.accountSolution.reasoning}</p>
+          )}
+        </div>
       </div>
 
-      {/* 08 · Outcomes & Proof */}
+      {/* §08 · Outcomes & Proof
+           Pattern B (3 ghost metric cards) + Pattern A (narrative) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="08"
           title="OUTCOMES & PROOF"
           subtitle="Category-level results — citable proof for marketing content and PR."
         />
-        {!account.accountOutcomes ? (
-          <SectionEmpty topic="portfolio-level outcomes and proof points" />
+        <div className={styles.metricsStrip}>
+          {account.accountOutcomes?.metrics.length ? (
+            account.accountOutcomes.metrics.map((m, i) => (
+              <div key={i} className={styles.metricCard}>
+                <p className={styles.metricValue}>{m.value}</p>
+                <p className={styles.metricLabel}>{m.label}</p>
+                <p className={styles.metricSource}>{m.source}</p>
+              </div>
+            ))
+          ) : (
+            [0, 1, 2].map(i => (
+              <div key={i} className={`${styles.metricCard} ${styles.ghostCard}`}>
+                <p className={`${styles.metricValue} ${styles.ghostText}`}>—</p>
+                <p className={`${styles.metricLabel} ${styles.ghostText}`}>Not yet captured</p>
+                <p className={`${styles.metricSource} ${styles.ghostText}`}>—</p>
+              </div>
+            ))
+          )}
+        </div>
+        {account.accountOutcomes?.narrative ? (
+          <div className={styles.outcomesNarrativeCard}>
+            <span className={`material-icons-round ${styles.outcomesNarrativeIcon}`}>auto_awesome</span>
+            <p className={styles.outcomesNarrativeText}>{account.accountOutcomes.narrative}</p>
+          </div>
         ) : (
-          <>
-            {account.accountOutcomes.metrics.length > 0 && (
-              <div className={styles.metricsStrip}>
-                {account.accountOutcomes.metrics.map((m, i) => (
-                  <div key={i} className={styles.metricCard}>
-                    <p className={styles.metricValue}>{m.value}</p>
-                    <p className={styles.metricLabel}>{m.label}</p>
-                    <p className={styles.metricSource}>{m.source}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-            {account.accountOutcomes.narrative && (
-              <div className={styles.outcomesNarrativeCard}>
-                <span className={`material-icons-round ${styles.outcomesNarrativeIcon}`}>auto_awesome</span>
-                <p className={styles.outcomesNarrativeText}>{account.accountOutcomes.narrative}</p>
-              </div>
-            )}
-          </>
+          <p className={styles.fieldMuted}>Portfolio narrative not yet captured.</p>
         )}
       </div>
 
@@ -489,57 +514,65 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP D · STORY CAPITAL" />
 
-      {/* 09 · Story Capital */}
+      {/* §09 · Story Capital
+           Pattern A for narrative/quotable/angles + Pattern B for moments (2 ghost items) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="09"
           title="STORY CAPITAL"
           subtitle="Narrative material for content, PR, and case studies — what's worth telling about working with this portfolio."
         />
-        {!account.storyCapital ? (
-          <SectionEmpty topic="defining narrative, story-worthy moments, and quotable material" />
-        ) : (
-          <div className={styles.storyCard}>
-            <div className={styles.storyBlock}>
-              <p className={styles.storyBlockLabel}>DEFINING NARRATIVE</p>
-              {account.storyCapital.definingNarrative ? (
-                <p className={styles.storyBlockBody}>{account.storyCapital.definingNarrative}</p>
-              ) : <FieldEmpty />}
-            </div>
-
-            <div className={styles.storyBlock}>
-              <p className={styles.storyBlockLabel}>STORY-WORTHY MOMENTS</p>
-              {account.storyCapital.storyWorthyMoments?.length ? (
-                <div className={styles.storyTimeline}>
-                  {account.storyCapital.storyWorthyMoments.map((m, i) => (
-                    <div key={i} className={styles.storyTimelineItem}>
-                      <span className={styles.storyTimelineDot} />
-                      <div className={styles.storyTimelineContent}>
-                        {m.date && <span className={styles.storyTimelineDate}>{m.date}</span>}
-                        <span className={styles.storyTimelineLabel}>{m.label}</span>
-                        {m.description && <p className={styles.storyTimelineDesc}>{m.description}</p>}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : <FieldEmpty />}
-            </div>
-
-            <div className={styles.storyBlock}>
-              <p className={styles.storyBlockLabel}>QUOTABLE MATERIAL</p>
-              {account.storyCapital.quotableMaterial ? (
-                <p className={styles.storyBlockBody}>{account.storyCapital.quotableMaterial}</p>
-              ) : <FieldEmpty />}
-            </div>
-
-            <div className={styles.storyBlock}>
-              <p className={styles.storyBlockLabel}>UNIQUE ANGLES</p>
-              {account.storyCapital.uniqueAngles ? (
-                <p className={styles.storyBlockBody}>{account.storyCapital.uniqueAngles}</p>
-              ) : <FieldEmpty />}
-            </div>
+        <div className={styles.storyCard}>
+          <div className={styles.storyBlock}>
+            <p className={styles.storyBlockLabel}>DEFINING NARRATIVE</p>
+            {account.storyCapital?.definingNarrative ? (
+              <p className={styles.storyBlockBody}>{account.storyCapital.definingNarrative}</p>
+            ) : <FieldMuted />}
           </div>
-        )}
+
+          <div className={styles.storyBlock}>
+            <p className={styles.storyBlockLabel}>STORY-WORTHY MOMENTS</p>
+            {account.storyCapital?.storyWorthyMoments?.length ? (
+              <div className={styles.storyTimeline}>
+                {account.storyCapital.storyWorthyMoments.map((m, i) => (
+                  <div key={i} className={styles.storyTimelineItem}>
+                    <span className={styles.storyTimelineDot} />
+                    <div className={styles.storyTimelineContent}>
+                      {m.date && <span className={styles.storyTimelineDate}>{m.date}</span>}
+                      <span className={styles.storyTimelineLabel}>{m.label}</span>
+                      {m.description && <p className={styles.storyTimelineDesc}>{m.description}</p>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.storyTimeline}>
+                {[0, 1].map(i => (
+                  <div key={i} className={`${styles.storyTimelineItem} ${styles.ghostRow}`}>
+                    <span className={`${styles.storyTimelineDot} ${styles.ghostDot}`} />
+                    <div className={styles.storyTimelineContent}>
+                      <span className={`${styles.storyTimelineLabel} ${styles.ghostText}`}>Not yet captured</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className={styles.storyBlock}>
+            <p className={styles.storyBlockLabel}>QUOTABLE MATERIAL</p>
+            {account.storyCapital?.quotableMaterial ? (
+              <p className={styles.storyBlockBody}>{account.storyCapital.quotableMaterial}</p>
+            ) : <FieldMuted />}
+          </div>
+
+          <div className={styles.storyBlock}>
+            <p className={styles.storyBlockLabel}>UNIQUE ANGLES</p>
+            {account.storyCapital?.uniqueAngles ? (
+              <p className={styles.storyBlockBody}>{account.storyCapital.uniqueAngles}</p>
+            ) : <FieldMuted />}
+          </div>
+        </div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -547,59 +580,62 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP E · CREATOR STRATEGY" />
 
-      {/* 10 · Creator Match & Top Performers */}
+      {/* §10 · Creator Match & Top Performers
+           Pattern A for profile fields + Pattern B for topPerformers (3 ghost cards) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="10"
           title="CREATOR MATCH & TOP PERFORMERS"
           subtitle="What kind of creators succeed here, and the proven top performers — backbone for creator acquisition and nurturing."
         />
-        {!account.creatorStrategy ? (
-          <SectionEmpty topic="creator profile, audience match, and top performers" />
-        ) : (
-          <div className={styles.creatorCard}>
-            <div className={styles.creatorProfileTop}>
-              {[
-                ['CREATOR PROFILE', account.creatorStrategy.creatorProfile],
-                ['AUDIENCE MATCH', account.creatorStrategy.audienceMatch],
-                ['CONTENT STYLE NEEDS', account.creatorStrategy.contentStyleNeeds],
-              ].map(([label, text]) => (
-                <div key={label} className={styles.creatorProfileBlock}>
-                  <p className={styles.creatorProfileLabel}>{label}</p>
-                  <p className={styles.creatorProfileBody}>{text ?? <FieldEmpty />}</p>
-                </div>
-              ))}
-            </div>
+        <div className={styles.creatorCard}>
+          <div className={styles.creatorProfileTop}>
+            {[
+              ['CREATOR PROFILE', account.creatorStrategy?.creatorProfile],
+              ['AUDIENCE MATCH', account.creatorStrategy?.audienceMatch],
+              ['CONTENT STYLE NEEDS', account.creatorStrategy?.contentStyleNeeds],
+            ].map(([label, text]) => (
+              <div key={label} className={styles.creatorProfileBlock}>
+                <p className={styles.creatorProfileLabel}>{label}</p>
+                <p className={styles.creatorProfileBody}>{text ?? <FieldMuted />}</p>
+              </div>
+            ))}
+          </div>
 
-            <div className={styles.topPerformersSection}>
-              <p className={styles.topPerformersLabel}>TOP PERFORMERS</p>
-              {account.creatorStrategy.topPerformers?.length ? (
-                <div className={styles.topPerformerGrid}>
-                  {account.creatorStrategy.topPerformers.map((tp, i) => (
-                    <div key={i} className={styles.topPerformerCard}>
-                      <div className={styles.tpAvatar}>{creatorInitials(tp.name)}</div>
-                      <div className={styles.tpInfo}>
-                        <p className={styles.tpName}>{tp.name}</p>
-                        {tp.handle && <p className={styles.tpHandle}>{tp.handle}</p>}
-                        {tp.notes && <p className={styles.tpNotes}>{tp.notes}</p>}
-                      </div>
+          <div className={styles.topPerformersSection}>
+            <p className={styles.topPerformersLabel}>TOP PERFORMERS</p>
+            <div className={styles.topPerformerGrid}>
+              {account.creatorStrategy?.topPerformers?.length ? (
+                account.creatorStrategy.topPerformers.map((tp, i) => (
+                  <div key={i} className={styles.topPerformerCard}>
+                    <div className={styles.tpAvatar}>{creatorInitials(tp.name)}</div>
+                    <div className={styles.tpInfo}>
+                      <p className={styles.tpName}>{tp.name}</p>
+                      {tp.handle && <p className={styles.tpHandle}>{tp.handle}</p>}
+                      {tp.notes && <p className={styles.tpNotes}>{tp.notes}</p>}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))
               ) : (
-                <p className={styles.topPerformersMuted}>
-                  No top performers captured yet — feed creators here as patterns emerge from completed projects.
-                </p>
+                [0, 1, 2].map(i => (
+                  <div key={i} className={`${styles.topPerformerCard} ${styles.ghostCard}`}>
+                    <div className={`${styles.tpAvatar} ${styles.ghostAvatar}`} />
+                    <div className={styles.tpInfo}>
+                      <p className={`${styles.tpName} ${styles.ghostText}`}>Not yet captured</p>
+                      <p className={`${styles.tpHandle} ${styles.ghostText}`}>—</p>
+                    </div>
+                  </div>
+                ))
               )}
             </div>
-
-            {account.creatorStrategy.notes && (
-              <div className={styles.creatorNotes}>
-                <p className={styles.creatorNotesText}>{account.creatorStrategy.notes}</p>
-              </div>
-            )}
           </div>
-        )}
+
+          {account.creatorStrategy?.notes && (
+            <div className={styles.creatorNotes}>
+              <p className={styles.creatorNotesText}>{account.creatorStrategy.notes}</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -607,18 +643,16 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP F · MARKETING PLAYBOOK" />
 
-      {/* 11 · Content Angles That Work */}
+      {/* §11 · Content Angles That Work — Pattern B (3 ghost cards when absent) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="11"
           title="CONTENT ANGLES THAT WORK"
           subtitle="Content angles, positioning, and story arcs that resonate with this portfolio's audience — proven by past work."
         />
-        {!account.contentAngles?.length ? (
-          <SectionEmpty topic="content angles and proven messaging frameworks" />
-        ) : (
-          <div className={styles.anglesList}>
-            {account.contentAngles.map(ca => (
+        <div className={styles.anglesList}>
+          {account.contentAngles?.length ? (
+            account.contentAngles.map(ca => (
               <div key={ca.id} className={styles.angleCard}>
                 <p className={styles.angleTitle}>{ca.angle}</p>
                 <p className={styles.angleWhy}>{ca.why}</p>
@@ -626,23 +660,28 @@ export default async function AccountPage({
                   <p className={styles.angleRef}>Reference: {ca.exampleProject}</p>
                 )}
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            [0, 1, 2].map(i => (
+              <div key={i} className={`${styles.angleCard} ${styles.ghostCard}`}>
+                <p className={`${styles.angleTitle} ${styles.ghostText}`}>Not yet captured</p>
+                <p className={`${styles.angleWhy} ${styles.ghostText}`}>Content angle and supporting rationale will appear here as patterns emerge.</p>
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
-      {/* 12 · Co-promotion Opportunities */}
+      {/* §12 · Co-promotion Opportunities — Pattern B (3 ghost rows when absent) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="12"
           title="CO-PROMOTION OPPORTUNITIES"
           subtitle="Joint marketing moments — events, platforms, and co-content opportunities to activate."
         />
-        {!account.coPromotionOpportunities?.length ? (
-          <SectionEmpty topic="joint marketing events and co-promotion opportunities" />
-        ) : (
-          <div className={styles.coPromoList}>
-            {account.coPromotionOpportunities.map(cp => (
+        <div className={styles.coPromoList}>
+          {account.coPromotionOpportunities?.length ? (
+            account.coPromotionOpportunities.map(cp => (
               <div key={cp.id} className={styles.coPromoRow}>
                 <div className={`${styles.coPromoTypePill} ${COPROMO_CLASS[cp.type]}`}>
                   <span className={`material-icons-round ${styles.coPromoTypeIcon}`}>{COPROMO_ICON[cp.type]}</span>
@@ -656,9 +695,19 @@ export default async function AccountPage({
                   <span className={styles.coPromoTiming}>{cp.timing}</span>
                 )}
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            [0, 1, 2].map(i => (
+              <div key={i} className={`${styles.coPromoRow} ${styles.ghostCard}`}>
+                <div className={`${styles.coPromoTypePill} ${styles.ghostPill}`}>—</div>
+                <div className={styles.coPromoCenter}>
+                  <p className={`${styles.coPromoTitle} ${styles.ghostText}`}>Not yet captured</p>
+                  <p className={`${styles.coPromoDesc} ${styles.ghostText}`}>Co-promotion opportunity will be recorded here.</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -666,7 +715,7 @@ export default async function AccountPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP G · ARCHIVE & REFERENCE" />
 
-      {/* 13 · Projects */}
+      {/* §13 · Projects — Pattern B (1 ghost project card per brand when no projects) */}
       <div className={styles.dossSection}>
         <SectionHeader
           num="13"
@@ -678,7 +727,7 @@ export default async function AccountPage({
           if (brand !== account.brands[0] && !projects.length) return null;
           const gridCols = 3;
           const slotsInRow = projects.length % gridCols;
-          const showAddCard = slotsInRow !== 0 || projects.length === 0;
+          const showAddCard = projects.length > 0 && slotsInRow !== 0;
           return (
             <div key={brand.id} className={styles.brandGroup}>
               <div className={styles.brandDivider}>
@@ -688,85 +737,98 @@ export default async function AccountPage({
                 )}
                 <span className={styles.brandDividerLine} />
               </div>
-              {projects.length === 0 ? (
-                <p className={styles.brandNoProjects}>No projects yet for {brand.name}</p>
-              ) : (
-                <div className={styles.projectsGrid}>
-                  {projects.map(p => {
-                    const isFull = p.type === 'full-case';
-                    return (
-                      <Link
-                        key={p.slug}
-                        href={`/knowledge-base/client-insight/portfolio/${account.slug}/${p.slug}`}
-                        className={`${styles.pjCard} ${!isFull ? styles.pjCardAdhoc : ''}`}
-                      >
-                        <div className={styles.pjCardHead}>
-                          <div className={`${styles.pjIconBox} ${isFull ? styles.pjIconBoxFull : styles.pjIconBoxAdhoc}`}>
-                            <span className={`material-icons-round ${styles.pjIcon} ${isFull ? styles.pjIconFull : styles.pjIconAdhoc}`}>
-                              {isFull ? 'menu_book' : 'bolt'}
-                            </span>
-                          </div>
-                          <div className={styles.pjCardMeta}>
-                            <span className={`${styles.pjBadge} ${isFull ? styles.pjBadgeFull : styles.pjBadgeAdhoc}`}>
-                              {isFull ? 'Full case' : 'Adhoc'}
-                            </span>
-                            <p className={styles.pjName}>{p.name}</p>
-                            <p className={styles.pjPeriod}>{p.period}</p>
-                          </div>
-                        </div>
-                        <p className={styles.pjOutcome}>{p.outcomeHeadline}</p>
-                        <p className={styles.pjServices}>
-                          {p.services.join(' + ')}
-                          {isFull && p.type === 'full-case' && p.patterns.length > 0 && (
-                            <> · {p.patterns.length} pattern{p.patterns.length !== 1 ? 's' : ''}</>
-                          )}
-                        </p>
-                      </Link>
-                    );
-                  })}
-                  {showAddCard && (
-                    <div className={styles.addProjectCard}>
-                      <span className={`material-icons-round ${styles.addProjectIcon}`}>add</span>
-                      <span className={styles.addProjectText}>Add project</span>
+              <div className={styles.projectsGrid}>
+                {projects.length === 0 ? (
+                  <div className={`${styles.pjCard} ${styles.ghostCard}`}>
+                    <div className={styles.pjCardHead}>
+                      <div className={`${styles.pjIconBox} ${styles.ghostIconBox}`} />
+                      <div className={styles.pjCardMeta}>
+                        <span className={`${styles.pjBadge} ${styles.ghostText}`}>—</span>
+                        <p className={`${styles.pjName} ${styles.ghostText}`}>No projects logged yet</p>
+                        <p className={`${styles.pjPeriod} ${styles.ghostText}`}>—</p>
+                      </div>
                     </div>
-                  )}
-                </div>
-              )}
+                    <p className={`${styles.pjOutcome} ${styles.ghostText}`}>Projects will appear here as they are logged for this brand.</p>
+                    <p className={`${styles.pjServices} ${styles.ghostText}`}>—</p>
+                  </div>
+                ) : (
+                  <>
+                    {projects.map(p => {
+                      const isFull = p.type === 'full-case';
+                      return (
+                        <Link
+                          key={p.slug}
+                          href={`/knowledge-base/client-insight/portfolio/${account.slug}/${p.slug}`}
+                          className={`${styles.pjCard} ${!isFull ? styles.pjCardAdhoc : ''}`}
+                        >
+                          <div className={styles.pjCardHead}>
+                            <div className={`${styles.pjIconBox} ${isFull ? styles.pjIconBoxFull : styles.pjIconBoxAdhoc}`}>
+                              <span className={`material-icons-round ${styles.pjIcon} ${isFull ? styles.pjIconFull : styles.pjIconAdhoc}`}>
+                                {isFull ? 'menu_book' : 'bolt'}
+                              </span>
+                            </div>
+                            <div className={styles.pjCardMeta}>
+                              <span className={`${styles.pjBadge} ${isFull ? styles.pjBadgeFull : styles.pjBadgeAdhoc}`}>
+                                {isFull ? 'Full case' : 'Adhoc'}
+                              </span>
+                              <p className={styles.pjName}>{p.name}</p>
+                              <p className={styles.pjPeriod}>{p.period}</p>
+                            </div>
+                          </div>
+                          <p className={styles.pjOutcome}>{p.outcomeHeadline}</p>
+                          <p className={styles.pjServices}>
+                            {p.services.join(' + ')}
+                            {isFull && p.type === 'full-case' && p.patterns.length > 0 && (
+                              <> · {p.patterns.length} pattern{p.patterns.length !== 1 ? 's' : ''}</>
+                            )}
+                          </p>
+                        </Link>
+                      );
+                    })}
+                    {showAddCard && (
+                      <div className={styles.addProjectCard}>
+                        <span className={`material-icons-round ${styles.addProjectIcon}`}>add</span>
+                        <span className={styles.addProjectText}>Add project</span>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
 
-      {/* 14 · Reference Index */}
-      {(account.tagClusters.length > 0 || account.linkedEntities.length > 0) && (
-        <div className={styles.dossSection}>
-          <SectionHeader num="14" title="REFERENCE INDEX" />
-          {account.tagClusters.length > 0 && (
-            <div className={styles.tagClustersGrid} style={{ marginBottom: account.linkedEntities.length > 0 ? '16px' : undefined }}>
-              {account.tagClusters.map((cl, i) => (
-                <div key={i} className={styles.tagClusterCard}>
-                  <p className={styles.tagClusterLabel}>{cl.label}</p>
-                  <div className={styles.tagPills}>
-                    {cl.tags.map((tag, j) => (
-                      <span key={j} className={styles.tagPill}>{tag}</span>
-                    ))}
-                  </div>
+      {/* §14 · Reference Index — always renders (Pattern A) */}
+      <div className={styles.dossSection}>
+        <SectionHeader num="14" title="REFERENCE INDEX" />
+        {account.tagClusters.length > 0 ? (
+          <div className={styles.tagClustersGrid} style={{ marginBottom: account.linkedEntities.length > 0 ? '16px' : undefined }}>
+            {account.tagClusters.map((cl, i) => (
+              <div key={i} className={styles.tagClusterCard}>
+                <p className={styles.tagClusterLabel}>{cl.label}</p>
+                <div className={styles.tagPills}>
+                  {cl.tags.map((tag, j) => (
+                    <span key={j} className={styles.tagPill}>{tag}</span>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-          {account.linkedEntities.length > 0 && (
-            <div className={styles.linkedGrid}>
-              {account.linkedEntities.map((e, i) => (
-                <span key={i} className={styles.linkedChip}>
-                  <span className={styles.linkedKind}>{e.kind}</span>
-                  {e.label}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className={styles.fieldMuted}>Tag clusters not yet captured.</p>
+        )}
+        {account.linkedEntities.length > 0 && (
+          <div className={styles.linkedGrid}>
+            {account.linkedEntities.map((e, i) => (
+              <span key={i} className={styles.linkedChip}>
+                <span className={styles.linkedKind}>{e.kind}</span>
+                {e.label}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
 
     </div>
   );
