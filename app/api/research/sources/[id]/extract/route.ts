@@ -10,7 +10,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { EXTRACTION_MODEL } from '@/lib/ai-models';
 import { issueSignedToken, presignUrl } from '@vercel/blob';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function POST(
   req: NextRequest,

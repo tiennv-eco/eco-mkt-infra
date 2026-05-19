@@ -215,18 +215,31 @@ export default function InsightsSectionClient({
   async function handleExtract() {
     setIsExtracting(true);
     setExtractionError(null);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4.5 * 60 * 1000);
     try {
       const res = await fetch(`/api/research/sources/${sourceId}/extract`, {
         method: 'POST',
+        signal: controller.signal,
       });
-      const data = await res.json();
+      clearTimeout(timeout);
+      let data: { error?: string; drafts?: DraftInsight[] };
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error(res.status === 504 ? 'Extraction timed out — the PDF may be too large. Try a smaller file.' : `Server error (${res.status})`);
+      }
       if (!res.ok) {
         setExtractionError(data.error ?? 'Extraction failed. Please try again.');
       } else {
         setDrafts(prev => [...prev, ...(data.drafts ?? [])]);
       }
     } catch (err) {
-      setExtractionError((err as Error).message);
+      clearTimeout(timeout);
+      const msg = (err as Error).message;
+      setExtractionError(
+        msg.includes('abort') ? 'Extraction timed out after 4.5 minutes.' : msg,
+      );
     } finally {
       setIsExtracting(false);
     }
