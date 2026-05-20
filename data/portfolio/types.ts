@@ -1,8 +1,9 @@
+import type { ModuleSlug, ServiceLineSlug } from '@/data/services/types';
+
 export type ProjectType = 'full-case' | 'adhoc';
 export type ClientCategory = 'beauty' | 'mom-kid' | 'home-care' | 'fnb' | 'fashion' | 'electronics';
 export type SizeTier = 'mnc' | 'enterprise' | 'local-large' | 'local-indie' | 'mid-market' | 'sme';
 export type BU = 'direct-brand' | 'affiliate' | 'creator-acq';
-export type ServiceCode = 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6' | 'P7';
 export type TagClusterCategory = 'industry' | 'geography' | 'size-type' | 'service-combo' | 'outcome-type' | 'bu-coverage';
 export type LinkedEntityKind = 'icp' | 'persona' | 'service' | 'case' | 'account';
 export type BrandStatus = 'active' | 'prospect' | 'pitched' | 'lapsed' | 'paused';
@@ -39,7 +40,8 @@ export interface Brand {
   targetConsumer?: string;
   brandManager?: string;
   pitchSolution?: string;
-  contractedServices?: ServiceCode[];
+  contractedModules?: ModuleSlug[];
+  contractedServiceLines?: ServiceLineSlug[];
   gmvLabel?: string;
 
   // Brand dossier fields (brand detail page)
@@ -95,7 +97,10 @@ export interface AccountContact {
 /* ── Project types ───────────────────────────────────────── */
 
 export interface DeployedService {
-  code: ServiceCode;
+  // INVARIANT: at least one of moduleSlug or serviceLineSlug must be present.
+  // Records with only moduleSlug indicate the tier was not captured at contract time.
+  moduleSlug?: ModuleSlug;
+  serviceLineSlug?: ServiceLineSlug;
   detail: string;
   bu: BU;
   since: string;
@@ -165,7 +170,10 @@ export interface ProjectBase {
   brandName: string;
   type: ProjectType;
   period: string;
-  services: ServiceCode[];
+  services?: {
+    modules?: ModuleSlug[];
+    serviceLines?: ServiceLineSlug[];
+  };
   outcomeHeadline: string;
 }
 
@@ -325,16 +333,6 @@ export interface PortfolioAccount {
 }
 
 /* ── Lookup tables ───────────────────────────────────────── */
-
-export const SERVICE_NAMES: Record<ServiceCode, string> = {
-  P1: 'Livestream Commerce',
-  P2: 'UGC & Content Production',
-  P3: 'TikTok Shop Partner',
-  P4: 'Performance Media',
-  P5: 'Affiliate & Creator Network',
-  P6: 'Technology & Data Platform',
-  P7: 'Service Seven',
-};
 
 export const CATEGORY_LABELS: Record<ClientCategory, string> = {
   beauty: 'Beauty & Personal Care',

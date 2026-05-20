@@ -12,12 +12,12 @@ import {
 } from '@/data/portfolio/helpers';
 import { getIcpBySlug } from '@/data/icps/helpers';
 import {
-  SERVICE_NAMES,
   CATEGORY_LABELS,
   MARKET_POSITION_LABELS,
   COPROMO_TYPE_LABELS,
 } from '@/data/portfolio/types';
 import type { MarketPosition, CoPromoType } from '@/data/portfolio/types';
+import { getModuleBySlug, getServiceLineBySlug } from '@/data/services/helpers';
 import { getInsightsForPortfolio } from '@/lib/research/helpers';
 import RelevantResearchSection from '@/components/research/RelevantResearchSection';
 import styles from '../../portfolio.module.css';
@@ -247,11 +247,24 @@ export default async function AccountPage({
                     <span className={styles.bpcRowVal}>{brand.pitchSolution ?? <FieldEmpty />}</span>
                   </div>
                 </div>
-                {brand.contractedServices && brand.contractedServices.length > 0 ? (
+                {(brand.contractedModules?.length || brand.contractedServiceLines?.length) ? (
                   <div className={styles.bpcServices}>
-                    {brand.contractedServices.map(s => (
-                      <span key={s} className={styles.bpcServicePill}>{s}</span>
-                    ))}
+                    {brand.contractedModules?.map(slug => {
+                      const mod = getModuleBySlug(slug);
+                      return (
+                        <Link key={slug} href={`/knowledge-base/services/${slug}`} className={styles.bpcServicePill}>
+                          {mod ? `${mod.pillarId} · ${mod.name}` : slug}
+                        </Link>
+                      );
+                    })}
+                    {brand.contractedServiceLines?.map(slug => {
+                      const line = getServiceLineBySlug(slug);
+                      return (
+                        <Link key={slug} href={`/knowledge-base/services/lines/${slug}`} className={styles.bpcServicePillLine}>
+                          {line?.name ?? slug}
+                        </Link>
+                      );
+                    })}
                   </div>
                 ) : (
                   <p className={styles.bpcServicesMuted}>No contracted services yet</p>
@@ -488,11 +501,20 @@ export default async function AccountPage({
         <div className={styles.solutionBlock}>
           <div className={styles.solutionServicesRow}>
             {(() => {
-              const services = Array.from(new Set(account.projects.flatMap(p => p.services))).sort();
-              return services.length > 0 ? (
-                services.map(s => (
-                  <span key={s} className={styles.solutionPill}>{s} — {SERVICE_NAMES[s]}</span>
-                ))
+              const moduleSet = new Set<string>();
+              for (const p of account.projects) {
+                for (const slug of p.services?.modules ?? []) moduleSet.add(slug);
+              }
+              const slugs = Array.from(moduleSet).sort();
+              return slugs.length > 0 ? (
+                slugs.map(slug => {
+                  const mod = getModuleBySlug(slug);
+                  return (
+                    <Link key={slug} href={`/knowledge-base/services/${slug}`} className={styles.solutionPill}>
+                      {mod ? `${mod.pillarId} · ${mod.name}` : slug}
+                    </Link>
+                  );
+                })
               ) : (
                 <FieldMuted />
               );
@@ -817,7 +839,9 @@ export default async function AccountPage({
                           </div>
                           <p className={styles.pjOutcome}>{p.outcomeHeadline}</p>
                           <p className={styles.pjServices}>
-                            {p.services.join(' + ')}
+                            {[...(p.services?.modules ?? []).map(s => getModuleBySlug(s)?.name ?? s),
+                               ...(p.services?.serviceLines ?? []).map(s => getServiceLineBySlug(s)?.name ?? s)
+                            ].join(' + ') || '—'}
                             {isFull && p.type === 'full-case' && p.patterns.length > 0 && (
                               <> · {p.patterns.length} pattern{p.patterns.length !== 1 ? 's' : ''}</>
                             )}

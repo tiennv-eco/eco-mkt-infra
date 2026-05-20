@@ -1,6 +1,7 @@
 import { PORTFOLIO_ACCOUNTS } from './accounts';
 import { CATEGORY_ORDER } from './types';
-import type { AccountContact, Brand, ClientCategory, PortfolioAccount, Product, Project, ServiceCode } from './types';
+import type { AccountContact, Brand, ClientCategory, PortfolioAccount, Product, Project } from './types';
+import type { ModuleSlug, ServiceLineSlug } from '@/data/services/types';
 
 export function getAccountBySlug(slug: string): PortfolioAccount | undefined {
   return PORTFOLIO_ACCOUNTS.find(a => a.slug === slug);
@@ -32,14 +33,23 @@ export function getAccountSummaryStats(account: PortfolioAccount): {
   adhocCount: number;
   brandCount: number;
   patternsTotal: number;
-  servicesUsed: ServiceCode[];
+  moduleSlugsUsed: ModuleSlug[];
+  serviceLineSlugsUsed: ServiceLineSlug[];
 } {
   const fullCaseProjects = account.projects.filter(p => p.type === 'full-case');
   const adhocCount = account.projects.filter(p => p.type === 'adhoc').length;
-  const serviceSet = new Set<ServiceCode>();
-  for (const p of account.projects) {
-    for (const s of p.services) serviceSet.add(s);
+  const moduleSet = new Set<ModuleSlug>();
+  const lineSet = new Set<ServiceLineSlug>();
+
+  for (const brand of account.brands) {
+    for (const slug of brand.contractedModules ?? []) moduleSet.add(slug);
+    for (const slug of brand.contractedServiceLines ?? []) lineSet.add(slug);
   }
+  for (const p of account.projects) {
+    for (const slug of p.services?.modules ?? []) moduleSet.add(slug);
+    for (const slug of p.services?.serviceLines ?? []) lineSet.add(slug);
+  }
+
   const patternsTotal = fullCaseProjects.reduce(
     (sum, p) => sum + (p.type === 'full-case' ? p.patterns.length : 0),
     0,
@@ -51,7 +61,8 @@ export function getAccountSummaryStats(account: PortfolioAccount): {
     adhocCount,
     brandCount: account.brands.length,
     patternsTotal,
-    servicesUsed: Array.from(serviceSet),
+    moduleSlugsUsed: Array.from(moduleSet),
+    serviceLineSlugsUsed: Array.from(lineSet),
   };
 }
 

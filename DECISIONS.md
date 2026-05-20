@@ -1,5 +1,97 @@
 # Architectural Decisions
 
+## D-027 — SERVICE_NAMES static map retired in favour of helper lookups
+_2026-05-20_
+
+**Decision**: The `SERVICE_NAMES: Record<ServiceCode, string>` static map in `data/portfolio/types.ts` is removed. All display names for modules and service lines are resolved by calling `getModuleBySlug(slug)?.name` and `getServiceLineBySlug(slug)?.name` from `data/services/helpers.ts`.
+
+**Rationale**: A parallel name registry duplicates the source of truth already in `data/services/modules.ts` and `data/services/serviceLines.ts`. Retiring it means renaming a module in `data/services/` propagates everywhere automatically — no secondary update needed. Helpers also return `undefined` on a bad slug, which surfaces typos immediately rather than silently rendering a stale display name.
+
+**Consequence**: Any new code that needs a service display name must import from `data/services/helpers`. Never add a local map or hardcoded label for service names.
+
+---
+
+## D-026 — Portfolio services use dual-altitude slug fields
+_2026-05-20_
+
+**Decision**: Brand, Project, and DeployedService records in `data/portfolio/accounts.ts` reference services via two fields: `contractedModules: ModuleSlug[]` (coarse — which product category) and `contractedServiceLines: ServiceLineSlug[]` (specific — which exact tier or variant). DeployedService uses `moduleSlug` and `serviceLineSlug`. The legacy `ServiceCode` type (`'P1'–'P7'`) and the `services: ServiceCode[]` array are fully retired.
+
+**Legacy P-code mapping** (canonical — do not re-derive):
+- Legacy P1 Livestream → `livestream-commerce`
+- Legacy P2 UGC → `ugc-content-production` (NOT `affiliate-marketing`!)
+- Legacy P3 TikTok Shop Partner → `tiktok-shop-partner` (or `livestream-commerce` when the account's P3 was the affiliate program aspect → use `affiliate-marketing`)
+- Legacy P4 Performance Media → `performance-boosting`
+- Legacy P5 Affiliate → `affiliate-marketing`
+- Legacy P6 / P7 → DROPPED (no matching module)
+
+**Rationale**: The old numeric P-codes were opaque, collision-prone after the 2025 services reorg (legacy P2 ≠ new P2), and could not type-check against the new module taxonomy. Dual-altitude fields let the system surface both "which module" (for section headers, cross-links to services pages) and "which specific service line" (for pricing and scope discussions) from the same record without ambiguity.
+
+**Consequence**: Default for migrated records: populate `contractedModules`, leave `contractedServiceLines: []` as a placeholder for when tier information is confirmed. When adding a new portfolio account or brand, always use `ModuleSlug` / `ServiceLineSlug` literal types — never string literals or P-codes.
+
+---
+
+## D-025 — ICP serviceMix typed against ModuleSlug
+_2026-05-20_
+
+**Decision**: The `serviceMix` field on ICPs is strongly typed against `ModuleSlug` (imported from `@/data/services/types`) rather than left as `string[]`. The `pCode` property on `rarelySold` entries is renamed to `moduleSlug` to match the new semantic.
+
+**Rationale**: Matches the typing pattern used elsewhere where slug fields reference real entity types. A typo in a slug (e.g. `'livestream-comerce'`) fails the build via TypeScript, not at runtime as a broken cross-link. Eliminates legacy P-code semantics from the ICP data layer. P7 references are mechanically dropped (P7 is no longer a module per D-021 era reasoning); original `whyNot` content preserved as a historical note on affected ICPs.
+
+**Consequence**: Adding a new module to `data/services/modules.ts` automatically makes its slug available for ICP service-mix references. Removing or renaming a module fails the build until all ICP references are updated — the right kind of friction.
+
+---
+
+## D-024 — Service Line detail: Group C (Bundle Composition) is conditional, not ghost
+_2026-05-20_
+
+**Decision**: The Bundle Composition section on Service Line detail pages only renders for lines where `composedOf` is a non-empty array. Non-bundle lines do not show a ghost version of this group.
+
+**Rationale**: This is a structural difference, not a data-empty state. Bundles and atomic service lines are different product types. Showing ghost bundle-composition scaffolding on an atomic line would misrepresent the product and confuse users. The transparency pattern (D-008) applies to content within a type, not to structural differences between types.
+
+**Consequence**: When building any future detail pages with type-conditional sections, the rule is: ghost cards for data that *could* exist but hasn't been entered; omit the section entirely when the data *cannot* exist for this entity type.
+
+---
+
+## D-023 — Module and Service Line helpers widened to accept `string` URL params
+_2026-05-20_
+
+**Decision**: `getModuleBySlug`, `getServiceLinesByModule`, and `getDealUspsByModule` accept `string` instead of `ModuleSlug`. The cast to `ModuleSlug` happens inside the helper at the point of comparison.
+
+**Rationale**: `params.moduleSlug` from Next.js App Router is typed as `string`, not `ModuleSlug`. Narrowing at the API boundary (the helper) rather than in every page component avoids scattered `as ModuleSlug` casts across callers. A bad slug simply returns `undefined`/empty which triggers `notFound()`.
+
+**Consequence**: Any new lookup helpers that accept URL-sourced slugs should follow this pattern: accept `string`, cast internally, return `undefined` on no match.
+
+---
+
+## D-022 — Services listing uses URL-stateful tabs and filters
+_2026-05-20_
+
+**Decision**: The Services listing page at `/knowledge-base/services` uses URL query parameters for tab state (`?tab=modules|service-lines|deal-usps`) and for filter state within each tab (`?role=`, `?module=`, `?status=`, `?sort=`, `?uspModule=`).
+
+**Rationale**: Matches the Research & Insights tab pattern already established in the codebase. Enables sharing direct links to a specific filtered view. Enables browser back/forward across filtered views. Server component reads `searchParams`; client tab and filter components update via `router.push`.
+
+**Consequence**: Every new tab or filter added must update the URL through `router.push`, not local component state. Tab switching clears all filter params except `tab` to avoid stale filters appearing after tab change. This is the established pattern; do not deviate.
+
+---
+
+## D-021 — Services data layer: static TypeScript, 6 modules, P7 dropped
+_2026-05-20_
+
+**Decision**: Services content (modules, service lines, deal USPs) is stored as static TypeScript files in `data/services/` — same pattern as `data/icps/` and `data/personas/`. No Prisma tables.
+
+**6 modules (P1–P6)**:
+- P1 Livestream Commerce, P2 UGC & Content Production, P3 TikTok Shop Partner, P4 Performance Media, P5 Affiliate & Creator Network, P6 Technology & Data Platform.
+
+**P7 dropped**: P7 ("Service Seven") is not offered as a module. The `p7-service-seven/` stub route will be deleted in Prompt 3. ICP `rarelySold` references to P7 will be removed in Prompt 5a.
+
+**`ModuleSlug` is the stable cross-link type**: ICP `serviceMix` fields will migrate from bare P-code strings (`'P1'`, `'P3'`) to `ModuleSlug[]` (`'livestream-commerce'`, `'tiktok-shop-partner'`) in Prompt 5a. This is the strongly-typed Option A from the pre-implementation review.
+
+**`ServiceCode` in `data/portfolio/` is unchanged**: Portfolio accounts continue to use `ServiceCode` (`'P1'–'P7'`) for contracted/deployed services. A cross-link from Portfolio to the new `data/services/` layer will be added in Prompt 5b but will not remove `ServiceCode`.
+
+**Coexistence of `data/services.ts` and `data/services/`**: Under `moduleResolution: "bundler"`, a flat file and a folder of the same base name resolve to different module paths (`@/data/services` vs `@/data/services/helpers`). No TypeScript error occurs. The flat file is dead code and will be deleted in Prompt 3.
+
+---
+
 ## D-020 — AI-Assisted Draft Creation Workflow (EntityDraft model)
 _2026-05-20_
 

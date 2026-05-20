@@ -48,7 +48,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         status: 'active',
         subCategory: 'Premium Mass',
         targetConsumer: 'Women 25-45, mid-to-premium income',
-        contractedServices: ['P1', 'P4'],
+        contractedModules: ['livestream-commerce', 'performance-boosting'],
+        contractedServiceLines: [],
         gmvLabel: '$5M+',
         positioning: "Premium-aspirational beauty backed by science — accessible French elegance for women who care about results.",
         voiceTone: "Confident and expert. Speaks like a knowledgeable friend, not a clinical brand. French elegance threaded through but never gatekeeping. 'You're worth it' is positioning, not a slogan to repeat.",
@@ -74,7 +75,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             marketingRole: 'hero',
             targetSubAudience: 'Women 35-55 concerned with anti-aging signs',
             positioning: 'Hyaluronic acid filler for plumping and firming — visible results in 4 weeks',
-            servicesDeployed: ['P1', 'P4'],
+            servicesDeployed: ['Livestream Commerce', 'Performance Boosting'],
             performanceHighlight: '#1 anti-aging product on TikTok Shop Beauty in VN, Q4 2024',
           },
           {
@@ -87,7 +88,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             marketingRole: 'volume-driver',
             targetSubAudience: 'Women 30+ doing at-home hair color',
             positioning: 'Salon-quality hair color, gentle on hair, easy application',
-            servicesDeployed: ['P1'],
+            servicesDeployed: ['Livestream Commerce'],
           },
           {
             id: 'lp-color-riche',
@@ -183,7 +184,9 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         status: 'active',
         subCategory: 'Mass Color',
         targetConsumer: 'Women 18-35, trend-driven, price-conscious',
-        contractedServices: ['P1', 'P3'],
+        contractedModules: ['livestream-commerce'],
+        contractedServiceLines: [],
+        // TODO: confirm specific Livestream tier. P3 TikTok Shop Partner merged into Livestream Commerce module.
         gmvLabel: '$2.5M+',
         positioning: "Mass-market color cosmetics for the everyday confident woman. Trend-forward but accessible.",
         voiceTone: "Playful, accessible, 'girl-next-door' tone. Trend-aware without being trying-too-hard.",
@@ -198,7 +201,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'makeup',
             status: 'hero',
             marketingRole: 'hero',
-            servicesDeployed: ['P1', 'P3'],
+            servicesDeployed: ['Livestream Commerce'],
           },
           {
             id: 'mb-superstay',
@@ -207,7 +210,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'makeup',
             status: 'active',
             marketingRole: 'volume-driver',
-            servicesDeployed: ['P1'],
+            servicesDeployed: ['Livestream Commerce'],
           },
           {
             id: 'mb-fit-me',
@@ -216,7 +219,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'makeup',
             status: 'active',
             marketingRole: 'new-launch',
-            servicesDeployed: ['P1', 'P2'],
+            servicesDeployed: ['Livestream Commerce', 'UGC Content Production'],
           },
         ],
       },
@@ -227,7 +230,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         status: 'pitched',
         subCategory: 'Mass Skincare / Hair',
         targetConsumer: 'Women 20-40, ingredient-aware, value-seeking',
-        pitchSolution: 'P2 UGC seeding + P1 education-led livestream for hair care range',
+        pitchSolution: 'UGC content seeding + education-led livestream for hair care range',
       },
     ],
 
@@ -240,7 +243,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: "L'Oréal Paris",
         type: 'full-case',
         period: 'Jan – Feb 2024',
-        services: ['P1', 'P4'],
+        services: { modules: ['livestream-commerce', 'performance-boosting'], serviceLines: [] },
         outcomeHeadline: '3× GMV vs Q4 baseline · 800+ sessions',
         goals: [
           'Dominate beauty GMV during Tet peak window',
@@ -253,10 +256,10 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           'Short runway from brief to launch — 6 weeks',
         ],
         deployedServices: [
-          { code: 'P1', detail: 'daily BAU studio + campaign peak scaling', bu: 'direct-brand', since: 'Jan 2024' },
-          { code: 'P4', detail: 'Spark Ads + GMV Max for livestream traffic', bu: 'direct-brand', since: 'Jan 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'daily BAU studio + campaign peak scaling', bu: 'direct-brand', since: 'Jan 2024' },
+          { moduleSlug: 'performance-boosting', detail: 'Spark Ads + GMV Max for livestream traffic', bu: 'direct-brand', since: 'Jan 2024' },
         ],
-        approachReasoning: 'Tet requires traffic surge that organic livestream reach cannot deliver alone. P4 was introduced simultaneously with P1 launch — against our usual P1-first sequencing — because the campaign window was too short to ramp separately.',
+        approachReasoning: 'Tet requires traffic surge that organic livestream reach cannot deliver alone. Performance Boosting was introduced simultaneously with Livestream Commerce launch — against our usual Livestream-first sequencing — because the campaign window was too short to ramp separately.',
         outcomeMetrics: [
           { value: '3×', label: 'GMV vs Q4', source: 'TikTok Shop analytics' },
           { value: '800+', label: 'Sessions', source: 'Internal ops log' },
@@ -271,34 +274,34 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         patterns: [
           {
             id: 'lo-p01',
-            title: 'Tet window requires parallel P1+P4 launch, not sequential',
+            title: 'Tet window requires parallel Livestream + Performance Boosting launch, not sequential',
             appliesTo: 'Any seasonal campaign with <8 weeks runway',
-            insight: 'The standard P1-first, P4-at-60-days sequencing breaks for short-window campaigns. Tet, 11.11, and 8.8 all need P4 live from day 1. Budget the parallel ramp cost into the proposal.',
+            insight: 'The standard Livestream-first, Performance-Boosting-at-60-days sequencing breaks for short-window campaigns. Tet, 11.11, and 8.8 all need Performance Boosting live from day 1. Budget the parallel ramp cost into the proposal.',
           },
           {
             id: 'lo-p02',
             title: 'Studio volume should be pre-built 2 weeks before Tet peak',
-            appliesTo: 'Premium brands running Tet campaigns on P1',
+            appliesTo: 'Premium brands running Tet campaigns via Livestream Commerce',
             insight: 'Ramping studio capacity during Tet week itself is too late — host availability and studio slots are locked by competitors. Build the peak capacity at T-14 days minimum.',
           },
           {
             id: 'lo-p03',
             title: 'Premium beauty brands need host audition, not just briefing',
             appliesTo: "L'Oréal Paris and La Roche-Posay projects",
-            insight: "Mass-market hosts underperform for premium beauty. The brand team notices and escalates. Run a 3-day host audition with recorded demos before any premium brand P1 launch.",
+            insight: "Mass-market hosts underperform for premium beauty. The brand team notices and escalates. Run a 3-day host audition with recorded demos before any premium brand Livestream Commerce launch.",
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Beauty', 'Premium', 'Seasonal'] },
           { category: 'geography', label: 'Geography', tags: ['Vietnam', 'Tet'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P4', 'Parallel launch', 'BAU + campaign'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream + Performance Boosting', 'Parallel launch', 'BAU + campaign'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['3× GMV', 'Peak commerce', 'Category win'] },
         ],
         linkedEntities: [
           { kind: 'account', slug: 'loreal-vn-consumer', label: "L'Oréal VN — Consumer Products" },
           { kind: 'icp', slug: 'mnc-global', label: 'MNC / Global' },
-          { kind: 'service', slug: 'p1-livestream-commerce', label: 'P1 Livestream' },
-          { kind: 'service', slug: 'p4-performance-media', label: 'P4 Performance Media' },
+          { kind: 'service', slug: 'livestream-commerce', label: 'Livestream Commerce' },
+          { kind: 'service', slug: 'performance-boosting', label: 'Performance Boosting' },
         ],
         version: 'v2026',
         lastVerified: '2d ago',
@@ -330,7 +333,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Maybelline',
         type: 'full-case',
         period: 'Apr – Jun 2024',
-        services: ['P1', 'P3'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
+        // TODO: confirm if affiliate-marketing also applies (P3 included affiliate program management)
         outcomeHeadline: '180% above GMV target · new product TikTok entry',
         goals: [
           'Launch new foundation range on TikTok Shop',
@@ -341,10 +345,11 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           'Competitive beauty category with established incumbents',
         ],
         deployedServices: [
-          { code: 'P1', detail: 'BAU studio + affiliate KOL host program', bu: 'direct-brand', since: 'Apr 2024' },
-          { code: 'P3', detail: 'TikTok Shop setup + affiliate program management', bu: 'direct-brand', since: 'Apr 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'BAU studio + affiliate KOL host program', bu: 'direct-brand', since: 'Apr 2024' },
+          // TODO: affiliate-marketing may also apply for the affiliate program management component
+          { moduleSlug: 'livestream-commerce', detail: 'TikTok Shop setup + affiliate program management (formerly TikTok Shop Partner)', bu: 'direct-brand', since: 'Apr 2024' },
         ],
-        approachReasoning: 'For a brand entering TikTok Shop with no prior presence, P1+P3 together is the fastest path to GMV — P3 builds the shop infrastructure and affiliate network while P1 drives the traffic that converts.',
+        approachReasoning: 'For a brand entering TikTok Shop with no prior presence, Livestream Commerce is the fastest path to GMV — TikTok Shop setup builds the shop infrastructure and affiliate network while livestream drives the traffic that converts.',
         outcomeMetrics: [
           { value: '180%', label: 'Above GMV target', source: 'TikTok Shop dashboard' },
           { value: 'Top 3', label: 'Beauty brand rank', source: 'TikTok VN category report' },
@@ -353,32 +358,32 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         patterns: [
           {
             id: 'may-p01',
-            title: 'P1+P3 is the fastest 0→GMV path for TikTok Shop entry',
+            title: 'Livestream Commerce is the fastest 0→GMV path for TikTok Shop entry',
             appliesTo: 'Any brand entering TikTok Shop for the first time',
-            insight: 'P3 alone (shop setup) without P1 traffic produces a live shop with no buyers. P1 without P3 produces viewer intent with nowhere to convert. The pair is non-negotiable for new TikTok Shop launches.',
+            insight: 'TikTok Shop setup without livestream traffic produces a live shop with no buyers. Livestream without shop setup produces viewer intent with nowhere to convert. The pair is non-negotiable for new TikTok Shop launches.',
           },
           {
             id: 'may-p02',
             title: 'Mass-market beauty entry uses affiliate KOL hosts, not celebrity',
-            appliesTo: 'Local mass-market beauty brands on P1',
+            appliesTo: 'Local mass-market beauty brands on Livestream Commerce',
             insight: 'Maybelline pricing and positioning fits affiliate KOL hosts (100K–500K followers) better than celebrity. Higher relatability translates directly to add-to-cart rates.',
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Beauty', 'Mass-market', 'TikTok Entry'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P3', 'Shop launch', '0 to GMV'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream Commerce', 'Shop launch', '0 to GMV'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['180% above target', 'Category rank', 'New brand entry'] },
         ],
         linkedEntities: [
           { kind: 'account', slug: 'loreal-vn-consumer', label: "L'Oréal VN — Consumer Products" },
-          { kind: 'service', slug: 'p1-livestream-commerce', label: 'P1 Livestream' },
-          { kind: 'service', slug: 'p3-tiktok-shop-partner', label: 'P3 TikTok Shop' },
+          { kind: 'service', slug: 'livestream-commerce', label: 'Livestream Commerce' },
+          { kind: 'service', slug: 'livestream-commerce', label: 'Livestream Commerce' },
         ],
         version: 'v2026',
         lastVerified: '5d ago',
         projectObjective: 'Launch Maybelline onto TikTok Shop Vietnam — establish presence and hit 180% of GMV target in first 3 months.',
         concept: 'Mass-market glam format. Affiliate KOL hosts in the 100K–500K follower range. Relatability over celebrity — "real girl" positioning.',
-        contentStrategy: 'P1 BAU daily + P3 shop affiliate program running simultaneously. Affiliate creators driving traffic into TikTok Shop. Cross-content with shop product pins.',
+        contentStrategy: 'Livestream Commerce BAU daily + TikTok Shop affiliate program running simultaneously. Affiliate creators driving traffic into TikTok Shop. Cross-content with shop product pins.',
         timeline: [
           { milestone: 'Shop setup + affiliate onboarding', date: 'Apr W1 2024' },
           { milestone: 'Soft launch', date: 'Apr W3 2024' },
@@ -400,7 +405,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Maybelline',
         type: 'adhoc',
         period: 'Nov 2024',
-        services: ['P1'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: '6hr flash sale executed on-time',
         briefNote: 'One-off 6-hour flash sale livestream for 11.11 sale event. Used existing BAU studio and host roster — no new build required.',
         outcomeNote: 'Executed on schedule. GMV tracked but not separately reported. Used as benchmark for 12.12 planning.',
@@ -414,9 +419,9 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Garnier',
         type: 'adhoc',
         period: 'Sep 2024',
-        services: ['P5'],
+        services: { modules: ['affiliate-marketing'], serviceLines: [] },
         outcomeHeadline: 'Seeding test completed · informed Q4 full program',
-        briefNote: 'Small-scale affiliate seeding test on Garnier Vitamin C range. 40 KOCs, 2-week window, commission-only structure. Used to validate category interest before committing to full P2 program.',
+        briefNote: 'Small-scale affiliate seeding test on Garnier Vitamin C range. 40 KOCs, 2-week window, commission-only structure. Used to validate category interest before committing to full UGC Content Production program.',
         outcomeNote: 'Positive signal — 34/40 KOCs produced content. Results briefed Q4 full UGC program. No GMV target on test.',
       },
     ],
@@ -425,7 +430,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
       { category: 'industry', label: 'Industry', tags: ['Beauty', 'Personal Care', 'Premium', 'Mass-market'] },
       { category: 'geography', label: 'Geography', tags: ['Vietnam', 'MNC-managed'] },
       { category: 'size-type', label: 'Account type', tags: ['MNC', '3 brands', 'Group procurement', 'Regional HQ'] },
-      { category: 'service-combo', label: 'Services ever used', tags: ['P1', 'P2', 'P3', 'P4', 'P5'] },
+      { category: 'service-combo', label: 'Services ever used', tags: ['Livestream Commerce', 'UGC Content Production', 'Performance Boosting', 'Affiliate Marketing'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['$8M+ GMV', 'Award winner', 'Category leader'] },
       { category: 'bu-coverage', label: 'BU', tags: ['Direct Brand primary', 'Affiliate secondary'] },
     ],
@@ -452,7 +457,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P1 anchors every new brand. P4 layers in at 60 days. P2 and P3 deployed selectively based on brand stage.',
+      servicesOverview: 'Livestream Commerce anchors every new brand. Performance Boosting layers in at 60 days. UGC Content Production and TikTok Shop setup deployed selectively based on brand stage.',
       reasoning: 'We operate as a multi-brand livestream factory — separate host pools, separate content calendars, unified procurement management.',
     },
 
@@ -506,7 +511,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     contentAngles: [
-      { id: 'ca1', angle: 'Expert-led education before commerce', why: 'Pre-launch education content (P2 UGC seeding) consistently outperforms straight commerce content for new SKUs. The audience needs to understand the product before they buy.', exampleProject: 'Dove Dry Serum UGC' },
+      { id: 'ca1', angle: 'Expert-led education before commerce', why: 'Pre-launch education content (UGC content seeding) consistently outperforms straight commerce content for new SKUs. The audience needs to understand the product before they buy.', exampleProject: 'Dove Dry Serum UGC' },
       { id: 'ca2', angle: 'Cultural moment as ritual, not sale', why: 'Reframing Tet, 8.3, 11.11 campaigns as cultural beauty rituals (gifting, self-care, transformation) beats straight sale-driven messaging by 2-3x in GMV.', exampleProject: 'Tet 2024 Livestream Series' },
       { id: 'ca3', angle: 'Authenticity over production polish', why: 'Lower-production-value KOC content drives 2-3x conversion vs polished brand-style content for mass beauty. Real bathroom, real lighting, real reactions outperform studio-shot creative.', exampleProject: 'Maybelline Summer Launch' },
       { id: 'ca4', angle: 'Multi-brand category narrative', why: 'Positioning multiple brands under a unified category story drives cross-brand recall and shared audience growth. Less efficient per campaign but builds compounding category authority.' },
@@ -561,7 +566,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         name: 'La Roche-Posay',
         status: 'active',
         subCategory: 'Clinical Skincare',
-        contractedServices: ['P1', 'P4'],
+        contractedModules: ['livestream-commerce', 'performance-boosting'],
+        contractedServiceLines: [],
         positioning: "The reference in dermo-cosmetics — dermatologist-tested, allergy-tested, recommended by healthcare professionals.",
         products: [
           {
@@ -571,7 +577,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'skincare',
             status: 'hero',
             marketingRole: 'hero',
-            servicesDeployed: ['P1', 'P4'],
+            servicesDeployed: ['Livestream Commerce', 'Performance Boosting'],
             performanceHighlight: 'Expert-presenter format: 2.3x vs lifestyle hosts (A/B test Q3)',
           },
           {
@@ -581,7 +587,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'skincare',
             status: 'active',
             marketingRole: 'volume-driver',
-            servicesDeployed: ['P1'],
+            servicesDeployed: ['Livestream Commerce'],
           },
         ],
       },
@@ -596,7 +602,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'La Roche-Posay',
         type: 'full-case',
         period: 'Jul – Sep 2024',
-        services: ['P1', 'P4'],
+        services: { modules: ['livestream-commerce', 'performance-boosting'], serviceLines: [] },
         outcomeHeadline: '140% ROAS · expert-led format established',
         goals: [
           'Establish La Roche-Posay on TikTok Shop as a science-led brand',
@@ -607,8 +613,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           'Brand safety requirements stricter than mass-market brands',
         ],
         deployedServices: [
-          { code: 'P1', detail: 'Dermatologist-presenter livestream format', bu: 'direct-brand', since: 'Jul 2024' },
-          { code: 'P4', detail: 'Targeted performance media to skin-concern audiences', bu: 'direct-brand', since: 'Jul 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'Dermatologist-presenter livestream format', bu: 'direct-brand', since: 'Jul 2024' },
+          { moduleSlug: 'performance-boosting', detail: 'Targeted performance media to skin-concern audiences', bu: 'direct-brand', since: 'Jul 2024' },
         ],
         approachReasoning: 'La Roche-Posay requires medical credibility in livestream. We sourced dermatologist and pharmacist hosts rather than beauty influencers. This narrowed the host pool but lifted conversion rate significantly.',
         outcomeMetrics: [
@@ -625,25 +631,25 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           {
             id: 'lrp-p01',
             title: 'Derma brands require credentialed hosts — lifestyle hosts underperform by 2×',
-            appliesTo: 'Any pharma or clinical skincare brand on P1',
+            appliesTo: 'Any pharma or clinical skincare brand using Livestream Commerce',
             insight: 'Dermatologist and pharmacist hosts achieve 2.3× better conversion than lifestyle beauty hosts for clinical skincare. The host sourcing process takes 3× longer — budget for it.',
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Beauty', 'Derma', 'Clinical skincare'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P4', 'Expert host', 'Credentialed format'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream + Performance Boosting', 'Expert host', 'Credentialed format'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['140% ROAS', 'Format established', 'Regional model'] },
         ],
         linkedEntities: [
           { kind: 'account', slug: 'loreal-vn-active', label: "L'Oréal VN — Active Cosmetics" },
-          { kind: 'service', slug: 'p1-livestream-commerce', label: 'P1 Livestream' },
-          { kind: 'service', slug: 'p4-performance-media', label: 'P4 Performance Media' },
+          { kind: 'service', slug: 'livestream-commerce', label: 'Livestream Commerce' },
+          { kind: 'service', slug: 'performance-boosting', label: 'Performance Boosting' },
         ],
         version: 'v2026',
         lastVerified: '1w ago',
         projectObjective: 'Establish La Roche-Posay on TikTok Shop as a science-led derma brand — achieve 130%+ ROAS set by regional HQ.',
         concept: 'Dermatologist-presenter format. Credentialed hosts (dermatologists and pharmacists) replacing lifestyle beauty influencers. Science-first positioning.',
-        contentStrategy: 'Expert livestream slots 3× per week. P4 targeted at skin-concern audience segments (acne, sensitive, anti-aging). A/B tested expert vs lifestyle host — expert won 2.3×.',
+        contentStrategy: 'Expert livestream slots 3× per week. Performance Boosting targeted at skin-concern audience segments (acne, sensitive, anti-aging). A/B tested expert vs lifestyle host — expert won 2.3×.',
         timeline: [
           { milestone: 'Host sourcing + audition', date: 'Jun 2024' },
           { milestone: 'Pilot stream (2 sessions)', date: 'Jul W1 2024' },
@@ -662,7 +668,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Beauty', 'Derma', 'Clinical skincare'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1', 'P4'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce', 'Performance Boosting'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['140% ROAS', 'Regional model'] },
     ],
 
@@ -682,7 +688,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P1 with credentialed hosts (dermatologists/pharmacists). P4 targeted at skin-concern audience segments.',
+      servicesOverview: 'Livestream Commerce with credentialed hosts (dermatologists/pharmacists). Performance Boosting targeted at skin-concern audience segments.',
       reasoning: 'Derma category requires trust signals that lifestyle hosts cannot provide. Expert hosting produces 2.3× better conversion.',
     },
 
@@ -739,7 +745,9 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         slug: 'dove',
         name: 'Dove',
         status: 'active',
-        contractedServices: ['P1', 'P2'],
+        contractedModules: ['livestream-commerce', 'ugc-content-production'],
+        contractedServiceLines: [],
+        // NOTE: Legacy P2 = UGC Content in old taxonomy; migrated to ugc-content-production (new P4), not affiliate-marketing (new P2). Confirm with user.
         positioning: "Real beauty for real women. Skincare and haircare grounded in self-acceptance.",
         brandAudience: {
           demographics: "Women 18-35, mass-market, value-seeking, urban and semi-urban VN",
@@ -752,7 +760,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'haircare',
             status: 'hero',
             marketingRole: 'new-launch',
-            servicesDeployed: ['P2', 'P4'],
+            servicesDeployed: ['UGC Content Production', 'Performance Boosting'],
             performanceHighlight: '68.48M views, 4× category benchmark on KOC seeding',
           },
           {
@@ -762,7 +770,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             categoryType: 'haircare',
             status: 'active',
             marketingRole: 'volume-driver',
-            servicesDeployed: ['P1', 'P2'],
+            servicesDeployed: ['Livestream Commerce', 'UGC Content Production'],
             performanceHighlight: 'Category #1 dry shampoo on TikTok Shop VN',
           },
         ],
@@ -771,7 +779,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
             { value: '68.48M', label: 'Views — Dry Serum launch', source: 'UGC campaign analytics' },
             { value: 'Cat. #1', label: 'Dry Shampoo on TikTok Shop', source: 'Category report' },
           ],
-          narrative: "Dove Dry Serum UGC program set the benchmark for category education via KOC seeding. Dry Shampoo launch proved the P2→P1 sequencing model.",
+          narrative: "Dove Dry Serum UGC program set the benchmark for category education via KOC seeding. Dry Shampoo launch proved the UGC seeding → Livestream Commerce sequencing model.",
         },
       },
       { id: 'sunsilk', slug: 'sunsilk', name: 'Sunsilk', status: 'prospect' },
@@ -786,7 +794,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Dove',
         type: 'full-case',
         period: 'Mar – Apr 2024',
-        services: ['P2'],
+        services: { modules: ['ugc-content-production'], serviceLines: [] },
         outcomeHeadline: '4× UGC target exceeded · 68M views',
         goals: [
           'Launch Dove Dry Serum with authentic creator advocacy',
@@ -797,7 +805,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           'Brand required creators to have genuinely tried the product',
         ],
         deployedServices: [
-          { code: 'P2', detail: '185 KOC seeding + content program', bu: 'direct-brand', since: 'Mar 2024' },
+          { moduleSlug: 'ugc-content-production', detail: '185 KOC seeding + content program', bu: 'direct-brand', since: 'Mar 2024' },
         ],
         approachReasoning: 'Selected KOCs were screened for existing interest in hair care — not just follower count. Commission-based structure meant only creators who genuinely used the product continued producing content.',
         outcomeMetrics: [
@@ -815,7 +823,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           {
             id: 'lo-p04',
             title: 'Commission-only UGC self-selects for genuine product users',
-            appliesTo: 'P2 programs for new product launches',
+            appliesTo: 'UGC Content Production programs for new product launches',
             insight: 'Paying a flat fee incentivises volume. Commission-only incentivises conversion. For launch UGC, commission-only produces 3–4× better content quality because uncommitted creators drop off early.',
           },
           {
@@ -827,13 +835,13 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Beauty', 'Hair Care', 'UGC'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P2 only', 'KOC seeding', 'Commission-based'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['UGC Content only', 'KOC seeding', 'Commission-based'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['4× target', '68M views', 'Authenticity-led'] },
         ],
         linkedEntities: [
           { kind: 'account', slug: 'unilever-vn-beauty', label: 'Unilever VN — Beauty & Wellbeing' },
           { kind: 'icp', slug: 'mnc-global', label: 'MNC / Global' },
-          { kind: 'service', slug: 'p2-ugc-content', label: 'P2 UGC & Content' },
+          { kind: 'service', slug: 'ugc-content-production', label: 'UGC Content Production' },
         ],
         version: 'v2026',
         lastVerified: '2d ago',
@@ -861,28 +869,28 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Dove',
         type: 'full-case',
         period: 'Mar – Apr 2024',
-        services: ['P1', 'P2'],
+        services: { modules: ['livestream-commerce', 'ugc-content-production'], serviceLines: [] },
         outcomeHeadline: 'Category-first dry shampoo launch via creator UGC',
         goals: ['Launch Dove Dry Shampoo as a new category on TikTok'],
         painPoints: ['No category awareness — consumers unfamiliar with dry shampoo format'],
         deployedServices: [
-          { code: 'P1', detail: 'Education-led livestream with usage demo', bu: 'direct-brand', since: 'Mar 2024' },
-          { code: 'P2', detail: 'Creator seeding for category education', bu: 'direct-brand', since: 'Feb 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'Education-led livestream with usage demo', bu: 'direct-brand', since: 'Mar 2024' },
+          { moduleSlug: 'ugc-content-production', detail: 'Creator seeding for category education', bu: 'direct-brand', since: 'Feb 2024' },
         ],
-        approachReasoning: 'P2 seeded 4 weeks before P1 launch to build category awareness. Livestream then converted the educated audience.',
+        approachReasoning: 'UGC content seeded 4 weeks before Livestream Commerce launch to build category awareness. Livestream then converted the educated audience.',
         outcomeMetrics: [{ value: 'Cat. #1', label: 'Dry shampoo on TikTok Shop', source: 'Category report' }],
         narrativeOutcomes: [],
         patterns: [
           {
             id: 'uv-p01',
-            title: 'New categories need P2 education before P1 commerce',
+            title: 'New categories need UGC education before Livestream Commerce',
             appliesTo: 'Any brand launching a product format unfamiliar to Vietnamese consumers',
-            insight: 'Livestream cannot educate and sell simultaneously for unfamiliar formats. Run P2 creator education 4 weeks before P1 launch. The livestream audience arrives already understanding why they need the product.',
+            insight: 'Livestream cannot educate and sell simultaneously for unfamiliar formats. Run UGC creator education 4 weeks before Livestream Commerce launch. The livestream audience arrives already understanding why they need the product.',
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Beauty', 'Hair Care', 'Category launch'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P2', 'Education-first', 'Category creation'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream + UGC Content', 'Education-first', 'Category creation'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['Category #1', 'New format launch'] },
         ],
         linkedEntities: [
@@ -894,7 +902,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         projectObjective: 'Launch Dove Dry Shampoo as a new product format on TikTok — build category awareness before driving commerce.',
         kpis: [
           { name: 'Category rank', target: 'Top 5', achieved: '#1', met: true },
-          { name: 'P2 to P1 handoff', target: '4 weeks', achieved: '4 weeks', met: true },
+          { name: 'UGC Content to Livestream handoff', target: '4 weeks', achieved: '4 weeks', met: true },
         ],
       },
       {
@@ -904,7 +912,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Sunsilk',
         type: 'adhoc',
         period: 'Nov 2024',
-        services: ['P1'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: 'Executed on-time · BAU execution',
         briefNote: 'One-off 11.11 stream for Sunsilk. Used existing BAU studio from Dove engagement. 4-hour session, standard promotional format.',
         outcomeNote: 'Executed on schedule. Positive session metrics, no separate GMV reporting. Confirmed BAU capability cross-brand.',
@@ -913,7 +921,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Beauty', 'FMCG', 'Multi-brand'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1', 'P2', 'P5'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce', 'UGC Content Production', 'Affiliate Marketing'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['$8M+ GMV', 'Multi-brand scale'] },
     ],
 
@@ -933,8 +941,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P2 education seeding deployed 4 weeks before P1 commerce launch.',
-      reasoning: 'The P2-first, then P1 sequencing was invented for Dove Dry Shampoo and proved the category education model.',
+      servicesOverview: 'UGC content education seeding deployed 4 weeks before Livestream Commerce launch.',
+      reasoning: 'The UGC-first, then Livestream sequencing was invented for Dove Dry Shampoo and proved the category education model.',
     },
 
     accountOutcomes: {
@@ -980,7 +988,9 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     keyContacts: [],
 
     brands: [
-      { id: 'cocoon-beauty', slug: 'cocoon-beauty', name: 'Cocoon Beauty', status: 'active', contractedServices: ['P1', 'P2', 'P5'] },
+      { id: 'cocoon-beauty', slug: 'cocoon-beauty', name: 'Cocoon Beauty', status: 'active', contractedModules: ['livestream-commerce', 'ugc-content-production', 'affiliate-marketing'], contractedServiceLines: [],
+        // NOTE: P2 here = UGC in old taxonomy → ugc-content-production. P5 = affiliate → affiliate-marketing. Confirm with user.
+      },
     ],
 
     projects: [
@@ -991,13 +1001,13 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Cocoon Beauty',
         type: 'full-case',
         period: 'Jan – Dec 2024',
-        services: ['P1', 'P2'],
+        services: { modules: ['livestream-commerce', 'ugc-content-production'], serviceLines: [] },
         outcomeHeadline: '0 → 1M followers via affiliate-first creator program',
         goals: ['Grow TikTok following to 1M by year end', 'Build sustainable affiliate creator community'],
         painPoints: ['Limited budget — cannot afford flat-fee macro creators', 'Brand identity needs to feel authentic, not sponsored'],
         deployedServices: [
-          { code: 'P1', detail: 'Affiliate-led livestream events with community hosts', bu: 'affiliate', since: 'Jan 2024' },
-          { code: 'P2', detail: 'Native UGC creator partnerships on commission model', bu: 'affiliate', since: 'Jan 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'Affiliate-led livestream events with community hosts', bu: 'affiliate', since: 'Jan 2024' },
+          { moduleSlug: 'ugc-content-production', detail: 'Native UGC creator partnerships on commission model', bu: 'affiliate', since: 'Jan 2024' },
         ],
         approachReasoning: 'Commission-only model self-selects for creators who believe in the product. Combined with livestream events hosted by community members (not hired influencers), the result is authentic content at scale.',
         outcomeMetrics: [
@@ -1015,7 +1025,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Beauty', 'Indie', 'Vietnamese-made'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P2', 'Affiliate model', 'Commission-only'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream + UGC Content', 'Affiliate model', 'Commission-only'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['1M followers', 'Community-led', 'Organic growth'] },
         ],
         linkedEntities: [
@@ -1037,7 +1047,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Cocoon Beauty',
         type: 'adhoc',
         period: 'Jan 2025',
-        services: ['P5'],
+        services: { modules: ['affiliate-marketing'], serviceLines: [] },
         outcomeHeadline: '3× content volume during Tet week',
         briefNote: 'Tet creator seeding push — 60 KOCs briefed with gifted product. Commission-only, 1-week window. Activated existing creator network.',
         outcomeNote: '3× normal content volume during Tet week. Organic reach boost without additional budget.',
@@ -1046,7 +1056,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Beauty', 'Indie', 'D2C'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1', 'P2', 'P5'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce', 'UGC Content Production', 'Affiliate Marketing'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['1M followers', 'Affiliate growth'] },
     ],
 
@@ -1067,7 +1077,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'Commission-only P1 + P2 operating in parallel. Community hosts replace hired influencers across all touchpoints.',
+      servicesOverview: 'Commission-only Livestream Commerce + UGC Content Production operating in parallel. Community hosts replace hired influencers across all touchpoints.',
       reasoning: 'For Cocoon, authenticity is the brand. Any creator who feels "paid" breaks the brand equity. Commission-only self-selects for believers — and believers produce content that converts because they mean it.',
     },
 
@@ -1115,7 +1125,9 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     keyContacts: [],
 
     brands: [
-      { id: 'pampers-vn', slug: 'pampers-vn', name: 'Pampers VN', status: 'active', contractedServices: ['P1', 'P3'] },
+      { id: 'pampers-vn', slug: 'pampers-vn', name: 'Pampers VN', status: 'active', contractedModules: ['livestream-commerce'], contractedServiceLines: [],
+        // NOTE: P3 TikTok Shop Partner merged into Livestream Commerce. TODO: affiliate-marketing may apply for affiliate program component.
+      },
     ],
 
     projects: [
@@ -1126,28 +1138,28 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Pampers VN',
         type: 'full-case',
         period: 'Mar – Jun 2024',
-        services: ['P1', 'P3'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: 'First parenting brand to scale on TikTok Shop VN',
         goals: ['Establish Pampers as TikTok Shop category leader for diapers'],
         painPoints: ['No category precedent — parenting products not proven on TikTok Shop VN'],
         deployedServices: [
-          { code: 'P3', detail: 'TikTok Shop storefront + certification badges', bu: 'direct-brand', since: 'Mar 2024' },
-          { code: 'P1', detail: 'Expert-parent hosted livestream sessions', bu: 'direct-brand', since: 'Apr 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'TikTok Shop storefront + certification badges (formerly TikTok Shop Partner)', bu: 'direct-brand', since: 'Mar 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'Expert-parent hosted livestream sessions', bu: 'direct-brand', since: 'Apr 2024' },
         ],
-        approachReasoning: 'P3 storefront launched 3 weeks before first P1 session to establish shop credibility. Parent-credentialed hosts used throughout.',
+        approachReasoning: 'TikTok Shop storefront launched 3 weeks before first Livestream session to establish shop credibility. Parent-credentialed hosts used throughout.',
         outcomeMetrics: [{ value: 'Cat. #1', label: 'Diapers on TikTok Shop VN', source: 'Category report Q2' }],
         narrativeOutcomes: [],
         patterns: [
           {
             id: 'pa-p01',
             title: 'Mom category hosts must be credible parents, not just lifestyle creators',
-            appliesTo: 'Baby care and parenting brands on P1',
+            appliesTo: 'Baby care and parenting brands using Livestream Commerce',
             insight: 'Viewers in the parenting category verify host credibility by looking for genuine parent signals — children visible, lived experience referenced. Lifestyle hosts without parent signals produce 40–50% lower add-to-cart rates.',
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Mom & Kid', 'Diapers', 'TikTok entry'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P3', 'Expert-parent host', 'Shop first'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream Commerce', 'Expert-parent host', 'Shop first'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['Category #1', 'First mover'] },
         ],
         linkedEntities: [
@@ -1159,7 +1171,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         projectObjective: 'Establish Pampers as the first parenting brand to scale on TikTok Shop VN — no category precedent, build from zero.',
         kpis: [
           { name: 'Category rank', target: 'Top 3', achieved: '#1', met: true },
-          { name: 'Shop setup to first P1', target: '4 weeks', achieved: '3 weeks', met: true },
+          { name: 'Shop setup to first Livestream session', target: '4 weeks', achieved: '3 weeks', met: true },
         ],
       },
       {
@@ -1169,7 +1181,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Pampers VN',
         type: 'adhoc',
         period: 'Jun 2024',
-        services: ['P1'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: 'Mid-year promo executed · results recorded',
         briefNote: 'Mid-year promotion stream, 4 hours, BAU execution. Standard promotional mechanics — bundle deals, flash price drops.',
         outcomeNote: 'Executed on schedule. Session results recorded and used in Q3 planning benchmark.',
@@ -1178,7 +1190,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Mom & Kid', 'Diapers', 'MNC'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1', 'P3'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['Category leader', 'First mover'] },
     ],
 
@@ -1199,8 +1211,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P3 shop setup first (3 weeks ahead of P1 launch). Expert-parent hosts selected over lifestyle creators throughout.',
-      reasoning: 'P3 storefront credibility signals matter in the parenting category — parents check shop ratings and certification badges. Leading with P3 built that credibility layer before the first livestream session.',
+      servicesOverview: 'TikTok Shop setup first (3 weeks ahead of Livestream launch). Expert-parent hosts selected over lifestyle creators throughout.',
+      reasoning: 'TikTok Shop storefront credibility signals matter in the parenting category — parents check shop ratings and certification badges. Leading with shop setup built that credibility layer before the first livestream session.',
     },
 
     accountOutcomes: {
@@ -1208,7 +1220,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         { value: 'Cat. #1', label: 'Diapers on TikTok Shop VN', source: 'Category report Q2' },
         { value: '$3M+', label: 'GMV achieved', source: 'TikTok Shop dashboard' },
       ],
-      narrative: 'First parenting brand to achieve category leadership on TikTok Shop VN. The P3-first sequencing is now recommended as standard for all parenting category entries.',
+      narrative: 'First parenting brand to achieve category leadership on TikTok Shop VN. The shop-first sequencing is now recommended as standard for all parenting category entries.',
     },
   },
 
@@ -1247,7 +1259,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     keyContacts: [],
 
     brands: [
-      { id: 'friso-vn', slug: 'friso-vn', name: 'Friso VN', status: 'active', contractedServices: ['P4'] },
+      { id: 'friso-vn', slug: 'friso-vn', name: 'Friso VN', status: 'active', contractedModules: ['performance-boosting'], contractedServiceLines: [] },
     ],
 
     projects: [
@@ -1258,12 +1270,12 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Friso VN',
         type: 'full-case',
         period: 'Jul – Sep 2024',
-        services: ['P4'],
-        outcomeHeadline: '2.5× ROAS benchmark for premium dairy via P4',
+        services: { modules: ['performance-boosting'], serviceLines: [] },
+        outcomeHeadline: '2.5× ROAS benchmark for premium dairy via Performance Boosting',
         goals: ['Achieve 2× ROAS target on premium dairy formula'],
         painPoints: ['High-consideration purchase — standard retargeting insufficient', 'Regulatory constraints on creative messaging'],
         deployedServices: [
-          { code: 'P4', detail: 'Parent-intent audience segmentation + premium-targeted Meta/TikTok', bu: 'direct-brand', since: 'Jul 2024' },
+          { moduleSlug: 'performance-boosting', detail: 'Parent-intent audience segmentation + premium-targeted Meta/TikTok', bu: 'direct-brand', since: 'Jul 2024' },
         ],
         approachReasoning: 'Household income and urban area signals layered with parent-intent behavioural data produced a tightly qualified audience. Regulatory constraints on formula advertising required creative workarounds approved in advance.',
         outcomeMetrics: [
@@ -1281,7 +1293,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Mom & Kid', 'Premium Dairy', 'High-consideration'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P4 only', 'Performance-first', 'ROAS benchmark'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Performance Boosting only', 'Performance-first', 'ROAS benchmark'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['2.5× ROAS', '35% CPA reduction'] },
         ],
         linkedEntities: [
@@ -1303,16 +1315,16 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Friso VN',
         type: 'adhoc',
         period: 'Oct 2024',
-        services: ['P2'],
+        services: { modules: ['ugc-content-production'], serviceLines: [] },
         outcomeHeadline: 'Seeding test run · informed Q4 plan',
-        briefNote: '20 KOL micro-seeding test for new Friso product line. Commission model, 3-week window. Used to validate creator appetite before committing to full P2 program.',
+        briefNote: '20 KOL micro-seeding test for new Friso product line. Commission model, 3-week window. Used to validate creator appetite before committing to full UGC Content Production program.',
         outcomeNote: 'Mixed results — 14/20 KOLs produced. Briefed Q4 plan, full program deferred to Q1 2025.',
       },
     ],
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Mom & Kid', 'Premium Dairy', 'MNC'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P4', 'P2'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Performance Boosting', 'UGC Content Production'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['2.5× ROAS', 'Performance benchmark'] },
     ],
 
@@ -1333,7 +1345,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P4 only — parent-intent behavioural audience + household income signals. Regulatory-approved creative brief pre-cleared before production.',
+      servicesOverview: 'Performance Boosting only — parent-intent behavioural audience + household income signals. Regulatory-approved creative brief pre-cleared before production.',
       reasoning: 'Premium dairy is a high-CPM, high-consideration category. Narrow targeting beats broad targeting because the conversion rate differential more than compensates for the higher CPM. The regulatory constraint on creative actually forced tighter audience thinking.',
     },
 
@@ -1377,7 +1389,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     keyContacts: [],
 
     brands: [
-      { id: 'bobby-vn', slug: 'bobby-vn', name: 'Bobby VN', status: 'active', contractedServices: ['P1'] },
+      { id: 'bobby-vn', slug: 'bobby-vn', name: 'Bobby VN', status: 'active', contractedModules: ['livestream-commerce'], contractedServiceLines: [] },
     ],
 
     projects: [
@@ -1388,12 +1400,12 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Bobby VN',
         type: 'full-case',
         period: 'Jun – Dec 2024',
-        services: ['P1'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: 'Category-leader brand storytelling via expert-parent hosting',
         goals: ['Defend category leadership against MNC competitors on TikTok', 'Build brand loyalty through community livestream format'],
         painPoints: ['MNC competitors entering with larger budgets', 'Brand strength is community trust — must preserve it in digital'],
         deployedServices: [
-          { code: 'P1', detail: 'Daily BAU story-led livestream with community hosts', bu: 'direct-brand', since: 'Jun 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'Daily BAU story-led livestream with community hosts', bu: 'direct-brand', since: 'Jun 2024' },
         ],
         approachReasoning: "Bobby's advantage is community trust — \"Vietnamese brand for Vietnamese families\". Livestream format led with brand story and community pride, then product conversion. Not the reverse.",
         outcomeMetrics: [{ value: 'Cat. #1', label: 'Diapers — Vietnamese brand', source: 'TikTok Shop category data' }],
@@ -1408,7 +1420,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Mom & Kid', 'Diapers', 'Vietnamese brand'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1 only', 'Story-led', 'Community hosts'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream Commerce only', 'Story-led', 'Community hosts'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['Category #1', 'Brand defense', 'Community trust'] },
         ],
         linkedEntities: [
@@ -1417,7 +1429,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         ],
         version: 'v2026',
         lastVerified: '1w ago',
-        projectObjective: "Defend Bobby's category leadership against MNC competitors by deploying community-first brand storytelling via daily P1 livestream.",
+        projectObjective: "Defend Bobby's category leadership against MNC competitors by deploying community-first brand storytelling via daily Livestream Commerce.",
         kpis: [
           { name: 'Category rank (Vietnamese brand)', target: '#1', achieved: '#1', met: true },
           { name: 'Daily BAU sessions', target: '5/week', achieved: '7/week', met: true },
@@ -1430,7 +1442,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Bobby VN',
         type: 'adhoc',
         period: 'Jan 2025',
-        services: ['P1'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: 'Tet popup positive · format tested for 2025 scale',
         briefNote: 'Tet popup stream, 3hrs, gifting mechanic — community members received gifted product kits for Tet. Tested "community gift-back" stream format.',
         outcomeNote: 'Strong engagement, format validated. Community gift-back mechanic to be scaled for 2025 Tet campaign.',
@@ -1439,7 +1451,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Mom & Kid', 'Diapers', 'Local brand'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['Category defense', 'Community trust'] },
     ],
 
@@ -1460,7 +1472,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: "P1 BAU with community hosts — mothers from Bobby's existing customer base, not hired creators.",
+      servicesOverview: "Livestream Commerce BAU with community hosts — mothers from Bobby's existing customer base, not hired creators.",
       reasoning: "Bobby doesn't compete on production quality. It competes on community trust. Every host decision is filtered through one question: does this person feel like 'one of us' to a Bobby mother?",
     },
 
@@ -1506,7 +1518,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     keyContacts: [],
 
     brands: [
-      { id: 'sunhouse-vn', slug: 'sunhouse-vn', name: 'Sunhouse VN', status: 'active', contractedServices: ['P1', 'P4'] },
+      { id: 'sunhouse-vn', slug: 'sunhouse-vn', name: 'Sunhouse VN', status: 'active', contractedModules: ['livestream-commerce', 'performance-boosting'], contractedServiceLines: [] },
     ],
 
     projects: [
@@ -1517,15 +1529,15 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Sunhouse VN',
         type: 'full-case',
         period: 'Sep – Nov 2023',
-        services: ['P1', 'P4'],
+        services: { modules: ['livestream-commerce', 'performance-boosting'], serviceLines: [] },
         outcomeHeadline: '357% GMV uplift in 3 months · zero to market leader',
         goals: ['Achieve 3× GMV within 90 days', 'Establish Sunhouse as #1 local appliance brand on TikTok Shop'],
         painPoints: ['Starting from zero — no TikTok Shop presence', 'Products require demonstration — static content insufficient'],
         deployedServices: [
-          { code: 'P1', detail: 'Demo-heavy BAU livestream with cooking/cleaning hosts', bu: 'direct-brand', since: 'Sep 2023' },
-          { code: 'P4', detail: 'GMV Max + Spark Ads from top-performing demo content', bu: 'direct-brand', since: 'Oct 2023' },
+          { moduleSlug: 'livestream-commerce', detail: 'Demo-heavy BAU livestream with cooking/cleaning hosts', bu: 'direct-brand', since: 'Sep 2023' },
+          { moduleSlug: 'performance-boosting', detail: 'GMV Max + Spark Ads from top-performing demo content', bu: 'direct-brand', since: 'Oct 2023' },
         ],
-        approachReasoning: '45-day ramp: Day 1–15 studio calibration + host selection. Day 15–30 daily demo sessions organic only. Day 30–45 introduce P4 using top demo content as Spark Ads. GMV inflection at day 38.',
+        approachReasoning: '45-day ramp: Day 1–15 studio calibration + host selection. Day 15–30 daily demo sessions organic only. Day 30–45 introduce Performance Boosting using top demo content as Spark Ads. GMV inflection at day 38.',
         outcomeMetrics: [
           { value: '357%', label: 'GMV uplift', source: 'TikTok Shop dashboard' },
           { value: '90 days', label: 'To market leader', source: 'Category report' },
@@ -1535,13 +1547,13 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           {
             id: 'su-p01',
             title: 'Local appliance brands need demo-heavy hosts who cook or clean on-stream',
-            appliesTo: 'Home appliance and kitchen brands on P1',
+            appliesTo: 'Home appliance and kitchen brands on Livestream Commerce',
             insight: 'Appliance livestream hosts must actually use the product on-stream — not describe it. Hosts who cook real meals or demonstrate cleaning tasks achieve 2–3× the add-to-cart rate of hosts who just present the product. Audition on demonstration skill, not presentation style.',
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Home Appliance', 'Demo category', 'Vietnamese brand'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1+P4', '45-day ramp', 'Demo-led'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream + Performance Boosting', '45-day ramp', 'Demo-led'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['357% GMV', 'Zero to leader', '90 days'] },
         ],
         linkedEntities: [
@@ -1563,16 +1575,16 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Sunhouse VN',
         type: 'adhoc',
         period: 'Feb 2024',
-        services: ['P5'],
-        outcomeHeadline: '28/35 creators produced content · informed P2 brief',
-        briefNote: 'Affiliate creator seeding test for new kitchen range. 35 creators, commission-only, 2-week window. Goal: validate creator appetite for demo-style content before committing to full P2.',
-        outcomeNote: '28/35 creators produced usable content. High-quality demos outperformed lifestyle shots. Informed full P2 brief for Q2 2024.',
+        services: { modules: ['affiliate-marketing'], serviceLines: [] },
+        outcomeHeadline: '28/35 creators produced content · informed UGC Content Production brief',
+        briefNote: 'Affiliate creator seeding test for new kitchen range. 35 creators, commission-only, 2-week window. Goal: validate creator appetite for demo-style content before committing to full UGC Content Production program.',
+        outcomeNote: '28/35 creators produced usable content. High-quality demos outperformed lifestyle shots. Informed full UGC Content Production brief for Q2 2024.',
       },
     ],
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Home Appliance', 'Kitchen', 'Home Care'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1', 'P4', 'P5'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce', 'Performance Boosting', 'Affiliate Marketing'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['357% GMV', 'Demonstration ROI'] },
     ],
 
@@ -1593,8 +1605,8 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P1 demo-heavy BAU with 45-day structured ramp. P4 introduced at day 30 using top-performing demo content as Spark Ads.',
-      reasoning: 'The 45-day ramp was designed to build organic session quality before spending on P4. GMV Max and Spark Ads amplify content that already converts — launching P4 before that quality threshold is waste.',
+      servicesOverview: 'Livestream Commerce demo-heavy BAU with 45-day structured ramp. Performance Boosting introduced at day 30 using top-performing demo content as Spark Ads.',
+      reasoning: 'The 45-day ramp was designed to build organic session quality before spending on Performance Boosting. GMV Max and Spark Ads amplify content that already converts — launching Performance Boosting before that quality threshold is waste.',
     },
 
     accountOutcomes: {
@@ -1641,7 +1653,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     keyContacts: [],
 
     brands: [
-      { id: 'comet-vn', slug: 'comet-vn', name: 'Comet VN', status: 'active', contractedServices: ['P1'] },
+      { id: 'comet-vn', slug: 'comet-vn', name: 'Comet VN', status: 'active', contractedModules: ['livestream-commerce'], contractedServiceLines: [] },
     ],
 
     projects: [
@@ -1652,12 +1664,12 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Comet VN',
         type: 'full-case',
         period: 'Jul – Sep 2024',
-        services: ['P1'],
+        services: { modules: ['livestream-commerce'], serviceLines: [] },
         outcomeHeadline: 'Cleaning category TikTok breakthrough · new audience segment',
         goals: ['Establish Comet presence on TikTok Shop in cleaning category'],
         painPoints: ['Cleaning is a low-engagement TikTok category — no proven playbook', 'MNC brand guidelines constrain creative format options'],
         deployedServices: [
-          { code: 'P1', detail: 'Before/after demo livestream with anchor SKU focus', bu: 'direct-brand', since: 'Jul 2024' },
+          { moduleSlug: 'livestream-commerce', detail: 'Before/after demo livestream with anchor SKU focus', bu: 'direct-brand', since: 'Jul 2024' },
         ],
         approachReasoning: 'Started with single anchor SKU (most visually dramatic result). Before/after demonstration format agreed as exception to standard brand guidelines. Category viability benchmark established before expanding SKU range.',
         outcomeMetrics: [{ value: 'Cat. entry', label: 'Established TikTok presence', source: 'TikTok Shop data' }],
@@ -1666,13 +1678,13 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
           {
             id: 'cm-p01',
             title: 'Cleaning category converts best with before/after demo format',
-            appliesTo: 'Cleaning and household care brands on P1 in low-engagement categories',
+            appliesTo: 'Cleaning and household care brands on Livestream Commerce',
             insight: 'Generic lifestyle framing does not convert for cleaning products. Before/after format — showing product efficacy on a real mess — consistently outperforms. Negotiate this format exception with brand team in week 1, before any content is produced.',
           },
         ],
         tagClusters: [
           { category: 'industry', label: 'Industry', tags: ['Cleaning', 'Home Care', 'Henkel'] },
-          { category: 'service-combo', label: 'Service combo', tags: ['P1 only', 'Before/after format', 'Anchor SKU'] },
+          { category: 'service-combo', label: 'Service combo', tags: ['Livestream Commerce only', 'Before/after format', 'Anchor SKU'] },
           { category: 'outcome-type', label: 'Outcome', tags: ['Category breakthrough', 'Low-engagement category entry'] },
         ],
         linkedEntities: [
@@ -1694,16 +1706,16 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
         brandName: 'Comet VN',
         type: 'adhoc',
         period: 'Oct 2024',
-        services: ['P2'],
+        services: { modules: ['ugc-content-production'], serviceLines: [] },
         outcomeHeadline: 'Mixed results · brief updated · full program on hold',
         briefNote: '15 micro-KOL trial for Comet bathroom cleaning range. 2-week window, gifted product. Tested whether lifestyle KOLs can make cleaning content feel aspirational.',
-        outcomeNote: 'Mixed results — 9/15 produced content. Lifestyle framing underperformed vs demo. Brief updated to demo-first for any future program. Full P2 program on hold pending Q1 2025 review.',
+        outcomeNote: 'Mixed results — 9/15 produced content. Lifestyle framing underperformed vs demo. Brief updated to demo-first for any future program. Full UGC Content Production program on hold pending Q1 2025 review.',
       },
     ],
 
     tagClusters: [
       { category: 'industry', label: 'Industry', tags: ['Cleaning', 'Home Care', 'MNC'] },
-      { category: 'service-combo', label: 'Services used', tags: ['P1', 'P2'] },
+      { category: 'service-combo', label: 'Services used', tags: ['Livestream Commerce', 'UGC Content Production'] },
       { category: 'outcome-type', label: 'Outcome class', tags: ['Category entry', 'Low-engagement breakthrough'] },
     ],
 
@@ -1724,7 +1736,7 @@ export const PORTFOLIO_ACCOUNTS: PortfolioAccount[] = [
     },
 
     accountSolution: {
-      servicesOverview: 'P1 only — before/after demo format, single anchor SKU. Format exception negotiated with brand team in week 1.',
+      servicesOverview: 'Livestream Commerce only — before/after demo format, single anchor SKU. Format exception negotiated with brand team in week 1.',
       reasoning: 'The brand guideline constraint turned into a creative constraint that forced the right answer: before/after is the highest-converting format in cleaning. Getting brand sign-off on it week 1 meant no wasted production time on formats that would not convert.',
     },
 

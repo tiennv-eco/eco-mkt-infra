@@ -1,3 +1,5 @@
+import type { ModuleSlug } from '@/data/services/types';
+
 export type ICPStatus = 'active' | 'evaluating' | 'deprioritized' | 'validated';
 export type ICPTier = 1 | 2 | 3;
 export type SocialCommerceMaturity = 'experimenting' | 'scaling' | 'mature' | 'disrupted';
@@ -75,9 +77,9 @@ export interface ICP {
 
   // ── Service Mix (Section 08) ──
   serviceMix?: {
-    heroServices?: string[];
-    commonAddOns?: string[];
-    rarelySold?: Array<{ pCode: string; whyNot: string }>;
+    heroServices?: ModuleSlug[];
+    commonAddOns?: ModuleSlug[];
+    rarelySold?: Array<{ moduleSlug: ModuleSlug; whyNot: string }>;
     typicalSequencing?: string;
   };
 

@@ -4,6 +4,10 @@ import { getAllIcps, getIcpBySlug, getPortfoliosByIcp } from '@/data/icps/helper
 import { getPersonaBySlug } from '@/data/personas/helpers';
 import type { ICPStatus, ICPTier, SocialCommerceMaturity, HypothesisStatus, FitConfidence } from '@/data/icps/types';
 import { getInsightsForIcp } from '@/lib/research/helpers';
+import {
+  getModuleBySlug,
+  getServiceLinesForIcp,
+} from '@/data/services/helpers';
 import RelevantResearchSection from '@/components/research/RelevantResearchSection';
 import styles from './icp.module.css';
 
@@ -112,6 +116,7 @@ export default async function ICPDetailPage({
 
   const mappedPortfolios = getPortfoliosByIcp(icp.slug);
   const relevantInsights = await getInsightsForIcp(icp.slug);
+  const contractedServiceLines = getServiceLinesForIcp(icp.slug);
 
   const citableCount = icp.outcomes?.citableOutcomes?.length ?? 0;
 
@@ -521,43 +526,127 @@ export default async function ICPDetailPage({
           <FieldRow label="HERO SERVICES">
             {icp.serviceMix?.heroServices && icp.serviceMix.heroServices.length > 0 ? (
               <div className={styles.pillRow}>
-                {icp.serviceMix.heroServices.map(p => (
-                  <span key={p} className={styles.servicePillHero}>{p}</span>
+                {icp.serviceMix.heroServices.map(slug => {
+                  const mod = getModuleBySlug(slug);
+                  return mod ? (
+                    <Link
+                      key={slug}
+                      href={`/knowledge-base/services/${mod.slug}`}
+                      className={styles.servicePillHero}
+                    >
+                      {mod.pillarId} · {mod.name}
+                    </Link>
+                  ) : (
+                    <span key={slug} className={styles.servicePillGray} title="Module not found">{slug}</span>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className={styles.pillRow}>
+                {[0, 1, 2].map(i => (
+                  <span key={i} className={`${styles.servicePillHero} ${styles.ghostCard}`}>Hero service not yet captured</span>
                 ))}
               </div>
-            ) : <Muted />}
+            )}
           </FieldRow>
           <FieldRow label="COMMON ADD-ONS">
             {icp.serviceMix?.commonAddOns && icp.serviceMix.commonAddOns.length > 0 ? (
               <div className={styles.pillRow}>
-                {icp.serviceMix.commonAddOns.map(p => (
-                  <span key={p} className={styles.servicePillAddon}>{p}</span>
+                {icp.serviceMix.commonAddOns.map(slug => {
+                  const mod = getModuleBySlug(slug);
+                  return mod ? (
+                    <Link
+                      key={slug}
+                      href={`/knowledge-base/services/${mod.slug}`}
+                      className={styles.servicePillAddon}
+                    >
+                      {mod.pillarId} · {mod.name}
+                    </Link>
+                  ) : (
+                    <span key={slug} className={styles.servicePillGray} title="Module not found">{slug}</span>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className={styles.pillRow}>
+                {[0, 1, 2].map(i => (
+                  <span key={i} className={`${styles.servicePillAddon} ${styles.ghostCard}`}>Add-on not yet captured</span>
                 ))}
               </div>
-            ) : <Muted />}
+            )}
           </FieldRow>
           <FieldRow label="RARELY SOLD">
             {icp.serviceMix?.rarelySold && icp.serviceMix.rarelySold.length > 0 ? (
               <div className={styles.rarelySoldList}>
-                {icp.serviceMix.rarelySold.map((r, i) => (
-                  <div key={i} className={styles.rarelySoldRow}>
-                    <span className={styles.servicePillGray}>{r.pCode}</span>
-                    <span className={styles.rarelySoldReason}>{r.whyNot}</span>
-                  </div>
-                ))}
+                {icp.serviceMix.rarelySold.map((r, i) => {
+                  const mod = getModuleBySlug(r.moduleSlug);
+                  return (
+                    <div key={i} className={styles.rarelySoldRow}>
+                      {mod ? (
+                        <Link
+                          href={`/knowledge-base/services/${mod.slug}`}
+                          className={styles.servicePillGray}
+                        >
+                          {mod.pillarId} · {mod.name}
+                        </Link>
+                      ) : (
+                        <span className={styles.servicePillGray}>{r.moduleSlug}</span>
+                      )}
+                      <span className={styles.rarelySoldReason}>{r.whyNot}</span>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
-              [0, 1].map(i => (
-                <div key={i} className={`${styles.rarelySoldRow} ${styles.ghostCard}`}>
-                  <span className={styles.ghostText}>Service</span>
-                  <span className={styles.ghostText}>Reason not yet captured</span>
-                </div>
-              ))
+              <span className={styles.fieldMuted}>No &apos;rarely sold&apos; entries captured</span>
             )}
           </FieldRow>
           <FieldRow label="TYPICAL SEQUENCING">
-            {icp.serviceMix?.typicalSequencing ?? <Muted />}
+            {icp.serviceMix?.typicalSequencing
+              ? icp.serviceMix.typicalSequencing.split('\n\n').map((para, i) => (
+                  <p key={i} style={{ marginBottom: i < icp.serviceMix!.typicalSequencing!.split('\n\n').length - 1 ? 8 : 0, fontSize: 13, color: '#333', lineHeight: 1.5 }}>{para}</p>
+                ))
+              : <Muted />}
           </FieldRow>
+        </div>
+
+        {/* Sub-section: Service Lines Commonly Contracted */}
+        <div className={styles.subSectionBlock}>
+          <p className={styles.subSectionTitle}>SERVICE LINES COMMONLY CONTRACTED</p>
+          <p className={styles.subSectionSubtitle}>Reverse-looked-up from Service Lines whose relevantIcpSlugs include this ICP</p>
+          {contractedServiceLines.length > 0 ? (
+            <div className={styles.serviceLineGrid}>
+              {contractedServiceLines.map(sl => {
+                const parentMod = sl.moduleSlugs[0] ? getModuleBySlug(sl.moduleSlugs[0]) : undefined;
+                return (
+                  <Link
+                    key={sl.slug}
+                    href={`/knowledge-base/services/lines/${sl.slug}`}
+                    className={styles.serviceLineCard}
+                  >
+                    <span className={styles.serviceLineTier}>{sl.tierLevel}</span>
+                    <p className={styles.serviceLineName}>{sl.name}</p>
+                    {sl.oneLiner && (
+                      <p className={styles.serviceLineOneLiner}>{sl.oneLiner}</p>
+                    )}
+                    {parentMod && (
+                      <p className={styles.serviceLineModule}>{parentMod.pillarId} · {parentMod.name}</p>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div className={styles.serviceLineGrid}>
+              {[0, 1, 2].map(i => (
+                <div key={i} className={`${styles.serviceLineCard} ${styles.ghostCard}`}>
+                  <span className={styles.ghostText} style={{ fontSize: 10 }}>Tier</span>
+                  <p className={styles.ghostText}>Service Line not yet cross-linked</p>
+                  <p className={styles.ghostText} style={{ fontSize: 11 }}>Populate relevantIcpSlugs in data/services/service-lines.ts</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

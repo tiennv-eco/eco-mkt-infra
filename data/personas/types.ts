@@ -1,3 +1,5 @@
+import type { ModuleSlug, ServiceLineSlug } from '@/data/services/types';
+
 export type PersonaType = 'champion' | 'influencer' | 'blocker' | 'gatekeeper' | 'mixed';
 export type SeniorityLevel = 'operator' | 'manager' | 'director' | 'executive';
 export type InfluenceLevel = 'decider' | 'influencer' | 'gate' | 'executor';
@@ -74,7 +76,14 @@ export interface Persona {
     alliesAndAdversaries?: string;
   };
 
-  // ── ICP Variations (Section 10) ──
+  // ── Service Involvement (Section 10 on detail page) ──
+  serviceInvolvement?: {
+    relevantModuleSlugs?: ModuleSlug[];
+    relevantServiceLineSlugs?: ServiceLineSlug[];
+    contextNote?: string;
+  };
+
+  // ── ICP Variations (Section 11) ──
   icpVariations?: Array<{
     icpSlug: string;
     behaviorAtThisIcp: string;

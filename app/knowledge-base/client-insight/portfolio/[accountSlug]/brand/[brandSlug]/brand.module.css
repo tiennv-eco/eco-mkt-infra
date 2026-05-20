@@ -378,6 +378,28 @@
   border: 0.5px solid var(--red-light);
   border-radius: 4px;
   padding: 3px 8px;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+a.contractedPill:hover {
+  background: #FEE2E2;
+}
+
+.contractedPillLine {
+  font-size: 10px;
+  font-weight: 600;
+  color: #535353;
+  background: #fff;
+  border: 0.5px solid #E6E6E6;
+  border-radius: 4px;
+  padding: 3px 8px;
+  text-decoration: none;
+  transition: border-color 0.12s;
+}
+
+a.contractedPillLine:hover {
+  border-color: #ccc;
 }
 
 /* ─── §08 Brand Top Creators ─────────────────────────────── */

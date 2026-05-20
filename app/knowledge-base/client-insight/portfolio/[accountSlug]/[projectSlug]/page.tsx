@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PORTFOLIO_ACCOUNTS } from '@/data/portfolio/accounts';
 import { getAccountBySlug, getProjectBySlug } from '@/data/portfolio/helpers';
-import { SERVICE_NAMES } from '@/data/portfolio/types';
+import { getModuleBySlug, getServiceLineBySlug } from '@/data/services/helpers';
 import styles from '../../../portfolio.module.css';
 
 export async function generateStaticParams() {
@@ -50,7 +50,9 @@ export default async function ProjectPage({
             <span>{account.name}</span>
             {brand && <span>{brand.name}</span>}
             <span>{project.period}</span>
-            <span>{project.services.join(' + ')}</span>
+            <span>{[...(project.services?.modules ?? []).map(s => getModuleBySlug(s)?.name ?? s),
+   ...(project.services?.serviceLines ?? []).map(s => getServiceLineBySlug(s)?.name ?? s)
+].join(' + ') || '—'}</span>
           </p>
         </div>
 
@@ -100,7 +102,9 @@ export default async function ProjectPage({
         <h1 className={styles.projectHeroName}>{p.name}</h1>
         <p className={styles.projectHeroMeta}>
           <span>{p.period}</span>
-          <span>{p.services.join(' + ')}</span>
+          <span>{[...(p.services?.modules ?? []).map(s => getModuleBySlug(s)?.name ?? s),
+   ...(p.services?.serviceLines ?? []).map(s => getServiceLineBySlug(s)?.name ?? s)
+].join(' + ') || '—'}</span>
           <span>Locked {p.version}</span>
           <span>Verified {p.lastVerified}</span>
         </p>

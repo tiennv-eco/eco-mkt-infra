@@ -130,13 +130,11 @@ export const ICPS: ICP[] = [
     },
 
     serviceMix: {
-      heroServices: ['P1', 'P3'],
-      commonAddOns: ['P2', 'P4'],
-      rarelySold: [
-        { pCode: 'P7', whyNot: "Standalone tech licensing rarely fits — they already have ad platforms. Bundled in, yes; standalone, rarely." },
-      ],
+      heroServices: ['livestream-commerce', 'brand-advocacy'],
+      commonAddOns: ['affiliate-marketing', 'ugc-content-production'],
+      rarelySold: [],
       typicalSequencing:
-        "Phase 1 (months 0-3): Land with P1 livestream commerce on hero brand. Phase 2 (months 3-9): Expand to P2 KOC content + P3 affiliate. Phase 3 (months 9-18): Add P4 performance media + expand to 2nd-3rd brands in portfolio.",
+        "Phase 1 (months 0-3): Land with Livestream Commerce on hero brand. Phase 2 (months 3-9): Expand to Affiliate Marketing KOC content + Brand Advocacy. Phase 3 (months 9-18): Add UGC Content Production performance media + expand to 2nd-3rd brands in portfolio.\n\nHistorical note: standalone tech licensing (former P7 — Content Commerce platform) was considered for this ICP but ruled out — Standalone tech licensing rarely fits — they already have ad platforms. Bundled in, yes; standalone, rarely.",
     },
 
     outcomes: {
@@ -348,10 +346,10 @@ export const ICPS: ICP[] = [
     },
 
     serviceMix: {
-      heroServices: ['P3', 'P1'],
-      commonAddOns: ['P2'],
+      heroServices: ['brand-advocacy', 'livestream-commerce'],
+      commonAddOns: ['affiliate-marketing'],
       typicalSequencing:
-        "Land with P3 affiliate-native model (their preferred economics) + P1 livestream for launch credibility. Slower service additions than MNC pattern — they grow conservatively.",
+        "Land with Brand Advocacy affiliate-native model (their preferred economics) + Livestream Commerce for launch credibility. Slower service additions than MNC pattern — they grow conservatively.",
     },
 
     outcomes: {

@@ -9,7 +9,7 @@ import {
   getDisplayName,
   getFullDisplayName,
 } from '@/data/portfolio/helpers';
-import { SERVICE_NAMES } from '@/data/portfolio/types';
+import { getModuleBySlug, getServiceLineBySlug } from '@/data/services/helpers';
 import type { Brand, BrandStatus, ProductStatus } from '@/data/portfolio/types';
 import { getInsightsForBrand } from '@/lib/research/helpers';
 import RelevantResearchSection from '@/components/research/RelevantResearchSection';
@@ -412,13 +412,24 @@ export default async function BrandPage({
           <div className={styles.pitchServicesRow}>
             <span className={styles.pitchServicesLabel}>CONTRACTED SERVICES</span>
             <span className={styles.pitchServicesVal}>
-              {brand.contractedServices?.length ? (
+              {(brand.contractedModules?.length || brand.contractedServiceLines?.length) ? (
                 <span className={styles.contractedPills}>
-                  {brand.contractedServices.map(s => (
-                    <span key={s} className={styles.contractedPill}>
-                      {s} — {SERVICE_NAMES[s]}
-                    </span>
-                  ))}
+                  {brand.contractedModules?.map(slug => {
+                    const mod = getModuleBySlug(slug);
+                    return (
+                      <a key={slug} href={`/knowledge-base/services/${slug}`} className={styles.contractedPill}>
+                        {mod ? `${mod.pillarId} · ${mod.name}` : slug}
+                      </a>
+                    );
+                  })}
+                  {brand.contractedServiceLines?.map(slug => {
+                    const line = getServiceLineBySlug(slug);
+                    return (
+                      <a key={slug} href={`/knowledge-base/services/lines/${slug}`} className={styles.contractedPillLine}>
+                        {line?.name ?? slug}
+                      </a>
+                    );
+                  })}
                 </span>
               ) : (
                 <FieldMuted />
@@ -672,7 +683,9 @@ export default async function BrandPage({
                     </div>
                     <p className={pStyles.pjOutcome}>{p.outcomeHeadline}</p>
                     <p className={pStyles.pjServices}>
-                      {p.services.join(' + ')}
+                      {[...(p.services?.modules ?? []).map(s => getModuleBySlug(s)?.name ?? s),
+                         ...(p.services?.serviceLines ?? []).map(s => getServiceLineBySlug(s)?.name ?? s)
+                      ].join(' + ') || '—'}
                       {isFull &&
                         p.type === 'full-case' &&
                         p.patterns.length > 0 && (

@@ -1,4 +1,267 @@
-# Last Build — AI-Assisted Creation Workflow (ICPs + Personas)
+# Last Build — Portfolio ServiceCode Migration (Prompt 5b of 6)
+_2026-05-20_
+
+## Summary
+
+Removed the `ServiceCode` type (`'P1'–'P7'`) and `SERVICE_NAMES` static map entirely from the portfolio data layer. Replaced with dual-altitude slug fields: `contractedModules: ModuleSlug[]` (coarse) + `contractedServiceLines: ServiceLineSlug[]` (specific tier) on Brand, `services: { modules, serviceLines }` on Project, and `moduleSlug`/`serviceLineSlug` on DeployedService.
+
+Migrated 48 field-level references in `data/portfolio/accounts.ts` using the legacy-aware mapping (legacy P2 = UGC → `ugc-content-production`, NOT `affiliate-marketing`). All three portfolio rendering pages updated to call `getModuleBySlug`/`getServiceLineBySlug` helpers instead of indexing `SERVICE_NAMES`. Module and service line pills now render as `<Link>` elements pointing to the services detail pages.
+
+## Files modified
+- `data/portfolio/types.ts` — removed `ServiceCode` type and `SERVICE_NAMES` map; added `contractedModules`/`contractedServiceLines` to Brand; `services` on ProjectBase restructured to `{ modules, serviceLines }`; `DeployedService.code` replaced by `moduleSlug`/`serviceLineSlug`
+- `data/portfolio/helpers.ts` — `getAccountSummaryStats` return type updated; aggregation loop collects `ModuleSlug[]` + `ServiceLineSlug[]` instead of `ServiceCode[]`
+- `data/portfolio/accounts.ts` — 48 field-level migrations; all P-code refs replaced; narrative text updated; TagCluster tags human-readable; LinkedEntity slugs updated
+- `app/knowledge-base/client-insight/portfolio/[accountSlug]/page.tsx` — brand card + Section 07 use helper lookups; pills render as `<Link>`
+- `app/knowledge-base/client-insight/portfolio/[accountSlug]/[projectSlug]/page.tsx` — services join uses helper lookups
+- `app/knowledge-base/client-insight/portfolio/[accountSlug]/brand/[brandSlug]/page.tsx` — contracted services use dual-altitude fields; services join uses helper lookups
+- `app/knowledge-base/client-insight/portfolio.module.css` — added `.bpcServicePillLine`; link-safe styles on `.bpcServicePill`, `.solutionPill`
+- `app/knowledge-base/client-insight/portfolio/[accountSlug]/brand/[brandSlug]/brand.module.css` — added `.contractedPillLine`; link-safe styles on `.contractedPill`
+
+## Build state
+- **146 pages** (unchanged — no route additions or deletions)
+- `npx tsc --noEmit`: clean
+- `grep -rn "'P[1-7]'" data/portfolio/`: zero results ✅
+- `grep -rn "ServiceCode\|SERVICE_NAMES" --include="*.ts" --include="*.tsx" .`: zero results ✅
+
+## No schema. No new dependencies. No env vars.
+
+---
+
+# Last Build — ICP + Persona Cross-Link Migration (Prompt 5a of 6)
+_2026-05-20_
+
+## Summary
+
+Migrated ICP service-mix references from legacy P-codes to the new `ModuleSlug` type. 5 lines across 2 ICPs updated mechanically (mnc-global-fmcg: 5 refs; regional-d2c-beauty: 2 refs). ICP detail page Section 08 now renders clickable `<Link>` Module pills plus a new reverse-lookup sub-section for Service Lines.
+
+Persona type gained optional `serviceInvolvement` field (zero data migration — purely additive). Persona detail page gained new Section 10 (Services They're Involved In) with three sub-blocks: Modules, Service Lines, Deal USPs. Existing Sections 10→11 (ICP Variations) and 11→12 (Relevant Research) renumbered; Reference Index moved to §13.
+
+P7 `whyNot` content preserved in mnc-global-fmcg `typicalSequencing` as a historical note. No content lost.
+
+6 new reverse-lookup helpers added to `data/services/helpers.ts`: `getServiceLinesForIcp`, `getModulesForPersona`, `getServiceLinesForPersona`, `getDealUspsForPersona`.
+
+## Files modified
+- `data/icps/types.ts` — added `ModuleSlug` import; `heroServices`/`commonAddOns` typed as `ModuleSlug[]`; `pCode` renamed to `moduleSlug` on `rarelySold` entries
+- `data/icps/icps.ts` — 5 P-code refs migrated (mnc-global-fmcg + regional-d2c-beauty)
+- `data/personas/types.ts` — added `ModuleSlug`/`ServiceLineSlug` imports; `serviceInvolvement` field added
+- `data/services/helpers.ts` — added `getServiceLinesForIcp`, `getModulesForPersona`, `getServiceLinesForPersona`, `getDealUspsForPersona`
+- `app/knowledge-base/client-insight/icps/[icpSlug]/page.tsx` — Section 08 renders clickable Module pills; new Service Lines sub-section
+- `app/knowledge-base/client-insight/icps/[icpSlug]/icp.module.css` — service pill link styles, sub-section block, serviceLineGrid/Card classes
+- `app/knowledge-base/client-insight/personas/[personaSlug]/page.tsx` — new Section 10 added; §10→§11, §11→§12, §12→§13
+- `app/knowledge-base/client-insight/personas/[personaSlug]/persona.module.css` — service involvement section styles
+
+## Build state
+- **146 pages** (unchanged)
+- `npx tsc --noEmit`: clean
+- `grep -rn "pCode\|'P[1-7]'" data/icps/`: zero results ✅
+
+## What's coming next
+- Prompt 5b: Portfolio ServiceCode migration. 46 P-code references across ~10 portfolio accounts in `data/portfolio/accounts.ts`. `ServiceCode` type will be replaced by `contractedModules`/`contractedServiceLines` slug arrays. The `SERVICE_NAMES` static map will be replaced by helper-based lookups against `data/services/`.
+
+## No schema. No new dependencies. No env vars.
+
+---
+
+# Last Build — Services Detail Pages (Prompt 4 of 6)
+_2026-05-20_
+
+## Summary
+
+Module detail pages (6) at `/knowledge-base/services/[moduleSlug]` and Service Line detail pages (26) at `/knowledge-base/services/lines/[lineSlug]` built. `cross-sell-map/` stub deleted. Two helpers added to `data/services/helpers.ts` (`getServiceLineBySlug`, `getBundlesForServiceLine`); `getModuleBySlug` and `getDealUspsByModule` param widened from `ModuleSlug` to `string` to accept URL params. Build: 115 → 146 pages. tsc clean.
+
+## Files created
+- `app/knowledge-base/services/[moduleSlug]/page.tsx` — 11-section module dossier (5 groups)
+- `app/knowledge-base/services/[moduleSlug]/page.module.css`
+- `app/knowledge-base/services/lines/[lineSlug]/page.tsx` — 9-section service line dossier (Group C conditional for bundles only)
+- `app/knowledge-base/services/lines/[lineSlug]/page.module.css`
+
+## Files deleted
+- `app/knowledge-base/services/cross-sell-map/` (stub, no content)
+
+## Files modified
+- `data/services/helpers.ts` — added `getServiceLineBySlug`, `getBundlesForServiceLine`; widened `getModuleBySlug` and `getDealUspsByModule` param to `string`
+
+## Build state
+- **146 pages** (was 115; +32 new detail pages; -1 deleted stub)
+- `npx tsc --noEmit`: clean
+
+## Verify
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` | ✅ clean |
+| `npm run build` | ✅ 146 pages |
+| Module pages render | `/knowledge-base/services/livestream-commerce` |
+| Service line pages render | `/knowledge-base/services/lines/pl2-room-ops-host` |
+| Bundle composition section | Only appears on bundle lines |
+| Ghost cards | Add-ons section (all 26 lines have empty addOns) |
+
+## Manual steps
+None. No new env vars, no schema changes.
+
+---
+
+# Last Build — Services Listing Page (Prompt 3 of 6)
+_2026-05-20_
+
+## Summary
+
+Services listing page built at `/knowledge-base/services`. Three tabs (Modules / Service Lines / Deal USPs), demand architecture diagram, universal upsell path timeline, per-tab URL-stateful filters. Sidebar updated — Services is now a top-level leaf entry after Brand System & Assets. 7 legacy P-code stub routes deleted, `data/services.ts` flat file deleted. Build: 122 → 115 pages. tsc clean.
+
+## Files created
+- `app/knowledge-base/services/page.tsx` (replaced stub)
+- `app/knowledge-base/services/page.module.css`
+- `app/knowledge-base/services/_components/Hero.tsx`
+- `app/knowledge-base/services/_components/DemandArchitectureDiagram.tsx`
+- `app/knowledge-base/services/_components/StatsStrip.tsx`
+- `app/knowledge-base/services/_components/UpsellPathTimeline.tsx`
+- `app/knowledge-base/services/_components/TabStrip.tsx` (client)
+- `app/knowledge-base/services/_components/ModulesTab.tsx` (client)
+- `app/knowledge-base/services/_components/ServiceLinesTab.tsx` (client)
+- `app/knowledge-base/services/_components/DealUspsTab.tsx` (client)
+
+## Files deleted
+- `app/knowledge-base/services/p1-livestream-commerce/`
+- `app/knowledge-base/services/p2-ugc-content/`
+- `app/knowledge-base/services/p3-tiktok-shop-partner/`
+- `app/knowledge-base/services/p4-performance-media/`
+- `app/knowledge-base/services/p5-affiliate-creator-network/`
+- `app/knowledge-base/services/p6-technology-platform/`
+- `app/knowledge-base/services/p7-service-seven/`
+- `data/services.ts` (legacy flat P-code label map, dead code)
+
+## Files modified
+- `components/Sidebar.tsx` — Services flyout (P1-P7 items) replaced with leaf at `/knowledge-base/services`, moved to position after Brand System & Assets
+
+## Build state
+- **115 pages** (was 122; 7 stubs deleted; 0 new routes; services page.tsx was already counted)
+- `npx tsc --noEmit`: clean
+- Legacy `@/data/services` import path: 0 references in app/components/lib
+- New `@/data/services/` folder path: used only by page.tsx and _components (correct)
+
+## Verify
+| Check | Result |
+|---|---|
+| `ls app/knowledge-base/services/` → only page.tsx, page.module.css, _components/, cross-sell-map/ | ✅ |
+| `ls data/` → no services.ts | ✅ |
+| `npx tsc --noEmit` | ✅ clean |
+| `npm run build` | ✅ 115 pages |
+| Legacy import `from '@/data/services'` | ✅ 0 results |
+| `cross-sell-map/` untouched | ✅ |
+
+## What's coming next
+- Prompt 4: Module detail + Service Line detail pages + decide cross-sell-map route fate. Module cards will become clickable.
+- Prompt 5a: ICP + Persona cross-link migration (heroServices → ModuleSlug[])
+- Prompt 5b: Portfolio ServiceCode migration (46 references)
+
+## No schema. No new npm packages. No env vars.
+
+---
+
+# Previous Build — Services Seed Content (Prompt 2 of 6)
+_2026-05-20_
+
+## Summary
+
+All Services data seeded. 6 Modules, 26 Service Lines (3 bundles with `composedOf`, 2 lines flagged `proposed`), 5 Deal USPs. Content depth varies by source: full content for CEO-doc lines (PL1, PL2, PL3 bundles), medium content for PL3 modular tiers, light content for P3/P4/P6 lines (designed for later fill-in via the transparency pattern). tsc clean. Build still 122 pages. Zero UI changes.
+
+## Files modified
+- `data/services/types.ts` — expanded with full rich types (see deviation note below)
+- `data/services/helpers.ts` — updated imports + 6 new helpers added (see deviation note)
+- `data/services/modules.ts` — 6 modules seeded; export renamed `MODULES` → `SERVICE_MODULES`
+- `data/services/service-lines.ts` — 26 service lines seeded
+- `data/services/deal-usps.ts` — 5 deal USPs seeded
+
+## Deviation from guide spec (necessary, not a bug)
+The guide said "ZERO changes to types.ts and helpers.ts (already complete)" but the Prompt 1 types were placeholder-depth — they did not include the fields needed by the seed content. Both files were updated to accommodate the seed data:
+- **types.ts**: `ModuleSlug` union updated to the 6 real slugs; `Module`/`ServiceLine`/`DealUsp` interfaces expanded with all content fields; `DemandRole` and `ServiceStatus` types added.
+- **helpers.ts**: import changed from `MODULES` → `SERVICE_MODULES`; `getServiceLinesByModule` fixed to use `moduleSlugs.includes()` (plural); 6 new helpers added (`getAllServiceLines`, `getAllDealUsps`, `getBundles`, `getServiceLinesByStatus`, `getComponentsForBundle`, `getModulesForIcp`).
+
+## What's seeded
+- **6 Modules**: P1 Livestream Commerce, P2 Affiliate Marketing, P3 Brand Advocacy, P4 UGC Content Production, P5 Performance Boosting, P6 Content Commerce
+- **26 Service Lines** across the 6 modules (6+5+2+4+5+4)
+- **3 Bundles** with `composedOf` references: Affiliate Commerce, Livestream Commerce, Full Commerce
+- **5 Deal USPs** covering MNC, cross-border, brand-safety, and facility differentiators
+
+## Verify results
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` | ✅ clean |
+| `npm run build` | ✅ 122 pages |
+| `getAllModules().length === 6` | ✅ |
+| `getAllServiceLines().length === 26` | ✅ |
+| `getAllDealUsps().length === 5` | ✅ |
+| `getBundles().length === 3` → `bundle-affiliate-commerce`, `bundle-livestream-commerce`, `bundle-full-commerce` | ✅ |
+| `getServiceLinesByStatus('proposed').length === 2` → `content-commerce-diagnostic`, `flywheel-onboarding` | ✅ |
+| `getServiceLinesByModule('livestream-commerce').length === 6` | ✅ |
+| `getServiceLinesByModule('brand-advocacy').length === 2` | ✅ |
+| `getServiceLinesByModule('content-commerce').length === 4` | ✅ |
+| `getComponentsForBundle('bundle-full-commerce')` → `pl1-cir`, `pl2-room-ops-host`, `pl3-full-service` (3) | ✅ |
+| `getModulesForIcp('mnc-global-fmcg').length` | ⚠️ **6** (all modules) — guide spec said 5 ("all except brand-advocacy"). The seed data itself links brand-advocacy to mnc-global-fmcg (`relevantIcpSlugs: ['mnc-global-fmcg', 'mnc-pharma-otc']`). The guide's test assertion was inconsistent with its own seed content. Data is correct. |
+| `getModulesForIcp('mnc-pharma-otc').length === 2` → `brand-advocacy`, `ugc-content-production` | ✅ |
+| `git status` — only services files + docs | ✅ |
+
+## Status field usage
+- 24 service lines: `'active'`
+- 2 service lines: `'proposed'` (`content-commerce-diagnostic`, `flywheel-onboarding`) — pending verification with sales/CEO
+
+## What's coming next
+- Prompt 3: Services listing page (3 tabs, upsell timeline hero, demand architecture diagram, delete legacy P1-P7 stub routes + `data/services.ts` flat file)
+- Prompt 4: Module detail + Service Line detail pages + decide `cross-sell-map` route fate
+- Prompt 5a: ICP + Persona cross-link migration (small, low-risk)
+- Prompt 5b: Portfolio `ServiceCode` migration (46 references)
+
+## No schema. No new npm packages. No env vars.
+
+---
+
+# Previous Build — Services Data Layer Foundation (Prompt 1 of 6)
+_2026-05-20_
+
+## Summary
+
+Services data layer foundation created. Pure data-layer build: types, empty stubs, and helpers. No routes, no UI, no seed content. TypeScript clean, build succeeds (122 pages unchanged, 0 errors).
+
+---
+
+## What was built
+
+### New files
+
+- `data/services/types.ts` — `ModuleSlug`, `ServiceLineSlug`, `UpsellPosition`, `Module`, `ServiceLine`, `DealUsp` interfaces
+- `data/services/modules.ts` — 6 Module stubs (P1 Livestream Commerce → P6 Technology & Data Platform). P7 explicitly dropped.
+- `data/services/service-lines.ts` — Empty `SERVICE_LINES` array (populated in Prompt 2)
+- `data/services/deal-usps.ts` — Empty `DEAL_USPS` array (populated in Prompt 2)
+- `data/services/helpers.ts` — `getModuleBySlug`, `getServiceLinesByModule`, `getDealUspsByModule`, `getAllModules`, `getServiceStats`
+
+### Not touched
+
+- `data/services.ts` — Legacy flat P-code label map. Dead code (zero imports). Will be deleted in Prompt 3.
+- All `app/` routes, `data/icps/`, `data/personas/`, `data/portfolio/` — untouched.
+- `ServiceCode` type in `data/portfolio/types.ts` — untouched. Portfolio P-code migration is Prompt 5b.
+
+---
+
+## Manual steps required
+
+None. No schema changes. No new npm packages.
+
+---
+
+## What's next (Services arc)
+
+```
+✅ Prompt 1 — Data layer foundation (types, stubs, helpers)
+⬜ Prompt 2 — Seed content (6 modules, 26 service lines, deal USPs)
+⬜ Prompt 3 — Routes (module index page, module detail pages, delete old P1–P7 stubs + data/services.ts)
+⬜ Prompt 4 — UI components (module cards, service line lists, deal USP panels)
+⬜ Prompt 5a — ICP/Persona cross-link migration (heroServices → ModuleSlug[] for 2 ICPs)
+⬜ Prompt 5b — Portfolio cross-link migration (ServiceCode stays, typed linking added)
+⬜ Prompt 6 — QA, cross-sell map, final cleanup
+```
+
+---
+
+# Previous Build — AI-Assisted Creation Workflow (ICPs + Personas)
 _2026-05-20_
 
 ## Summary

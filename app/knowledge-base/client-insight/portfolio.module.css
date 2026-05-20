@@ -662,6 +662,29 @@
   border: 0.5px solid var(--red-light);
   border-radius: 3px;
   padding: 1px 5px;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+a.bpcServicePill:hover {
+  background: #FEE2E2;
+}
+
+.bpcServicePillLine {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  color: #535353;
+  background: #fff;
+  border: 0.5px solid #E6E6E6;
+  border-radius: 3px;
+  padding: 1px 5px;
+  text-decoration: none;
+  transition: border-color 0.12s;
+}
+
+a.bpcServicePillLine:hover {
+  border-color: #ccc;
 }
 
 .bpcStat {
@@ -1695,6 +1718,12 @@
   border: 0.5px solid var(--red-light);
   border-radius: 4px;
   padding: 3px 7px;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+a.solutionPill:hover {
+  background: #FEE2E2;
 }
 
 .solutionOverview {

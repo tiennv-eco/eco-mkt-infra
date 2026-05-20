@@ -72,7 +72,12 @@
       "Bash(sed -i '' 's/icpSlug: '\\\\''local-indie'\\\\''/icpSlug: '\\\\''regional-d2c-beauty'\\\\''/g' data/portfolio/accounts.ts)",
       "Bash(sed -i '' 's/icpSlug: '\\\\''local-large'\\\\'',/icpSlug: '\\\\''vietnamese-domestic-cpg'\\\\'',/g' data/portfolio/accounts.ts)",
       "Bash(mkdir -p /Users/tienvnguyen/eco_mkt_infra/app/api/drafts/\\\\[id\\\\]/upload /Users/tienvnguyen/eco_mkt_infra/app/api/drafts/\\\\[id\\\\]/publish)",
-      "Bash(mkdir -p \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/icps/drafts/[id]\" \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/personas/drafts/[id]\")"
+      "Bash(mkdir -p \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/icps/drafts/[id]\" \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/client-insight/personas/drafts/[id]\")",
+      "Bash(grep -v \"^--$\")",
+      "Bash(python3 -c ' *)",
+      "Bash(mkdir -p \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/services/[moduleSlug]\")",
+      "Bash(mkdir -p \"/Users/tienvnguyen/eco_mkt_infra/app/knowledge-base/services/lines/[lineSlug]\")",
+      "Bash(echo \"EXIT:$?\")"
     ],
     "additionalDirectories": [
       "/Users/tienvnguyen/Downloads",

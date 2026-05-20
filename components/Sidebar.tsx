@@ -35,6 +35,11 @@ const navTree: NavItem[] = [
         ],
       },
       {
+        kind: 'leaf',
+        label: 'Services',
+        href: '/knowledge-base/services',
+      },
+      {
         kind: 'flyout',
         label: 'Client Insight',
         href: '/knowledge-base/client-insight',
@@ -57,21 +62,6 @@ const navTree: NavItem[] = [
           { label: 'Creator ICPs', href: '/knowledge-base/creator-insight/icps' },
           { label: 'Creator Personas', href: '/knowledge-base/creator-insight/personas' },
           { label: 'Network Overview', href: '/knowledge-base/creator-insight/network' },
-        ],
-      },
-      {
-        kind: 'flyout',
-        label: 'Services',
-        href: '/knowledge-base/services',
-        items: [
-          { label: 'P1 — Livestream Commerce', href: '/knowledge-base/services/p1-livestream-commerce' },
-          { label: 'P2 — UGC & Content Production', href: '/knowledge-base/services/p2-ugc-content' },
-          { label: 'P3 — TikTok Shop Partner', href: '/knowledge-base/services/p3-tiktok-shop-partner' },
-          { label: 'P4 — Performance Media', href: '/knowledge-base/services/p4-performance-media' },
-          { label: 'P5 — Affiliate & Creator Network', href: '/knowledge-base/services/p5-affiliate-creator-network' },
-          { label: 'P6 — Technology & Data Platform', href: '/knowledge-base/services/p6-technology-platform' },
-          { label: 'P7 — Service Seven', href: '/knowledge-base/services/p7-service-seven' },
-          { label: 'Cross-sell Map', href: '/knowledge-base/services/cross-sell-map' },
         ],
       },
     ],

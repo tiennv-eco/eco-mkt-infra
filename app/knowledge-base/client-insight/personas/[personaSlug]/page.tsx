@@ -4,6 +4,13 @@ import { getAllPersonas, getPersonaBySlug } from '@/data/personas/helpers';
 import { getIcpBySlug } from '@/data/icps/helpers';
 import type { PersonaType, SeniorityLevel, InfluenceLevel } from '@/data/personas/types';
 import { getInsightsForPersona } from '@/lib/research/helpers';
+import {
+  getModuleBySlug,
+  getServiceLineBySlug,
+  getModulesForPersona,
+  getServiceLinesForPersona,
+  getDealUspsForPersona,
+} from '@/data/services/helpers';
 import RelevantResearchSection from '@/components/research/RelevantResearchSection';
 import styles from './persona.module.css';
 
@@ -109,6 +116,31 @@ export default async function PersonaDetailPage({
   const relevantInsights = await getInsightsForPersona(persona.slug);
   const icpVariationsCount = persona.icpVariations?.length ?? 0;
   const objectionCount = persona.commonObjections?.length ?? 0;
+
+  // Service involvement — combine curated + reverse-lookup, deduplicate
+  const curatedModules = (persona.serviceInvolvement?.relevantModuleSlugs ?? [])
+    .map(getModuleBySlug)
+    .filter(Boolean);
+  const reversedModules = getModulesForPersona(persona.slug);
+  const allModuleSlugs = new Set<string>();
+  const involvedModules = [...curatedModules, ...reversedModules].filter((m) => {
+    if (!m || allModuleSlugs.has(m.slug)) return false;
+    allModuleSlugs.add(m.slug);
+    return true;
+  });
+
+  const curatedLines = (persona.serviceInvolvement?.relevantServiceLineSlugs ?? [])
+    .map(getServiceLineBySlug)
+    .filter(Boolean);
+  const reversedLines = getServiceLinesForPersona(persona.slug);
+  const allLineSlugs = new Set<string>();
+  const involvedLines = [...curatedLines, ...reversedLines].filter((sl) => {
+    if (!sl || allLineSlugs.has(sl.slug)) return false;
+    allLineSlugs.add(sl.slug);
+    return true;
+  });
+
+  const resonatingUsps = getDealUspsForPersona(persona.slug);
 
   return (
     <div className={styles.page}>
@@ -529,10 +561,110 @@ export default async function PersonaDetailPage({
         </div>
       </div>
 
-      {/* §10 — ICP Variations */}
+      {/* §10 — Services They're Involved In */}
       <div className={styles.section}>
         <SectionHeader
           num="10"
+          title="SERVICES THEY'RE INVOLVED IN"
+          subtitle="Modules and Service Lines this persona typically engages with as a decision-maker, influencer, or gatekeeper."
+        />
+
+        {persona.serviceInvolvement?.contextNote && (
+          <p className={styles.serviceContextNote}>{persona.serviceInvolvement.contextNote}</p>
+        )}
+
+        {/* Sub-block A: Modules */}
+        <p className={styles.serviceSubLabel}>MODULES THIS PERSONA INFLUENCES</p>
+        <p className={styles.serviceSubSubtitle}>Combined from curated persona data + reverse lookup from Module decisionMakerPersonaSlugs</p>
+        {involvedModules.length > 0 ? (
+          <div className={styles.serviceCardGrid}>
+            {involvedModules.map((m) => (
+              <Link
+                key={m!.slug}
+                href={`/knowledge-base/services/${m!.slug}`}
+                className={styles.serviceCard}
+              >
+                <span className={styles.serviceCardEyebrow}>{m!.pillarId}</span>
+                <p className={styles.serviceCardName}>{m!.name}</p>
+                {m!.oneLiner && (
+                  <p className={styles.serviceCardOneLiner}>{m!.oneLiner}</p>
+                )}
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.serviceCardGrid}>
+            {[0, 1, 2].map(i => (
+              <div key={i} className={`${styles.serviceCard} ${styles.ghostCard}`}>
+                <span className={styles.ghostText} style={{ fontSize: 10 }}>Module</span>
+                <p className={styles.ghostText}>Not yet linked</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Sub-block B: Service Lines */}
+        <p className={styles.serviceSubLabel} style={{ marginTop: 20 }}>SERVICE LINES THIS PERSONA TYPICALLY CONTRACTS</p>
+        <p className={styles.serviceSubSubtitle}>Combined from curated persona data + reverse lookup from ServiceLine decisionMakerPersonaSlugs</p>
+        {involvedLines.length > 0 ? (
+          <div className={styles.serviceCardGrid}>
+            {involvedLines.map((sl) => (
+              <Link
+                key={sl!.slug}
+                href={`/knowledge-base/services/lines/${sl!.slug}`}
+                className={styles.serviceCard}
+              >
+                <span className={styles.serviceCardEyebrow}>{sl!.tierLevel}</span>
+                <p className={styles.serviceCardName}>{sl!.name}</p>
+                {sl!.oneLiner && (
+                  <p className={styles.serviceCardOneLiner}>{sl!.oneLiner}</p>
+                )}
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.serviceCardGrid}>
+            {[0, 1, 2].map(i => (
+              <div key={i} className={`${styles.serviceCard} ${styles.ghostCard}`}>
+                <span className={styles.ghostText} style={{ fontSize: 10 }}>Service Line</span>
+                <p className={styles.ghostText}>Not yet linked</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Sub-block C: Deal USPs */}
+        <p className={styles.serviceSubLabel} style={{ marginTop: 20 }}>DEAL USPS THAT RESONATE WITH THIS PERSONA</p>
+        <p className={styles.serviceSubSubtitle}>Pitch closers that historically land with this persona type</p>
+        {resonatingUsps.length > 0 ? (
+          <div className={styles.serviceCardGrid}>
+            {resonatingUsps.map((usp) => (
+              <div key={usp.slug} className={styles.uspCard}>
+                <span className={styles.uspCardIcon}>{usp.icon}</span>
+                <p className={styles.serviceCardName}>{usp.name}</p>
+                <p className={styles.serviceCardOneLiner}>{usp.commercialFrame}</p>
+                <p className={styles.uspCardWhen}>
+                  <span className={styles.uspCardWhenLabel}>When to deploy:</span>
+                  {usp.whenToDeploy}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.serviceCardGrid}>
+            {[0, 1].map(i => (
+              <div key={i} className={`${styles.uspCard} ${styles.ghostCard}`}>
+                <span className={styles.ghostText}>No Deal USPs linked yet</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* §11 — ICP Variations */}
+      <div className={styles.section}>
+        <SectionHeader
+          num="11"
           title="ICP VARIATIONS"
           subtitle="How this persona behaves at different ICP types. The same role looks different across company types — these are the specifics."
         />
@@ -576,10 +708,10 @@ export default async function PersonaDetailPage({
       ══════════════════════════════════════════════════════ */}
       <GroupDivider label="GROUP E · KNOWLEDGE & REFERENCE" />
 
-      {/* §11 — Relevant Research */}
+      {/* §12 — Relevant Research */}
       <div className={styles.section}>
         <SectionHeader
-          num="11"
+          num="12"
           title="RELEVANT RESEARCH FROM THE LIBRARY"
           subtitle="Insights tagged with this persona's slug from the Research & Insights library."
         />
@@ -590,9 +722,9 @@ export default async function PersonaDetailPage({
         />
       </div>
 
-      {/* §12 — Reference Index */}
+      {/* §13 — Reference Index */}
       <div className={styles.section}>
-        <SectionHeader num="12" title="REFERENCE INDEX" />
+        <SectionHeader num="13" title="REFERENCE INDEX" />
         <div className={styles.profileCard}>
           <FieldRow label="TAG CLUSTERS">
             {persona.referenceIndex?.tagClusters && persona.referenceIndex.tagClusters.length > 0 ? (
